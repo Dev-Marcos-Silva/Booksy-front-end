@@ -65,8 +65,8 @@ export function UpdateBook(){
                                 </span>
 
                                 <div className="flex gap-8">
-                                     <SmallButton text="Excluir" color="font-700" />
-                                     <SmallButton text="Salva" color="font-600" />
+                                     <SmallButton text="Excluir" isSave={false} />
+                                     <SmallButton text="Salva" isSave={true} />
                                 </div>
                             </div>
                 

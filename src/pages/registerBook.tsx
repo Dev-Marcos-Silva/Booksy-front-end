@@ -63,7 +63,7 @@ export function RegisterBook(){
                                     <input className="w-5 h-5" type="checkbox" id="checkbox" />
                                     <label htmlFor="checkbox">Disponivel</label>
                                 </span>
-                               <SmallButton text="Salva" color="font-600" />
+                               <SmallButton text="Salva" isSave={true}/>
                             </div>
                 
                         </div>

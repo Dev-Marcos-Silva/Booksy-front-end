@@ -2,8 +2,7 @@ import { Login } from "./pages/login"
 import { Register } from "./pages/register"
 
 import { Layout } from "./pages/layout"
-
-//import { NotFound } from "./pages/notFound"
+import { NotFound } from "./pages/notFound"
 
 import { Home } from "./pages/home"
 import { Details } from "./pages/details"
@@ -24,7 +23,6 @@ import { BookDelivered } from "./pages/bookDelivered"
 import { BorrowedBook } from "./pages/borrowedBook"
 import { FinishedBook } from "./pages/finishedBook"
 import { UnfinishedBook } from "./pages/unfinishedBook"
-
 
 import { BrowserRouter, Routes, Route} from "react-router"
 import { LibraryProfile } from "./pages/libraryProfile"
@@ -61,6 +59,8 @@ export function App() {
           <Route path="/library/profile" element={<LibraryProfile/>}  />
           <Route path="/library/update" element={<UpdateBook/>}  />
         </Route>
+
+        <Route path="/*" element={<NotFound/>}/>
 
       </Routes>
     </BrowserRouter>

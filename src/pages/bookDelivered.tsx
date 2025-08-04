@@ -1,4 +1,5 @@
 import { ArrowBigUpDash } from "lucide-react"
+import { CardClient } from "../components/cardClient"
 
 export function BookDelivered(){
     return(
@@ -10,10 +11,10 @@ export function BookDelivered(){
                 </div>
             </header>
             <main className="overflow-y-scroll h-full" >
-                <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4"  >
-                    
-                    
-                   
+                <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4"  > 
+                    <CardClient isDelivered={false}/>
+                    <CardClient isDelivered={false}/>
+                    <CardClient isDelivered={false}/>
                 </section>
             </main>
         </section>

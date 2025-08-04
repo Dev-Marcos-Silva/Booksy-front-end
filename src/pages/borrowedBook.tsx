@@ -1,4 +1,5 @@
 import { BookUser } from "lucide-react"
+import { CardBookWithClient } from "../components/cardBookWithClient"
 
 export function BorrowedBook(){
     return(
@@ -11,9 +12,11 @@ export function BorrowedBook(){
             </header>
             <main className="overflow-y-scroll h-full" >
                 <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4"  >
-                    
-                    
-                   
+                    <CardBookWithClient />
+                    <CardBookWithClient />
+                    <CardBookWithClient />
+                    <CardBookWithClient />
+                    <CardBookWithClient /> 
                 </section>
             </main>
         </section>
