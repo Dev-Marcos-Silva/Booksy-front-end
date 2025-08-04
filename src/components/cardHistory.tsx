@@ -21,7 +21,7 @@ export function CardHistory(){
 
                 <div className="flex justify-between items-center">
                         <span className="flex gap-1 items-center font-medium text-sm"><Star color="#FC9B1C" fill="#FC9B1C" strokeWidth={0} size={20}/>4.7</span>
-                        <ButtonCard text="avaliar" link="/user/details" size="text-sm"/>
+                        <ButtonCard text="Avaliar" link="/user/details" size="text-sm"/>
                 </div>
 
                 <div className="flex flex-col w-full items-center" >

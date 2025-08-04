@@ -5,10 +5,11 @@ import { ButtonMark } from "../components/buttonMark"
 import { Link, Outlet } from "react-router-dom"
 import { ItemBook } from "../components/itemBook"
 import { ButtonCard } from "../components/buttonCard"
+import { SmallButton } from "../components/smallButton"
 
 export function Details(){
 
-    const isUser = false
+    const isUser = true
 
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
@@ -64,16 +65,16 @@ export function Details(){
                                 {
                                     isUser?
                                     <form className="flex justify-between gap-6 relative" >
-                                        <button className="bg-bg-primary py-1 px-2 rounded-2xl border-1 border-but-100 text-but-100 cursor-pointer" >fazer pedido</button>
+                                        <SmallButton text="Fazer pedido" color="but-100"/>
                                         <select id="days" className="bg-bg-primary appearance-none py-1 pl-6 pr-8 rounded-2xl border-1 border-but-100 text-but-100 cursor-pointer outline-0">
-                                            <option value={30} >dias 30</option>
-                                            <option value={60} >dias 60</option>
+                                            <option value={30} >Dias 30</option>
+                                            <option value={60} >Dias 60</option>
                                         </select>
                                         <ArrowBigDownDash className="absolute right-2 top-2 pointer-events-none" size={20} color="#FF815B" strokeWidth={1.8} />
                                     </form>
                                     : 
                                     <div className="flex w-full justify-end">
-                                        <ButtonCard text="editar" link="/#" size="" />
+                                        <ButtonCard text="Editar" link="/library/update" size="" />
                                     </div>
                                 }
                             </div>

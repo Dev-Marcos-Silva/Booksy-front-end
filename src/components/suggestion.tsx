@@ -37,7 +37,7 @@ export function Suggestion(){
                     arrow.map((item) =>{
                         return(
                             <div className="keen-slider__slide" >
-                                <CardBookUser  key={item} size="h-58" />
+                                <CardBookUser  key={item} />
                             </div>
                         )
                     })

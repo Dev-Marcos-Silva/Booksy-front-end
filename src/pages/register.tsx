@@ -1,7 +1,7 @@
 import image from "../assets/img/register.webp"
 import { InputText } from "../components/inputText"
 import { InputPassword } from "../components/inputPassword"
-import { Button } from "../components/button"
+import { BigButton } from "../components/bigButton"
 import { Link } from "react-router-dom"
 
 export function Register(){
@@ -24,13 +24,13 @@ export function Register(){
                     
                         <form className="flex flex-col gap-5 w-full" action="">
 
-                            <InputText type="text" placeholder="Digite seu nome" label="Nome"/>
-                            <InputText type="email" placeholder="Digite seu email" label="Email"/>
-                            <InputPassword isTrue placeholder="Digite sua senha" label="Criar senha"/>
-                            <InputPassword isTrue={false} placeholder="Digite sua senha" label="Confirmar senha"/>
+                            <InputText isBook={false} widthDiv="w-full" type="text" placeholder="Digite seu nome" label="Nome"/>
+                            <InputText isBook={false} widthDiv="w-full" type="email" placeholder="Digite seu email" label="Email"/>
+                            <InputPassword widthDiv="w-full" isTrue placeholder="Digite sua senha" label="Criar senha"/>
+                            <InputPassword widthDiv="w-full" isTrue={false} placeholder="Digite sua senha" label="Confirmar senha"/>
 
-                            <Button text="Enviar" type="submit" margin="mt-4" />
-
+                            <BigButton text="Enviar" type="submit" margin="mt-4" />
+ 
                         </form>
 
                         <div className="flex w-full pt-2 justify-end" >

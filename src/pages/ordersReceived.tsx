@@ -1,4 +1,5 @@
 import { ArrowBigDownDash } from "lucide-react"
+import { CardClient } from "../components/cardClient"
 
 export function OrdersReceived(){
     return(
@@ -11,7 +12,11 @@ export function OrdersReceived(){
             </header>
             <main className="overflow-y-scroll h-full" >
                 <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4"  >
-                    
+                    <CardClient/>
+                    <CardClient/>
+                    <CardClient/>
+                    <CardClient/>
+                    <CardClient/>
                     
                    
                 </section>

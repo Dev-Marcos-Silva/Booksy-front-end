@@ -12,17 +12,17 @@ export function Favorites(){
 
             </header>
             <main className="overflow-y-scroll h-full" >
-                <section className="flex flex-wrap gap-x-6 gap-y-8 mx-2 my-4 px-7" >
+                <section className="flex flex-wrap gap-x-6 gap-y-5 mx-2 my-4 px-6" >
 
-                    <CardBookUser size="h-62" />
-                    <CardBookUser size="h-62" />
-                    <CardBookUser size="h-62" />
-                    <CardBookUser size="h-62" />
-                    <CardBookUser size="h-62" />
-                    <CardBookUser size="h-62" />
-                    <CardBookUser size="h-62" />
-                    <CardBookUser size="h-62" />
-                    
+                    <CardBookUser />
+                    <CardBookUser />
+                    <CardBookUser />
+                    <CardBookUser />
+                    <CardBookUser />
+                    <CardBookUser />
+                    <CardBookUser />
+                    <CardBookUser />
+                   
                 </section>
             </main>
         </section>

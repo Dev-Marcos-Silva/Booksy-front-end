@@ -7,13 +7,13 @@ import image from "../assets/img/book.webp"
 
 const lista = [1,2,3,4,5,6,7,8,9,10]
 
-export function RegisterBook(){
+export function UpdateBook(){
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >
                 <div className="flex py-3 px-4 gap-4 text-2xl font-medium items-center" >
                     <PencilLine size={38} />
-                    <h1>Cadastrar livros</h1>
+                    <h1>Editar informações do livro</h1>
                 </div>
             </header>
             <main className="flex items-center justify-center h-full w-full">
@@ -63,7 +63,11 @@ export function RegisterBook(){
                                     <input className="w-5 h-5" type="checkbox" id="checkbox" />
                                     <label htmlFor="checkbox">Disponivel</label>
                                 </span>
-                               <SmallButton text="Salva" color="font-600" />
+
+                                <div className="flex gap-8">
+                                     <SmallButton text="Excluir" color="font-700" />
+                                     <SmallButton text="Salva" color="font-600" />
+                                </div>
                             </div>
                 
                         </div>

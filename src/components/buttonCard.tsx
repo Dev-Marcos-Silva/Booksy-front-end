@@ -9,7 +9,7 @@ interface ButtonType extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export function ButtonCard({ text, link, size }: ButtonType ){
     return(
-        <Link to={`${link}`} className={`bg-bg-primary px-2 py-1 rounded-2xl border-1 border-but-100 text-but-100 cursor-pointer ${size} `} >
+        <Link to={`${link}`} className={`bg-bg-primary px-2 py-1 rounded-2xl border-1 border-but-100 text-but-100 cursor-pointer ${size} duration-500 hover:bg-but-100 hover:text-amber-50`} >
             {text}
         </Link>
     )

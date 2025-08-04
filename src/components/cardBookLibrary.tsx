@@ -2,12 +2,12 @@ import image from "../assets/img/book.webp"
 import { ButtonCard } from "./buttonCard"
 
 interface BookType{
-    size: string
+    
 }
 
-export function CardBookLibrary({size}: BookType){
+export function CardBookLibrary({}: BookType){
     return (
-        <div className={` max-w-62 ${size} border-1 border-but-200 rounded-sm`}>
+        <div className="max-w-56 max-h-72 border-1 border-but-200 rounded-sm shadow-lg">
             
             <section  className="relative w-full h-4/5">
                 <img className="w-full h-full object-cover rounded-t-sm " src={image} alt=""/>
@@ -27,8 +27,8 @@ export function CardBookLibrary({size}: BookType){
             </section>
 
             <div className="bg-font-500 w-full h-1/5 py-2 px-4 border-t-1 border-but-200 flex justify-between items-center">
-                <ButtonCard text="ver mais" link="/user/details" size="text-sm"/>
-                <ButtonCard text="editar" link="/#" size="text-sm"/>
+                <ButtonCard text="Ver mais" link="/user/details" size="text-sm"/>
+                <ButtonCard text="Editar" link="/library/update" size="text-sm"/>
             </div>       
         </div>
     )

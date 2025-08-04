@@ -38,7 +38,7 @@ export function CardOrder(){
                         
                     <div className="flex justify-between items-center" >
                         <span className="flex gap-1 items-center font-medium" ><Star color="#FC9B1C" fill="#FC9B1C" size={22} strokeWidth={1}/>4.7</span>
-                        <ButtonCard text="avaliar" link="/user/details" size="text-base"/>
+                        <ButtonCard text="Avaliar" link="/user/details" size="text-base"/>
                     </div>
                 </aside>
 

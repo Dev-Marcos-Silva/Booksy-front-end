@@ -1,7 +1,7 @@
 import image from "../assets/img/login.webp"
 import { InputText } from "../components/inputText"
 import { InputPassword } from "../components/inputPassword"
-import { Button } from "../components/button"
+import { BigButton } from "../components/bigButton"
 import { Link } from "react-router-dom"
 
 export function Login(){
@@ -23,10 +23,10 @@ export function Login(){
                     
                         <form className="flex flex-col gap-8 w-full">
 
-                            <InputText type="email" placeholder="Digite seu email" label="Email"/>
-                            <InputPassword isTrue={false} placeholder="Digite sua senha" label="Senha"/>
+                            <InputText isBook={false} widthDiv="w-full" type="email" placeholder="Digite seu email" label="Email"/>
+                            <InputPassword widthDiv="w-full" isTrue={false} placeholder="Digite sua senha" label="Senha"/>
 
-                            <Button text="Enviar" type="submit" margin="mt-4" />
+                            <BigButton text="Enviar" type="submit" margin="mt-4" />
 
                         </form>
 

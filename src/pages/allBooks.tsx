@@ -16,10 +16,15 @@ export function AllBooks(){
 
             </header>
             <main className="overflow-y-scroll h-full" >
-                <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4"  >
-                    <CardBookLibrary size="max-h-72"/>
-                    
-                   
+                <section className="flex flex-wrap gap-x-5 gap-y-4 mx-1 my-4 pr-3 pl-6"  >
+                    <CardBookLibrary />
+                    <CardBookLibrary />
+                    <CardBookLibrary />
+                    <CardBookLibrary />
+                    <CardBookLibrary />
+                    <CardBookLibrary />
+                    <CardBookLibrary />
+                    <CardBookLibrary />    
                 </section>
             </main>
         </section>

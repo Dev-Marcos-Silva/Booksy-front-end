@@ -4,12 +4,12 @@ import { ButtonMark } from "./buttonMark"
 import { Star } from "lucide-react"
 
 interface BookType{
-    size: string
+    
 }
 
-export function CardBookUser({size}: BookType){
+export function CardBookUser({}: BookType){
     return (
-        <div className={`relative max-w-54 ${size} border-1 border-font-200 rounded-sm`}>
+        <div className="relative max-w-54 h-64 border-1 border-font-200 rounded-sm shadow-lg">
 
             <img className="w-full h-full object-cover rounded-sm " src={image} alt=""/>
 
@@ -27,7 +27,7 @@ export function CardBookUser({size}: BookType){
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="flex gap-1 items-center font-medium"><Star color="#FCCA23" fill="#FCCA23" strokeWidth={0}/>4.7</span>
-                        <ButtonCard text="ver mais" link="/user/details" size="text-sm" />
+                        <ButtonCard text="Ver mais" link="/user/details" size="text-sm" />
                     </div>
                 </section>
             </div>

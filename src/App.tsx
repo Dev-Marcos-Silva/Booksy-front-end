@@ -17,6 +17,7 @@ import { RegisterLibrary } from "./pages/registerLibrary"
 import { UserProfile } from "./pages/userProfile"
 
 import { AllBooks } from "./pages/allBooks"
+import { UpdateBook } from "./pages/updateBook"
 import { RegisterBook } from "./pages/registerBook"
 import { OrdersReceived } from "./pages/ordersReceived"
 import { BookDelivered } from "./pages/bookDelivered"
@@ -58,6 +59,7 @@ export function App() {
           <Route path="/library/finished" element={<FinishedBook/>}  />
           <Route path="/library/unfinished" element={<UnfinishedBook/>}  />
           <Route path="/library/profile" element={<LibraryProfile/>}  />
+          <Route path="/library/update" element={<UpdateBook/>}  />
         </Route>
 
       </Routes>
