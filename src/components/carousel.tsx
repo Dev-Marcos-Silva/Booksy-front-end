@@ -2,22 +2,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import { ChevronLeft } from 'lucide-react'
 import { ChevronRight } from 'lucide-react'
-
-const categories = [
-    "Romance",
-    "Aventura",
-    "Drama",
-    "Fantasia",
-    "Ficção científica",
-    "Distopia",
-    "Mistério",
-    "Suspense",
-    "Horror",
-    "Ficção histórica",
-    "Economia",
-    "Mangá",
-]
-
+import { categories } from '../utils/listsForBooks'
 
 export function Carousel(){
 

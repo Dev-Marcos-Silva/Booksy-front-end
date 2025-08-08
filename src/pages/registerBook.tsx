@@ -4,8 +4,8 @@ import { TextArea } from "../components/textArea"
 import { InputSelect } from "../components/inputSelect"
 import { SmallButton } from "../components/smallButton"
 import image from "../assets/img/book.webp"
+import { categories, edition, finish, yearOfPublication } from "../utils/listsForBooks"
 
-const lista = [1,2,3,4,5,6,7,8,9,10]
 
 export function RegisterBook(){
     return(
@@ -32,11 +32,10 @@ export function RegisterBook(){
                             </div>
                         
                             <div className="bg-font-500 p-6 py-6 border-1 border-font-200 rounded-lg flex flex-col gap-2" >
-                                <InputSelect label="Categoria/Genero" options={lista} />
-                                <InputSelect label="Edição" options={lista} />
-                                <InputSelect label="Ano de publicação" options={lista} />
-                                <InputSelect label="Acabamento" options={lista} />
-                               
+                                <InputSelect label="Categoria/Genero" options={categories} />
+                                <InputSelect label="Edição" options={edition} />
+                                <InputSelect label="Ano de publicação" options={yearOfPublication} />
+                                <InputSelect label="Acabamento" options={finish} />
                             </div>
 
                         </div>
@@ -65,7 +64,7 @@ export function RegisterBook(){
                                 </span>
                                <SmallButton text="Salva" isSave={true}/>
                             </div>
-                
+
                         </div>
                     </form>    
                 </section>

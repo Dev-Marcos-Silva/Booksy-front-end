@@ -26,7 +26,7 @@ export function CardFinishedBook({isComplete}: BookType){
                 </div>
             </div>
 
-            <div className="flex items-center  gap-4 px-0" >
+            <div className="flex items-center  gap-4 px-3" >
             
                 <img className={`${isComplete? "border-font-600 bg-bg-400":"border-font-700 bg-bg-500"}border-but-200 border-1 rounded-full mx-3 max-w-30 max-h-30 object-cover`} src={imageUser} alt="" />
                 
@@ -40,12 +40,17 @@ export function CardFinishedBook({isComplete}: BookType){
 
                 {
                     isComplete?
-                    <div className="flex flex-col justify-center gap-6 pl-1 pr-2" >
-                        <SmallButton text="Concluir" isSave={true}/>
+                    <div className="bg-bg-primary flex flex-col items-center justify-center border-font-600 border-1 rounded-xl h-full px-3" >
+                        <h2 className="text-lg text-font-100 font-semibold">Encerrado Em</h2>
+                        <p className=" text-font-100 font-medium" >11/02/2024</p>
                     </div>
                     : 
-                    <div className="flex flex-col justify-center gap-6 pl-1 pr-2" >
-                        <SmallButton text="Concluir" isSave={true}/>
+                    <div className="bg-bg-primary flex flex-col items-center justify-evenly border-font-700 border-1 rounded-xl h-full px-3" >
+                        <div className="flex flex-col items-center justify-center" >
+                            <h2 className="text-lg text-font-100 font-semibold">Encerrado Em</h2>
+                            <p className=" text-font-100 font-medium" >11/02/2024</p>
+                        </div>
+                        <SmallButton text="Finalizar" isSave={true}/>
                     </div>
 
                 }

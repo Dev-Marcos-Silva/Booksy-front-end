@@ -41,12 +41,12 @@ export function CardClient({isDelivered}: BookType){
 
                 {
                     isDelivered?
-                    <div className="flex flex-col justify-center gap-6 px-3" >
+                    <div className="flex flex-col justify-center gap-6 px-5" >
                         <SmallButton text="Aceite" isSave={true}/>
                         <SmallButton text="Negar" isSave={false}/>
                     </div>
                     :
-                     <div className="flex flex-col justify-center gap-6 px-1" >
+                     <div className="flex flex-col justify-center gap-6 px-3" >
                         <StopWatch days={24}/>
                         <SmallButton text="Entregar" isSave={true}/>
                     </div>

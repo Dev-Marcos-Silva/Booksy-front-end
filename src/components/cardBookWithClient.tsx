@@ -42,8 +42,8 @@ export function CardBookWithClient({}: BookType){
                     <p className="text-font-100 text-sm ">Rua 20, Jardim Cearense, casa 200</p>
                 </div>
 
-                <div className="flex flex-col justify-center gap-6 pl-1 pr-2" >
-                    <SmallButton text="Concluir" isSave={true}/>
+                <div className="flex flex-col justify-center gap-6 px-5" >
+                    <SmallButton text="Finalizar" isSave={true}/>
                 </div>
                  
             </div>  
