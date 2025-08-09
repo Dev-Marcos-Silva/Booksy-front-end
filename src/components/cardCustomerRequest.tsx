@@ -7,7 +7,7 @@ interface BookType{
     isDelivered: boolean
 }
 
-export function CardClient({isDelivered}: BookType){
+export function CardCustomerRequest({isDelivered}: BookType){
     return (
         <div className="border-font-200 border-1 w-full rounded-xl flex justify-between bg-font-500 py-3 shadow-lg">
             <div className="flex items-center  gap-4 px-3" >

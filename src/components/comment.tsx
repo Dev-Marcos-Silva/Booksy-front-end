@@ -11,7 +11,7 @@ interface CommentType{
 
 export function Comment({ name, comment, date}: CommentType){
 
-    const isUser = false
+    const isUser = true
 
     return (
         <section className="mt-6 flex gap-2" >

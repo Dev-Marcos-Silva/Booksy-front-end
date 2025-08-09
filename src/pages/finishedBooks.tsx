@@ -2,7 +2,7 @@ import { CircleCheck } from "lucide-react"
 import { CardFinishedBook } from "../components/cardFinishedBook"
 
 
-export function FinishedBook(){
+export function FinishedBooks(){
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >

@@ -20,9 +20,9 @@ import { UpdateBook } from "./pages/updateBook"
 import { RegisterBook } from "./pages/registerBook"
 import { OrdersReceived } from "./pages/ordersReceived"
 import { BookDelivered } from "./pages/bookDelivered"
-import { BorrowedBook } from "./pages/borrowedBook"
-import { FinishedBook } from "./pages/finishedBook"
-import { UnfinishedBook } from "./pages/unfinishedBook"
+import { BorrowedBooks } from "./pages/borrowedBooks"
+import { FinishedBooks } from "./pages/finishedBooks"
+import { UnfinishedBook } from "./pages/unfinishedBooks"
 
 import { BrowserRouter, Routes, Route} from "react-router"
 import { LibraryProfile } from "./pages/libraryProfile"
@@ -53,8 +53,8 @@ export function App() {
           <Route path="/library/register" element={<RegisterBook/>}  />
           <Route path="/library/orders" element={<OrdersReceived/>}  />
           <Route path="/library/delivered" element={<BookDelivered/>}  />
-          <Route path="/library/borrowed" element={<BorrowedBook/>}  />
-          <Route path="/library/finished" element={<FinishedBook/>}  />
+          <Route path="/library/borrowed" element={<BorrowedBooks/>}  />
+          <Route path="/library/finished" element={<FinishedBooks/>}  />
           <Route path="/library/unfinished" element={<UnfinishedBook/>}  />
           <Route path="/library/profile" element={<LibraryProfile/>}  />
           <Route path="/library/update" element={<UpdateBook/>}  />

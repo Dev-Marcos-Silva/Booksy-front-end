@@ -4,10 +4,11 @@ function generateDates(){
     const currentYear = new Date().getFullYear()
     const startYeat: number = 1980
 
-    let index = startYeat
-    while(index <= currentYear){
-        yearOfPublication.push(`${index}`)
-        index++
+    let years = startYeat
+    
+    while(years <= currentYear){
+        yearOfPublication.push(`${years}`)
+        years++
     }
 }
 generateDates()

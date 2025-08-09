@@ -3,7 +3,7 @@ import { ButtonComment } from "../components/buttonComment"
 
 export function Comments(){
 
-    const isUser = false
+    const isUser = true
 
     return(
         <section className="overflow-auto no-scrollbar max-h-100">

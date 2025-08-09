@@ -8,7 +8,7 @@ import { ButtonCard } from "../components/buttonCard"
 
 export function Details(){
 
-    const isUser = false
+    const isUser = true
 
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >

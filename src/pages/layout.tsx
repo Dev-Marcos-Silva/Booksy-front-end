@@ -4,7 +4,7 @@ import { LibrarySideBar } from "../components/librarySideBar"
 
 export function Layout(){
 
-    const isUser = false
+    const isUser = true
 
     return(
         <section className="w-screen h-screen grid grid-cols-4 grid-rows-5">

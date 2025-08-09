@@ -1,7 +1,7 @@
 import { BookUser } from "lucide-react"
 import { CardBookWithClient } from "../components/cardBookWithClient"
 
-export function BorrowedBook(){
+export function BorrowedBooks(){
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >

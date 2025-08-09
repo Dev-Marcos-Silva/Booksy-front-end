@@ -3,7 +3,7 @@ import { ButtonRating } from "../components/buttonRating";
 
 export function Assessments(){
 
-    const isUser = false
+    const isUser = true
 
     return(
         <section className="overflow-auto no-scrollbar max-h-100">
