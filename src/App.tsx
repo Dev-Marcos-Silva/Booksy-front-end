@@ -1,31 +1,32 @@
-import { Login } from "./pages/login"
-import { Register } from "./pages/register"
+import { Login } from "./pages/account/login"
+import { Register } from "./pages/account/register"
 
-import { Layout } from "./pages/layout"
-import { NotFound } from "./pages/notFound"
+import { Layout } from "./pages/layout/layout"
+import { NotFound } from "./pages/layout/notFound"
 
-import { Home } from "./pages/home"
-import { Details } from "./pages/details"
-import { Comments } from "./pages/comments"
-import { Assessments } from "./pages/assessments"
-import { Books } from "./pages/books"
-import { History } from "./pages/history"
-import { Suggestions } from "./pages/suggestions"
-import { Favorites } from "./pages/favorites"
-import { RegisterLibrary } from "./pages/registerLibrary"
-import { UserProfile } from "./pages/userProfile"
+import { Home } from "./pages/user/home"
+import { Books } from "./pages/user/books"
+import { History } from "./pages/user/history"
+import { Suggestions } from "./pages/user/suggestions"
+import { Favorites } from "./pages/user/favorites"
+import { RegisterLibrary } from "./pages/user/registerLibrary"
+import { UserProfile } from "./pages/user/userProfile"
 
-import { AllBooks } from "./pages/allBooks"
-import { UpdateBook } from "./pages/updateBook"
-import { RegisterBook } from "./pages/registerBook"
-import { OrdersReceived } from "./pages/ordersReceived"
-import { BookDelivered } from "./pages/bookDelivered"
-import { BorrowedBooks } from "./pages/borrowedBooks"
-import { FinishedBooks } from "./pages/finishedBooks"
-import { UnfinishedBook } from "./pages/unfinishedBooks"
+import { Details } from "./pages/book/details"
+import { Comments } from "./pages/book/comments"
+import { Assessments } from "./pages/book/assessments"
+
+import { AllBooks } from "./pages/library/allBooks"
+import { UpdateBook } from "./pages/library/updateBook"
+import { RegisterBook } from "./pages/library/registerBook"
+import { OrdersReceived } from "./pages/library/ordersReceived"
+import { BookDelivered } from "./pages/library/bookDelivered"
+import { BorrowedBooks } from "./pages/library/borrowedBooks"
+import { FinishedBooks } from "./pages/library/finishedBooks"
+import { UnfinishedBook } from "./pages/library/unfinishedBooks"
+import { LibraryProfile } from "./pages/library/libraryProfile"
 
 import { BrowserRouter, Routes, Route} from "react-router"
-import { LibraryProfile } from "./pages/libraryProfile"
 
 export function App() {
   return (
@@ -36,16 +37,19 @@ export function App() {
 
         <Route path="/user" element={<Layout/>}>
           <Route index element={<Home/>} />
-          <Route path="/user/details" element={<Details/>}>
-            <Route index element={<Comments/>} />
-            <Route path="/user/details/assessments" element={<Assessments/>} />
-          </Route>
-          <Route path="/user/book" element={<Books/>} />
+          <Route path="/user/orders" element={<Books/>} />
           <Route path="/user/history" element={<History/>} />
           <Route path="/user/suggestions" element={<Suggestions/>} />
           <Route path="/user/favorites" element={<Favorites/>} />
           <Route path="/user/register" element={<RegisterLibrary/>} />
           <Route path="/user/profile" element={<UserProfile/>} />
+        </Route>
+
+        <Route path="/book" element={<Layout/>} >
+         <Route path="/book" element={<Details/>}>
+            <Route index element={<Comments/>} />
+            <Route path="/book/assessments" element={<Assessments/>} />
+          </Route>
         </Route>
 
         <Route path="/library" element={<Layout/>} >
