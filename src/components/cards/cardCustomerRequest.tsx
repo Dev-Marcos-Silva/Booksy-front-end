@@ -1,7 +1,7 @@
 import imageBook from "../../assets/img/book.webp"
 import imageUser from "../../assets/img/profile.webp"
 import { SmallButton } from "../buttons/smallButton"
-import { StopWatch } from "../../utils/stopWatch"
+import { StopWatch } from "../ui/stopWatch"
 
 interface BookType{
     isDelivered: boolean

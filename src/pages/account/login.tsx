@@ -1,4 +1,5 @@
-import image from "../../assets/img/login.webp"
+import { postSession, type PostSessionTypeReponse, type PostSessionTypeRequest } from "../../http/postSession"
+import { useMutation } from "@tanstack/react-query"
 import { InputText } from "../../components/inputs/inputText"
 import { InputPassword } from "../../components/inputs/inputPassword"
 import { BigButton } from "../../components/buttons/bigButton"
@@ -6,6 +7,7 @@ import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
+import image from "../../assets/img/login.webp"
 
 const schemaLogin = z.object({
     email: z.email(),
@@ -20,9 +22,23 @@ export function Login(){
         resolver: zodResolver(schemaLogin)
     })
 
+    const session = useMutation<PostSessionTypeReponse, Error, PostSessionTypeRequest>({
+        mutationFn: postSession,
+        onSuccess: (data) => {
+            console.log(data)
+            reset()  
+        },
+        onError: () => {
+            alert("Email ou senha incorreto!!")
+            reset()  
+        }
+    })
+
     async function loginPost({email, password }: SchemaLogin) {
-        console.log(email, password)
-        reset()  
+        session.mutate({
+            email,
+            password
+        })
     }
 
     return (

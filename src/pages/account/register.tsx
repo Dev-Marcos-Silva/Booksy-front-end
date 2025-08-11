@@ -1,4 +1,5 @@
-import image from "../../assets/img/register.webp"
+import { postUser, type postUserTypeRequest} from "../../http/postUser"
+import { useMutation } from "@tanstack/react-query"
 import { InputText } from "../../components/inputs/inputText"
 import { InputPassword } from "../../components/inputs/inputPassword"
 import { BigButton } from "../../components/buttons/bigButton"
@@ -6,6 +7,7 @@ import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
+import image from "../../assets/img/register.webp"
 
 const schemaRegister = z.object({
     name: z.string(),
@@ -16,22 +18,36 @@ const schemaRegister = z.object({
 
 type SchemaRegister = z.infer<typeof schemaRegister>
 
-
 export function Register(){
 
     const {register, reset, handleSubmit} = useForm<SchemaRegister>({
         resolver: zodResolver(schemaRegister)
     })
 
+    const user = useMutation<void, Error, postUserTypeRequest >({
+        mutationFn: postUser,
+        onSuccess: () => {
+            alert("Conta criada com súcesso")
+            reset()
+        },
+        onError: () => {
+            alert("Conta já existe!")
+            reset()
+        }
+    })
+
     async function registerPost({name, email, password, confirmPassword}: SchemaRegister) {
+
         if(password !== confirmPassword || password.length < 6){
-           return alert('Password invalido')
+           return alert('Senha invalidas')
         }
 
-        console.log(name, email, password)
-        reset()
+        user.mutate({
+            name,
+            email,
+            password
+        })  
     }
-
 
     return (
         <section className="bg-bg-primary w-screen h-screen flex justify-between items-center">
