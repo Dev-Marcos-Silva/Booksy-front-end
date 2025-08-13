@@ -3,10 +3,11 @@ import { useMutation } from "@tanstack/react-query"
 import { InputText } from "../../components/inputs/inputText"
 import { InputPassword } from "../../components/inputs/inputPassword"
 import { BigButton } from "../../components/buttons/bigButton"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
+import { authContex } from "../../hook/authContext"
 import image from "../../assets/img/login.webp"
 
 const schemaLogin = z.object({
@@ -18,14 +19,26 @@ type SchemaLogin = z.infer<typeof schemaLogin>
 
 export function Login(){
 
-    const {register, reset, handleSubmit} = useForm<SchemaLogin>({
+    const { login } = authContex()
+
+    const navigate = useNavigate()
+
+    const { register, reset, handleSubmit } = useForm<SchemaLogin>({
         resolver: zodResolver(schemaLogin)
     })
 
     const session = useMutation<PostSessionTypeReponse, Error, PostSessionTypeRequest>({
         mutationFn: postSession,
         onSuccess: (data) => {
-            console.log(data)
+            login(data)
+
+            if(data.type == "USER"){
+                navigate('/user')
+            }
+            else if(data.type == "LIBRARY"){
+                navigate('/library')
+            }
+            
             reset()  
         },
         onError: () => {

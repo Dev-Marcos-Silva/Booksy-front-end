@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query"
 import { InputText } from "../../components/inputs/inputText"
 import { InputPassword } from "../../components/inputs/inputPassword"
 import { BigButton } from "../../components/buttons/bigButton"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
@@ -20,6 +20,8 @@ type SchemaRegister = z.infer<typeof schemaRegister>
 
 export function Register(){
 
+    const navigate = useNavigate()
+
     const {register, reset, handleSubmit} = useForm<SchemaRegister>({
         resolver: zodResolver(schemaRegister)
     })
@@ -29,6 +31,7 @@ export function Register(){
         onSuccess: () => {
             alert("Conta criada com súcesso")
             reset()
+            navigate("/login")
         },
         onError: () => {
             alert("Conta já existe!")
