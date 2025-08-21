@@ -3,13 +3,15 @@ import { persist } from "zustand/middleware"
 
 type Account = {
     id: string
+    name: string
+    image: string | undefined | null
     type: string
     token: string
 }
 
 type AccountContex = {
     account: Account | null
-    login: ({id, type, token}: Account) => void
+    login: (data: Account) => void
     logout: () => void
 }
 

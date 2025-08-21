@@ -2,10 +2,54 @@ import { PencilLine, Camera } from "lucide-react"
 import { InputText } from "../../components/inputs/inputText"
 import { InputPassword } from "../../components/inputs/inputPassword"
 import { BigButton } from "../../components/buttons/bigButton"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { authContex } from "../../hook/authContext"
+import { useState } from "react"
+import { api } from "../../service/api"
+import z from "zod"
 import image from '../../assets/img/profile.webp'
+
+const schemaForm = z.object({
+    name: z.string(),
+    email: z.string(),
+    newPassword: z.string(),
+    oldPassword: z.string().min(6),
+    ddd: z.string(),
+    phone: z.string(),
+    cep: z.string(),
+    street: z.string(),
+    number: z.string(),
+    neighborhood: z.string(),
+    city: z.string()
+})
+
+type SchemaForm = z.infer<typeof schemaForm>
 
 export function UserProfile(){
 
+    const { account } = authContex()
+
+    const avatar = account?.image? `${api.defaults.baseURL}/upload/profile/${account.image}` : image
+
+    const [ imageState, setImageState ] = useState<string>(avatar)
+ 
+    const { register, handleSubmit } = useForm<SchemaForm>({
+        resolver: zodResolver(schemaForm)
+    })
+
+    function handleImage(file: FileList | null){
+
+        if(file){
+            const fileImage = file[0]
+            setImageState(URL.createObjectURL(fileImage))
+        }
+    }
+ 
+    async function formUserPut(data: SchemaForm){
+        console.log(data, imageState)  
+    }
+    
     return(
         <section className='bg-bg-primary h-full flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >
@@ -17,50 +61,50 @@ export function UserProfile(){
             <main className="flex items-center justify-center h-full w-full">
                 <section className="bg-bg-100 rounded-md w-full my-2 mx-10 pb-2" >
 
-                    <form className="flex ">
+                    <form onSubmit={handleSubmit(formUserPut)}  className="flex ">
                         <div className="flex-1/2 px-8 py-6 flex flex-col items-center gap-3" > 
 
                             <div className="relative max-h-30 max-w-30" >
-                                <img className="max-h-30 max-w-30 border-1 border-but-200 rounded-full" src={image} alt="" />
+                                <img className="h-30 w-30 border-1 border-but-200 rounded-full" src={imageState} alt="" />
                                 <button className="absolute flex justify-center items-center bg-bg-primary w-10 h-10 top-20 right-0 rounded-xl border-1 border-but-200 " >
                                     <Camera color="#FA7248" size={32}/>
                                 </button>
-                                <input className="absolute w-10 h-10 pt-11 top-19 right-0 rounded-xl cursor-pointer" type="file" name="" id="" />
+                                <input  
+                                    className="absolute w-10 h-10 pt-11 top-19 right-0 rounded-xl cursor-pointer" 
+                                    type="file"
+                                    onChange={e => handleImage(e.target.files)} 
+                                />
                             </div>
                            
-
-                            <InputText isBook={false} widthDiv="w-full" className="inline" type="text" placeholder="Digite seu nome" label="Nome de usuário"/>
-                            <InputText isBook={false} widthDiv="w-full" className="inline" type="email" placeholder="Digite seu email" label="Novo email"/>
-                            <InputPassword widthDiv="w-full" className="inline" isTrue placeholder="Digite a nova senha" label="Nova senha"/>
-                            <InputPassword widthDiv="w-full" className="inline" isTrue={false} placeholder="Digite a antiga senha" label="Antiga senha"/>
+                            <InputText {...register('name')} isBook={false} widthDiv="w-full" className="inline" type="text" placeholder="Digite seu nome" label="Nome de usuário"/>
+                            <InputText {...register('email')} isBook={false} widthDiv="w-full" className="inline" type="email" placeholder="Digite seu email" label="Novo email"/>
+                            <InputPassword {...register('newPassword')} widthDiv="w-full" className="inline" isTrue placeholder="Digite a nova senha" label="Nova senha"/>
+                            <InputPassword {...register('oldPassword')} widthDiv="w-full" className="inline" isTrue={false} placeholder="Digite a antiga senha" label="Antiga senha"/>
 
                         </div>
 
                         <div className="flex-1/2 px-8 py-6 gap-3 flex flex-col" >
                             <div className="flex gap-4 justify-center">
-                                <InputText isBook={false} widthDiv="max-w-26" type="text"  placeholder="00" label="DDD"/>
-                                <InputText isBook={false} widthDiv="w-full" type="text"  placeholder="000000000" label="Telefone de contato"/>
+                                <InputText {...register('ddd')} isBook={false} widthDiv="max-w-26" type="number" className="" placeholder="00" label="DDD"/>
+                                <InputText {...register('phone')} isBook={false} widthDiv="w-full" type="number"  placeholder="000000000" label="Telefone de contato"/>
                             </div>
 
-                            <InputText isBook={false} widthDiv="w-full" type="text"  placeholder="00000-000" label="CEP"/>
+                            <InputText {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000-000" label="CEP"/>
 
                             <div className="flex gap-4 justify-center" >
-                                <InputText isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome da rua" label="Nome da rua"/>
-                                <InputText isBook={false} widthDiv="" type="text"  placeholder="000" label="Número"/>
+                                <InputText {...register('street')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome da rua" label="Nome da rua"/>
+                                <InputText {...register('number')} isBook={false} widthDiv="" type="text"  placeholder="000" label="Número"/>
                             </div>
 
                             <div className="flex gap-4 justify-center" >
-                                <InputText isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome do Bairro" label="Bairro"/>
-                                <InputText isBook={false} widthDiv="w-full" type="text"  placeholder="Cidade" label="Cidade"/>  
+                                <InputText {...register('neighborhood')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome do Bairro" label="Bairro"/>
+                                <InputText {...register('city')} isBook={false} widthDiv="w-full" type="text"  placeholder="Cidade" label="Cidade"/>  
                             </div>
 
                             <BigButton  
-                                type="button" 
+                                type="submit" 
                                 text="Enviar" 
                                 margin="mt-20"
-                                onClick={() => {
-                                console.log('update')
-                                }} 
                             />
                         </div>
                     </form> 

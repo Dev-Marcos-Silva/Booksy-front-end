@@ -11,8 +11,7 @@ export function Suggestion(){
     const [ sliderRef, slider ] = useKeenSlider<HTMLDivElement>({
         loop: true,
         slides: {
-            spacing: 12,
-            perView: 5
+            perView: 4.2
         },
         mode: 'free' 
     })
@@ -22,7 +21,7 @@ export function Suggestion(){
 
 
     return(
-        <div className='max-w-full flex relative' >
+        <div className='max-w-full flex justify-center relative' >
 
             <button
                 onClick={handlePrev}
@@ -31,7 +30,7 @@ export function Suggestion(){
                 <ChevronLeft size={33}/>
             </button>
 
-            <div ref={sliderRef} className="keen-slider py-2" >
+            <div ref={sliderRef} className="keen-slider" >
 
                 {
                     arrow.map((item) =>{

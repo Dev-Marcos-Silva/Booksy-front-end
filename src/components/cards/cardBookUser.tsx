@@ -9,7 +9,7 @@ interface BookType{
 
 export function CardBookUser({}: BookType){
     return (
-        <div className="relative max-w-54 h-64 border-1 border-font-200 rounded-sm shadow-lg">
+        <div className="relative max-w-52 h-64 border-1 border-font-200 rounded-sm shadow-lg">
 
             <img className="w-full h-full object-cover rounded-sm " src={image} alt=""/>
 

@@ -12,19 +12,17 @@ export function Home(){
                 <Carousel />
             </search>
 
-            <main className="overflow-y-scroll h-full" >
-              <section className="flex flex-wrap gap-x-6 gap-y-5 mx-2 my-4 px-6"> 
-                
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                     
-              </section>
+            <main className="overflow-y-scroll h-full " >
+                <section className="flex justify-center my-5"> 
+                    <div className="max-w-223 flex flex-wrap gap-x-5 gap-y-5" >
+                        <CardBookUser />
+                        <CardBookUser />
+                        <CardBookUser />
+                        <CardBookUser />
+                        <CardBookUser />
+                        <CardBookUser />
+                    </div>            
+                </section>
             </main>
         </section>
     )

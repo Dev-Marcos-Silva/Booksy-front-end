@@ -33,3 +33,8 @@
   -ms-overflow-style: none;  /* Internet Explorer e Edge antigo */
   scrollbar-width: none;     /* Firefox */
 }
+
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+    -webkit-appearance: none;  
+} 

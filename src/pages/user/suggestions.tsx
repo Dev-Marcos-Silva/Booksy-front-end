@@ -16,8 +16,8 @@ export function Suggestions(){
                 <section className="h-full flex flex-col justify-center mx-2 px-6 pb-4" >
                     <div>
                         <span className="flex gap-2 items-center">
-                            <h1 className="text-2xl py-2">Mais bem avaliado</h1>
-                            <ArrowUpNarrowWide/>
+                            <h1 className="text-xl py-2">Mais bem avaliado</h1>
+                            <ArrowUpNarrowWide size={20} />
                         </span>
                         <Suggestion/>
 
@@ -25,8 +25,8 @@ export function Suggestions(){
                     <div>
 
                         <span className="flex gap-2 items-center">
-                            <h1 className="text-2xl py-2">Recém adicionado</h1>
-                            <SquarePlus/>
+                            <h1 className="text-xl py-2">Recém adicionado</h1>
+                            <SquarePlus size={20} />
                         </span>      
                        <Suggestion/>
 

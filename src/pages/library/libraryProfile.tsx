@@ -36,11 +36,11 @@ export function LibraryProfile(){
 
                         <div className="flex-1/2 px-8 py-6 w-full flex flex-col gap-3" >
                              <div className="flex gap-4 justify-center">
-                                    <InputText isBook={false} widthDiv="max-w-26" type="text"  placeholder="00" label="DDD"/>
-                                    <InputText isBook={false} widthDiv="w-full" type="text"  placeholder="000000000" label="Telefone de contato"/>
+                                    <InputText isBook={false} widthDiv="max-w-26" type="number"  placeholder="00" label="DDD"/>
+                                    <InputText isBook={false} widthDiv="w-full" type="number"  placeholder="000000000" label="Telefone de contato"/>
                             </div>
 
-                            <InputText isBook={false} widthDiv="w-full" type="text"  placeholder="00000-000" label="CEP"/>
+                            <InputText isBook={false} widthDiv="w-full" type="number"  placeholder="00000-000" label="CEP"/>
 
                             <div className="flex gap-4 justify-center" >
                                 <InputText isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome da rua" label="Nome da rua"/>

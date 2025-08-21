@@ -13,7 +13,13 @@ export function InputText({placeholder, label, type, widthDiv, isBook, ...props}
         <div className={`flex flex-col gap-2 ${widthDiv}`}>
             <label className="text-font-100 text-lg" htmlFor={label}>{label}</label>
 
-            <input {...props} type={type} className={`bg-amber-50 w-full py-2 px-4 focus:outline-2 ${isBook? "focus:outline-font-200" : "focus:outline-but-100"  } rounded-md text-sm`} placeholder={placeholder} id={label}/>
+            <input 
+                {...props} 
+                type={type} 
+                className={`bg-amber-50 w-full py-2 px-4 focus:outline-2 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${isBook? "focus:outline-font-200" : "focus:outline-but-100"  } rounded-md text-sm`} 
+                placeholder={placeholder} 
+                id={label}
+            />
         </div> 
     )
 }

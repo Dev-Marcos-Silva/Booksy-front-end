@@ -34,7 +34,7 @@ export function Register(){
             navigate("/login")
         },
         onError: () => {
-            alert("Conta já existe!")
+            alert("Algo deu errado ao criar a contar! tente novamente")
             reset()
         }
     })
@@ -42,7 +42,7 @@ export function Register(){
     async function registerPost({name, email, password, confirmPassword}: SchemaRegister) {
 
         if(password !== confirmPassword || password.length < 6){
-           return alert('Senha invalidas')
+           return alert("Senha invalidas")
         }
 
         user.mutate({

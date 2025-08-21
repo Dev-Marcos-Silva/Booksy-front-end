@@ -6,8 +6,10 @@ export interface PostSessionTypeRequest{
 }
 
 export interface PostSessionTypeReponse{
-    type: string
     id: string
+    name: string
+    image: string | undefined | null
+    type: string
     token: string
 }
 

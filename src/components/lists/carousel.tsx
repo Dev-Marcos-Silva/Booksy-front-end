@@ -20,7 +20,7 @@ export function Carousel(){
 
 
     return(
-        <div className='max-w-full pl-6 pr-11 flex' >
+        <div className='max-w-full pl-6 pr-9 flex' >
 
             <button
                 onClick={handlePrev}

@@ -11,8 +11,8 @@ function generateDates(){
         years++
     }
 }
-generateDates()
 
+generateDates()
 
 export const categories = [
     "Romance",
