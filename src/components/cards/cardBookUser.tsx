@@ -27,7 +27,7 @@ export function CardBookUser({}: BookType){
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="flex gap-1 items-center font-medium"><Star color="#FCCA23" fill="#FCCA23" strokeWidth={0}/>4.7</span>
-                        <ButtonCard text="Ver mais" link="/book" size="text-sm" />
+                        <ButtonCard text="Ver mais" link="/user/book" size="text-sm" />
                     </div>
                 </section>
             </div>

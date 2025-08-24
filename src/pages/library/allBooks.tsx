@@ -1,7 +1,31 @@
 import { LibraryBig } from "lucide-react"
 import { CardBookLibrary } from "../../components/cards/cardBookLibrary"
+import { useQuery } from "@tanstack/react-query"
+import { getAllBooks, type getAllBooksTypeResponse } from "../../http/getAllBooks"
+import { authContex } from "../../hook/authContext"
 
 export function AllBooks(){
+
+    const { account } = authContex()
+
+    if(!account){
+        return
+    }
+
+    const { data, isLoading, error } = useQuery<getAllBooksTypeResponse[]>({
+
+        queryKey: ["keyGetAllBook", account.id ],
+        queryFn: async () => 
+            await getAllBooks({
+                libraryId: account.id, 
+                token: account.token
+            })
+    })
+
+    if(error){
+        alert("Error ao buscar livros...")
+    }
+
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >
@@ -17,14 +41,21 @@ export function AllBooks(){
             </header>
             <main className="overflow-y-scroll h-full" >
                 <section className="flex flex-wrap gap-x-5 gap-y-4 mx-1 my-4 pr-3 pl-6"  >
-                    <CardBookLibrary />
-                    <CardBookLibrary />
-                    <CardBookLibrary />
-                    <CardBookLibrary />
-                    <CardBookLibrary />
-                    <CardBookLibrary />
-                    <CardBookLibrary />
-                    <CardBookLibrary />    
+                    {
+                        isLoading && <p>carregando...</p>
+                    }
+                    {
+                        data?.map(book => {
+                            return(
+                                <CardBookLibrary 
+                                    key={book.id}
+                                    title={book.title}
+                                    author={book.author}
+                                    image={book.image} 
+                                />
+                            ) 
+                        })
+                    }
                 </section>
             </main>
         </section>

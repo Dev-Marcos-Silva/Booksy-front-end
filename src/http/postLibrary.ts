@@ -21,7 +21,7 @@ export async function postLibrary(data : postLibraryTypeRequest) {
 
     const { userId, token, image, ...newData } = data
 
-    // fetch conseguer recuperar o blob pela url
+    // fetch consegue recuperar o blob pela url
     const file = await fetch(image).then(img => img.blob())
 
     const formData = new FormData()

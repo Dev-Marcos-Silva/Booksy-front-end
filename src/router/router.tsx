@@ -5,32 +5,47 @@ import { NotFound } from "../pages/layout/notFound"
 import { RouterLibrary } from "./library"
 import { RouterUser } from "./user"
 
-import { Routes, Route} from "react-router"
+import { Routes, Route, Navigate} from "react-router-dom"
 import { authContex } from "../hook/authContext"
 
 export function Routers(){
 
   const { account } = authContex()
-
+  
   return (
     <Routes>
+
+      {/* Rotas públicas */}
       <Route path="/login" element={<Login/>} />
       <Route path="/register" element={<Register/>} />
 
-      {
+
+      {/* Rota raiz "/" */}
+      <Route path="/" element={
         account?(
           account.type === "USER"? (
-            <Route path="/*" element={<RouterUser/>} />
+            <Navigate to="/user" />
           ):
-          account.type === "LIBRARY"?(
-            <Route path="/*" element={<RouterLibrary/>} />
+          account.type === "LIBRARY"? (
+            <Navigate to="/library" />
           ):
-           <Route path="/*" element={<NotFound/>} />  
+           <NotFound/>
         ):
+          <Navigate to="/login"/>
+      } />
 
-        <Route path="/*" element={<NotFound />} />
-      }
-      
+      {/* Rotas privadas */}
+      {account?.type === "USER" && (
+        <Route path="/user/*" element={<RouterUser/>} />
+      )}
+
+      {account?.type === "LIBRARY" && (
+        <Route path="/library/*" element={<RouterLibrary/>} />
+      )}
+
+      {/* Rota not found */}
+      <Route path="*" element={<NotFound />} />
+
     </Routes>
   )
 }

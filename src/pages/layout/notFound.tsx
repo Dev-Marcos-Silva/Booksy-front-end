@@ -9,7 +9,7 @@ export function NotFound(){
                     <p className="text-4xl text-font-100 pl-1 font-medium" >Error: 404 Not Found!</p>
                 </div>
                 <div className="p-3" >
-                    <Link className="text-2xl text-font-100 border-b-1 border-bg-primary hover:border-b-font-100 duration-600" to={'/login'} >
+                    <Link className="text-2xl text-font-100 border-b-1 border-bg-primary hover:border-b-font-100 duration-600" to={'/'} >
                         volta
                     </Link>
                 </div>

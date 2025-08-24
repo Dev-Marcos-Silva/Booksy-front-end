@@ -5,7 +5,7 @@ export interface PostSessionTypeRequest{
     password: string
 }
 
-export interface PostSessionTypeReponse{
+export interface PostSessionTypeResponse{
     id: string
     name: string
     image: string | undefined | null
@@ -13,9 +13,9 @@ export interface PostSessionTypeReponse{
     token: string
 }
 
-export async function postSession({email, password}: PostSessionTypeRequest): Promise<PostSessionTypeReponse> {
+export async function postSession({email, password}: PostSessionTypeRequest): Promise<PostSessionTypeResponse> {
 
-    const { data } = await api.post<PostSessionTypeReponse>('/session', {email, password})
+    const { data } = await api.post<PostSessionTypeResponse>('/session', {email, password})
 
     return data
 }

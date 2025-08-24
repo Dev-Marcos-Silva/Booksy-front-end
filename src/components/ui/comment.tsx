@@ -48,7 +48,7 @@ export function Comment({ name, comment, date, isUser}: CommentType){
                                 <div>
                                     <span className="font-medium text-black">{"Digital Library"} </span>
                                         <p className="text-sm text-justify text-font-300">
-                                                {comment}
+                                             {comment}
                                         </p>
                                     <p className="text-xs text-font-300" >{date}</p>
                                 </div> 

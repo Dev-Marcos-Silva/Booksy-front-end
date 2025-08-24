@@ -5,10 +5,19 @@ import imagenLibrary from "../../assets/img/logo.webp"
 import { ButtonMark } from "../../components/buttons/buttonMark"
 import { ItemBook } from "../../components/lists/itemBook"
 import { ButtonCard } from "../../components/buttons/buttonCard"
+import { authContex } from "../../hook/authContext"
 
 export function Details(){
 
-    const isUser = true
+    const { account } = authContex()
+
+    let path: string = ''
+
+    if(account){
+       const { type } = account
+
+       path = type.toLocaleLowerCase()
+    }
 
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
@@ -21,9 +30,9 @@ export function Details(){
             <main className="overflow-y-scroll h-full" >
                 <section className="flex mt-4 mx-10 gap-6">
                     <div className="relative">
-                        <img className="w-full max-w-88 h-full object-cover rounded-md" src={imagenBook} alt=""/>
+                        <img className="w-88 h-full object-cover rounded-md" src={imagenBook} alt=""/>
                         {
-                            isUser &&
+                            account?.type === "USER" &&
                             <div className="absolute flex justify-end items-start p-4 w-full h-full top-0 opacity-0 hover:opacity-100 duration-500">
                                 <ButtonMark/>
                             </div>
@@ -62,7 +71,7 @@ export function Details(){
                                 <h2 className="text-xl text-right">Disponível</h2>
 
                                 {
-                                    isUser?
+                                    account?.type === "USER"?
                                     <form className="flex justify-between gap-6 relative" >
                                         <button className="bg-bg-primary px-5 py-1 rounded-2xl border-1 cursor-pointer duration-500 border-but-100 text-but-100 hover:bg-but-100 hover:text-amber-50 ">
                                             Fazer pedido
@@ -125,9 +134,9 @@ export function Details(){
                     </aside>
                     <section className="w-full h-23" >
                         <div className="py-4 flex">
-                            <Link className="border-r-1 border-font-400 pr-8 text-lg hover:text-font-200" to={'/book'}>Comentários</Link>
+                            <Link className="border-r-1 border-font-400 pr-8 text-lg hover:text-font-200" to={`/${path}/book`}>Comentários</Link>
                     
-                            <Link className="border-l-1 border-font-400 pl-8 text-lg hover:text-font-200" to={'/book/assessments'}>Avaliações</Link>
+                            <Link className="border-l-1 border-font-400 pl-8 text-lg hover:text-font-200" to={`/${path}/book/assessments`}>Avaliações</Link>
                         </div>
                         <section>
                             <Outlet/>

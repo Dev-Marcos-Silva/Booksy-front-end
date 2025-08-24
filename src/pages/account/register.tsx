@@ -10,7 +10,7 @@ import z from "zod"
 import image from "../../assets/img/register.webp"
 
 const schemaRegister = z.object({
-    name: z.string(),
+    name: z.string().min(3),
     email: z.email(),
     password: z.string().min(6),
     confirmPassword: z.string().min(6)
@@ -20,11 +20,11 @@ type SchemaRegister = z.infer<typeof schemaRegister>
 
 export function Register(){
 
-    const navigate = useNavigate()
-
     const {register, reset, handleSubmit} = useForm<SchemaRegister>({
         resolver: zodResolver(schemaRegister)
     })
+    
+    const navigate = useNavigate()
 
     const user = useMutation<void, Error, postUserTypeRequest >({
         mutationFn: postUser,

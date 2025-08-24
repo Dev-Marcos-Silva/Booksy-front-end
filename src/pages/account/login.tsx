@@ -1,4 +1,4 @@
-import { postSession, type PostSessionTypeReponse, type PostSessionTypeRequest } from "../../http/postSession"
+import { postSession, type PostSessionTypeResponse, type PostSessionTypeRequest } from "../../http/postSession"
 import { useMutation } from "@tanstack/react-query"
 import { InputText } from "../../components/inputs/inputText"
 import { InputPassword } from "../../components/inputs/inputPassword"
@@ -19,15 +19,15 @@ type SchemaLogin = z.infer<typeof schemaLogin>
 
 export function Login(){
 
-    const { login } = authContex()
-
-    const navigate = useNavigate()
-
     const { register, reset, handleSubmit } = useForm<SchemaLogin>({
         resolver: zodResolver(schemaLogin)
     })
 
-    const session = useMutation<PostSessionTypeReponse, Error, PostSessionTypeRequest>({
+    const { login } = authContex()
+
+    const navigate = useNavigate()
+
+    const session = useMutation<PostSessionTypeResponse, Error, PostSessionTypeRequest>({
         mutationFn: postSession,
         onSuccess: (data) => {
             login(data)

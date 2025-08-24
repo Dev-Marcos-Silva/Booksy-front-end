@@ -20,16 +20,16 @@ import { NotFound } from "../pages/layout/notFound"
 export function RouterLibrary () {
     return (
         <Routes>
-            <Route path="/library" element={<Layout/>} >
+            <Route path="/" element={<Layout/>} >
             <Route index element={<AllBooks/>}  />
-            <Route path="/library/register" element={<RegisterBook/>}  />
-            <Route path="/library/orders" element={<OrdersReceived/>}  />
-            <Route path="/library/delivered" element={<BookDelivered/>}  />
-            <Route path="/library/borrowed" element={<BorrowedBooks/>}  />
-            <Route path="/library/finished" element={<FinishedBooks/>}  />
-            <Route path="/library/unfinished" element={<UnfinishedBook/>}  />
-            <Route path="/library/profile" element={<LibraryProfile/>}  />
-            <Route path="/library/update" element={<UpdateBook/>}  />
+            <Route path="/register" element={<RegisterBook/>}  />
+            <Route path="/orders" element={<OrdersReceived/>}  />
+            <Route path="/delivered" element={<BookDelivered/>}  />
+            <Route path="/borrowed" element={<BorrowedBooks/>}  />
+            <Route path="/finished" element={<FinishedBooks/>}  />
+            <Route path="/unfinished" element={<UnfinishedBook/>}  />
+            <Route path="/profile" element={<LibraryProfile/>}  />
+            <Route path="/update" element={<UpdateBook/>}  />
             </Route>
 
             <Route path="/book" element={<Layout/>} >

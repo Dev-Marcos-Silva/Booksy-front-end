@@ -31,15 +31,27 @@ type SchemaForm = z.infer<typeof schemaForm>
 
 export function RegisterLibrary(){
 
+    const { register, reset, handleSubmit } = useForm<SchemaForm>({
+        resolver: zodResolver(schemaForm)
+    })
+
     const { account, logout } = authContex()
 
     const navigate = useNavigate()
 
-    const [ imageState, setImageState ] = useState<string | null >(null)
-    
+    const [ imageState, setImageState ] = useState<string | null >(null) 
 
-    const { register, reset, handleSubmit } = useForm<SchemaForm>({
-        resolver: zodResolver(schemaForm)
+    const library = useMutation<void, Error, postLibraryTypeRequest>({
+        mutationFn: postLibrary,
+        onSuccess: () => {
+            alert("Conta criada com sucesso, faça login novamente para entra como biblioteca")
+            reset()
+            logout()
+            navigate("/login")
+        },
+        onError: () => {
+            alert("Algo deu errado ao criar a contar! tente novamente") 
+        }
     })
 
     function handleImage(file: FileList | null){
@@ -49,21 +61,6 @@ export function RegisterLibrary(){
             setImageState(URL.createObjectURL(fileImage))
         }
     }
-
-    const library = useMutation<void, Error, postLibraryTypeRequest>({
-        mutationFn: postLibrary,
-        onSuccess: () => {
-            alert("Conta criada com súcesso, faça login novamente para entra como biblioteca")
-            reset()
-            logout()
-            navigate("/login")
-        },
-        onError: (data) => {
-            console.log(data)
-            alert("Algo deu errado ao criar a contar! tente novamente")
-            
-        }
-    })
 
     async function formLibraryPost(data: SchemaForm){
 
@@ -81,7 +78,12 @@ export function RegisterLibrary(){
             return alert("Adicionar uma imagem da biblioteca")
         }
 
-        const dataLibrary = {userId: account.id, token: account.token, image: imageState , ...data }
+        const dataLibrary = {
+            userId: account.id, 
+            token: account.token, 
+            image: imageState, 
+            ...data 
+        }
 
         library.mutate(dataLibrary)
     }
@@ -102,7 +104,7 @@ export function RegisterLibrary(){
                         <div className="flex-1/2 px-8 py-6 flex flex-col items-center gap-3" > 
                            
                             <div className="relative max-h-30 max-w-40" >
-                                <img className="h-30 w-40 border-1 border-but-200 rounded-lg" src={imageState? imageState: image } alt="" />
+                                <img className="h-30 w-40 border-1 border-but-200 rounded-lg object-cover" src={imageState? imageState: image } alt="" />
                                 <button className="absolute flex justify-center items-center bg-bg-primary w-10 h-10 top-20 -right-5 rounded-xl border-1 border-but-200 " >
                                     <Camera color="#FA7248" size={32}/>
                                 </button>

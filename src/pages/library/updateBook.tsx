@@ -22,7 +22,7 @@ export function UpdateBook(){
 
                             <div className="relative h-60" >
 
-                                <img className="border-1 h-full border-font-200 rounded-lg object-cover" src={image} alt="" />
+                                <img className="border-1 h-full w-full border-font-200 rounded-lg object-cover" src={image} alt="" />
 
                                 <button className="absolute flex justify-center items-center bg-bg-primary w-10 h-10 top-50 right-0 rounded-lg border-1 border-but-200 " >
                                     <Camera color="#FA7248" size={32}/>

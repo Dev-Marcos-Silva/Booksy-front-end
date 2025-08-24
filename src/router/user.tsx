@@ -18,14 +18,14 @@ import { NotFound } from "../pages/layout/notFound"
 export function RouterUser() {
   return (
         <Routes>
-            <Route path="/user" element={<Layout/>}>
+            <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>} />
-            <Route path="/user/orders" element={<Books/>} />
-            <Route path="/user/history" element={<History/>} />
-            <Route path="/user/suggestions" element={<Suggestions/>} />
-            <Route path="/user/favorites" element={<Favorites/>} />
-            <Route path="/user/register" element={<RegisterLibrary/>} />
-            <Route path="/user/profile" element={<UserProfile/>} />
+            <Route path="/orders" element={<Books/>} />
+            <Route path="/history" element={<History/>} />
+            <Route path="/suggestions" element={<Suggestions/>} />
+            <Route path="/favorites" element={<Favorites/>} />
+            <Route path="/register" element={<RegisterLibrary/>} />
+            <Route path="/profile" element={<UserProfile/>} />
             </Route>
 
             <Route path="/book" element={<Layout/>} >
