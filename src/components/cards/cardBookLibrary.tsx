@@ -1,13 +1,15 @@
 import { api } from "../../service/api"
+import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter"
 import { ButtonCard } from "../buttons/buttonCard"
 
 interface BookType{
+    id: string
     title: string
     author: string
     image: string
 }
 
-export function CardBookLibrary({title, author, image}: BookType){
+export function CardBookLibrary({id, title, author, image}: BookType){
 
     return (
         <div className="max-w-56 max-h-72 border-1 border-but-200 rounded-sm shadow-lg">
@@ -19,10 +21,10 @@ export function CardBookLibrary({title, author, image}: BookType){
                     <section className="bg-font-500 h-26 flex flex-col justify-center px-2 gap-2">
                     <div className="flex flex-col gap-1">
                         <abbr className="no-underline" title="Mockup Your Design Mockup Your Design Mockup Your Design">
-                            <h2 className="font-medium whitespace-nowrap overflow-hidden truncate">{title}</h2>
+                            <h2 className="font-medium whitespace-nowrap overflow-hidden truncate">{capitalizeFirstLetter(title)}</h2>
                         </abbr>
         
-                        <p className="text-sm">Autor(a): {author}</p>
+                        <p className="text-sm">Autor(a): {capitalizeFirstLetter(author)}</p>
                     </div>
 
                     </section>
@@ -30,7 +32,7 @@ export function CardBookLibrary({title, author, image}: BookType){
             </section>
 
             <div className="bg-font-500 w-full h-1/5 py-2 px-4 border-t-1 border-but-200 flex justify-between items-center">
-                <ButtonCard text="Ver mais" link="/library/book" size="text-sm"/>
+                <ButtonCard text="Ver mais" link={`/library/book/${id}`} size="text-sm"/>
                 <ButtonCard text="Editar" link="/library/update" size="text-sm"/>
             </div>       
         </div>

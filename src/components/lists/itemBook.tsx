@@ -1,6 +1,6 @@
 interface ItemType{
     text: string
-    description: string
+    description: string | number
 }
 
 export function ItemBook({text, description}: ItemType){

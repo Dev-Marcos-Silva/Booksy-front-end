@@ -1,9 +1,11 @@
 import { Star } from "lucide-react"
 import imageUser from "../../assets/img/profile.webp"
+import { api } from "../../service/api"
+import { formatDate } from "../../utils/formatDate"
 
 interface RatingType{
-    //image: string
-    name: string
+    name: string | undefined
+    image: string | undefined
     date: string
     index: number
 }
@@ -11,10 +13,10 @@ interface RatingType{
 const ratingStar = [1,2,3,4,5]
 
 
-export function Rating({ name, date, index }: RatingType){
+export function Rating({image, name, date, index }: RatingType){
     return (
         <section className="mt-6 flex gap-2" >
-            <img className="max-w-12 max-h-12 rounded-full" src={imageUser} alt="" />
+            <img className="max-w-12 max-h-12 rounded-full" src={image? `${api.defaults.baseURL}/upload/profile/${image}`: imageUser} alt={`Imagem do usuário ${name}`} />
             <div className="" >
                 <span className="font-medium text-black">{name} </span>
 
@@ -30,7 +32,7 @@ export function Rating({ name, date, index }: RatingType){
                     })}
                 </div>
 
-                <p className="text-xs text-font-300" >{date}</p>
+                <p className="text-xs text-font-300" >{formatDate(date)}</p>
             </div>
         </section>
     )

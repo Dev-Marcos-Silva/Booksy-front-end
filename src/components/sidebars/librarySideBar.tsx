@@ -2,6 +2,7 @@ import image from '../../assets/img/house.webp'
 import { Link, useNavigate } from 'react-router-dom'
 import { Book, Power, BookUp, BookCopy, BookCheck, BookX, BookDown, BookPlus } from 'lucide-react'
 import { authContex } from '../../hook/authContext'
+import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter'
  
 export function LibrarySideBar(){
 
@@ -22,7 +23,7 @@ export function LibrarySideBar(){
                 <Link to={'/library/profile'}>
                     <img className='h-30 w-40 rounded-lg border-1 border-but-100 object-cover' src={account?.image? `http://localhost:3333/upload/library/${account.image}`: image} alt={`imagem da biblioteca ${account?.name}`} />
                 </Link>
-                <p className='py-2 text-2xl'>{account?.name}</p>
+                <p className='py-2 text-2xl'>{capitalizeFirstLetter(account?.name)}</p>
 
            </section>
 

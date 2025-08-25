@@ -65,7 +65,7 @@ export function UserProfile(){
                         <div className="flex-1/2 px-8 py-6 flex flex-col items-center gap-3" > 
 
                             <div className="relative max-h-30 max-w-30" >
-                                <img className="h-30 w-30 border-1 border-but-200 rounded-full object-cover" src={imageState} alt="" />
+                                <img className="h-30 w-30 border-1 border-but-200 rounded-full object-cover" src={imageState} alt={`Imagem do usuário ${account?.name}`} />
                                 <button className="absolute flex justify-center items-center bg-bg-primary w-10 h-10 top-20 right-0 rounded-xl border-1 border-but-200 " >
                                     <Camera color="#FA7248" size={32}/>
                                 </button>

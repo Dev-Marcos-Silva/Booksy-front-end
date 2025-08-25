@@ -29,9 +29,9 @@ export function RouterUser() {
             </Route>
 
             <Route path="/book" element={<Layout/>} >
-            <Route path="/book" element={<Details/>}>
+            <Route path="/book/:id" element={<Details/>}>
                 <Route index element={<Comments/>} />
-                <Route path="/book/assessments" element={<Assessments/>} />
+                <Route path="/book/:id/assessments" element={<Assessments/>} />
             </Route>
             </Route>
 
