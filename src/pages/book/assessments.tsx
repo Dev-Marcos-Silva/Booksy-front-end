@@ -2,9 +2,9 @@ import { Rating } from "../../components/ui/rating";
 import { ButtonRating } from "../../components/buttons/buttonRating";
 import { authContex } from "../../hook/authContext";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getStar, type getStarTypeResponse } from "../../http/getStar";
-import { getUser, type getUserTypeResponse } from "../../http/getUser";
+import { useQueries, useQuery } from "@tanstack/react-query";
+import { getAssessment, type getAssessmentTypeResponse } from "../../http/getAssessment";
+import { getUser } from "../../http/getUser";
 
 type ParamBook = {
     id: string
@@ -20,15 +20,28 @@ export function Assessments(){
         return
     }
 
-    const { data: dataAssessment, isLoading, error} = useQuery<getStarTypeResponse[] | null>({
+    const { data: dataAssessment, isLoading, error} = useQuery<getAssessmentTypeResponse[] | null>({
         queryKey: ["keyGetStar", param.id],
         queryFn: async () => 
-            await getStar({
+            await getAssessment({
                bookId: param.id!,
                token: account.token
-        }),
-
+        })
     })
+
+    const userQueries = useQueries({
+        queries: ((dataAssessment ?? []).map(assessment =>
+            ({
+                queryKey: ["keyGetUser", assessment.user_id],
+                queryFn: async () => 
+                    await getUser({
+                        userId: assessment.user_id,
+                        token: account.token
+                }),
+                enabled: !!assessment.user_id
+            })
+        )
+    )})
 
     if(error){
         alert("Error ao buscar avaliações...")
@@ -45,25 +58,17 @@ export function Assessments(){
             }
             {
                 dataAssessment && 
-                    dataAssessment.map(assessment => {
+                    dataAssessment.map((assessment, index )=> {
 
-                        const { data: dataUser} = useQuery<getUserTypeResponse>({
-                            queryKey: ["keyGetUser", assessment.id],
-                            queryFn: async () => 
-                                await getUser({
-                                userId: assessment.user_id,
-                                token: account.token
-                            }),
-
-                        })
+                        const dataUser = userQueries[index]?.data
 
                         return(
                             <Rating 
                                 key={assessment.id}
                                 name={dataUser?.name}
                                 image={dataUser?.image}
-                                date={assessment.created_at} 
                                 index={assessment.star} 
+                                date={assessment.created_at} 
                             />
                         )
                     })

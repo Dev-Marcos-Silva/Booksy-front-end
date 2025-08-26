@@ -1,7 +1,7 @@
 import { ArrowDownFromLine, Star, ArrowBigDownDash } from "lucide-react"
 import { Link, Navigate, Outlet, useParams } from "react-router-dom"
 import imagenBook from "../../assets/img/book.webp"
-import imagenLibrary from "../../assets/img/logo.webp"
+import imageLibrary from "../../assets/img/logo.webp"
 import { ButtonMark } from "../../components/buttons/buttonMark"
 import { ItemBook } from "../../components/lists/itemBook"
 import { ButtonCard } from "../../components/buttons/buttonCard"
@@ -9,7 +9,7 @@ import { authContex } from "../../hook/authContext"
 import { useQuery } from "@tanstack/react-query"
 import { getBook, type getBooksTypeResponse } from "../../http/getbook"
 import { getLibrary, type getLibraryTypeResponse } from "../../http/getLibrary"
-import { getStar, type getStarTypeResponse } from "../../http/getStar"
+import { getAssessment, type getAssessmentTypeResponse } from "../../http/getAssessment"
 import { api } from "../../service/api"
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter"
 import { numberOfStars } from "../../utils/numberOfStars"
@@ -58,10 +58,10 @@ export function Details(){
         enabled: !!dataBook?.library_id
     })
 
-    const { data: dataAssessment} = useQuery<getStarTypeResponse[] | null>({
+    const { data: dataAssessment} = useQuery<getAssessmentTypeResponse[] | null>({
         queryKey: ["keyGetStar", param.id],
         queryFn: async () => 
-            await getStar({
+            await getAssessment({
                bookId: param.id!,
                token: account.token
         }),
@@ -90,7 +90,7 @@ export function Details(){
                 <main className="overflow-y-scroll h-full" >
                     <section className="flex mt-4 mx-10 gap-6">
                         <div className="relative">
-                            <img className="w-88 h-full object-cover rounded-md" src={dataBook.image? `${api.defaults.baseURL}/upload/book/${dataBook.image}`: imagenBook} alt=""/>
+                            <img className="w-88 h-full object-cover rounded-md" src={dataBook.image? `${api.defaults.baseURL}/upload/book/${dataBook.image}`: imagenBook} alt={`Imagem do livro ${dataBook.title}`}/>
                             {
                                 account?.type === "USER" &&
                                 <div className="absolute flex justify-end items-start p-4 w-full h-full top-0 opacity-0 hover:opacity-100 duration-500">
@@ -100,7 +100,7 @@ export function Details(){
                         </div>
                         <section className="flex flex-col gap-2 h-full w-full" >
                             <div className="bg-bg-300 pl-4 py-3 pr-3 flex gap-6 w-full h-full rounded-md">
-                                <img className="w-40 max-h-32 rounded-md border-1 border-but-100 object-cover" src={dataLibrary.image? `${api.defaults.baseURL}/upload/library/${dataLibrary.image}`: imagenLibrary} alt="" />
+                                <img className="w-40 max-h-32 rounded-md border-1 border-but-100 object-cover" src={dataLibrary.image? `${api.defaults.baseURL}/upload/library/${dataLibrary.image}`: imageLibrary} alt={`Imagem da biblioteca ${dataLibrary.name}`}/>
 
                                 <div className="flex flex-col gap-4 ">
                                     <div>
