@@ -12,8 +12,12 @@ export function InputSelect({label, options, ...props}: InputType){
         <div className="flex flex-col gap-2 relative w-full " >
             <label htmlFor={label}>{label}</label>
 
-            <select {...props} className="bg-amber-50 w-full py-2 pl-4 pr-6 focus:outline-2 appearance-none focus:outline-font-200 rounded-md text-sm" id={label}>
-                {options.map((item => {
+            <select {...props} className="bg-amber-50 w-full py-2 pl-3 pr-6 focus:outline-2 appearance-none focus:outline-font-200 rounded-md text-sm" id={label}>
+                <option value="" disabled selected >
+                    Selecione uma opção
+                </option>
+
+                {options.map(((item) => {
                     return <option key={item} value={item}>
                         {item}
                     </option>

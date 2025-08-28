@@ -3,7 +3,7 @@ import { SearchBook } from "../../components/ui/search"
 import { CardBookUser } from "../../components/cards/cardBookUser"
 
 export function Home(){
-
+    
     return (
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden'>
 

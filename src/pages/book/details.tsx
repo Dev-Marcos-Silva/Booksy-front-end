@@ -1,6 +1,6 @@
 import { ArrowDownFromLine, Star, ArrowBigDownDash } from "lucide-react"
 import { Link, Navigate, Outlet, useParams } from "react-router-dom"
-import imagenBook from "../../assets/img/book.webp"
+import imageBook from "../../assets/img/book.webp"
 import imageLibrary from "../../assets/img/logo.webp"
 import { ButtonMark } from "../../components/buttons/buttonMark"
 import { ItemBook } from "../../components/lists/itemBook"
@@ -90,7 +90,7 @@ export function Details(){
                 <main className="overflow-y-scroll h-full" >
                     <section className="flex mt-4 mx-10 gap-6">
                         <div className="relative">
-                            <img className="w-88 h-full object-cover rounded-md" src={dataBook.image? `${api.defaults.baseURL}/upload/book/${dataBook.image}`: imagenBook} alt={`Imagem do livro ${dataBook.title}`}/>
+                            <img className="w-88 h-full object-cover rounded-md" src={dataBook.image? `${api.defaults.baseURL}/upload/book/${dataBook.image}`: imageBook} alt={`Imagem do livro ${dataBook.title}`}/>
                             {
                                 account?.type === "USER" &&
                                 <div className="absolute flex justify-end items-start p-4 w-full h-full top-0 opacity-0 hover:opacity-100 duration-500">
@@ -157,7 +157,7 @@ export function Details(){
                                         </form>
                                         : 
                                         <div className="flex w-full justify-end">
-                                            <ButtonCard text="Editar" link="/library/update" size="" />
+                                            <ButtonCard text="Editar" link={`/library/update/${param.id}`} size="" />
                                         </div>
                                     }
                                 </div>

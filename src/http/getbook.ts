@@ -8,6 +8,7 @@ export interface getBooksTypeRequest{
 export interface getBooksTypeResponse{
     author: string
     title: string
+    isbn: string
     image: string
     description: string
     dimensions: string

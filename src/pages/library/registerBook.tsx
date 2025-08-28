@@ -17,10 +17,10 @@ const schemaForm = z.object({
     author: z.string().min(3),
     title: z.string().min(3),
     description: z.string().min(1),
-    category: z.string(),
-    edition: z.string(),
-    finishing: z.string(),
-    year_publi: z.string(),
+    category: z.string().min(1),
+    edition: z.string().min(1),
+    finishing: z.string().min(1),
+    year_publi: z.string().min(1),
     isbn: z.string().min(13),
     dimensions: z.string().min(8),
     page: z.string().min(1),           
@@ -63,7 +63,6 @@ export function RegisterBook(){
         setValueCheckBox(!valueCheckBox)
     }
 
-
     async function formBookPost(data: SchemaForm){
 
         if(imageState === null){
@@ -76,7 +75,6 @@ export function RegisterBook(){
 
         const availability = valueCheckBox? "available": "unavailable"
 
-        
         const dataBook = {
             libraryId: account.id, 
             token: account.token, 
@@ -126,20 +124,20 @@ export function RegisterBook(){
 
                         <div className="bg-font-500 flex-2/3 px-8 py-3 w-full flex flex-col gap-3  border-1 border-font-200 rounded-lg" >
     
-                            <InputText {...register("author")} isBook widthDiv="w-full" type="text"  placeholder="Digite o nome do autor(a)" label="Autor(a) do livro"/>
+                            <InputText {...register("author")} isBook widthDiv="w-full" type="text" placeholder="Digite o nome do autor(a)" label="Autor(a) do livro"/>
 
-                            <InputText {...register("title")} isBook widthDiv="w-full" type="text"  placeholder="Digite o título do livro" label="Título do livro"/>
+                            <InputText {...register("title")} isBook widthDiv="w-full" type="text" placeholder="Digite o título do livro" label="Título do livro"/>
 
                             <TextArea {...register("description")} placeholder="Digite a descrição" label="Descrição, Resumo ou Sinopse"/>
 
                             <div className="flex gap-4 justify-center">
-                                <InputText {...register("page")} isBook widthDiv="w-full" type="number"  placeholder="000" label="Páginas"/>
-                                <InputText {...register("amount")} isBook widthDiv="w-full" type="number"  placeholder="000" label="Quantidade"/>
+                                <InputText {...register("page")} isBook widthDiv="w-full" type="number" placeholder="000" label="Páginas"/>
+                                <InputText {...register("amount")} isBook widthDiv="w-full" type="number" placeholder="000" label="Quantidade"/>
                             </div>
 
-                            <InputText {...register("isbn")} isBook widthDiv="w-full" type="text"  placeholder="0000000000000" label="ISBN"/>
+                            <InputText {...register("isbn")} isBook widthDiv="w-full" type="text" placeholder="0000000000000" label="ISBN"/>
 
-                            <InputText {...register("dimensions")} isBook widthDiv="w-full" type="text"  placeholder="00x00x00" label="Dimensões"/>
+                            <InputText {...register("dimensions")} isBook widthDiv="w-full" type="text" placeholder="00x00x00" label="Dimensões"/>
 
                             <div className="flex justify-between items-center mt-2">
                                 <div className="flex items-center gap-2" >

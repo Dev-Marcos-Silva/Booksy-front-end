@@ -33,7 +33,7 @@ export function CardBookLibrary({id, title, author, image}: BookType){
 
             <div className="bg-font-500 w-full h-1/5 py-2 px-4 border-t-1 border-but-200 flex justify-between items-center">
                 <ButtonCard text="Ver mais" link={`/library/book/${id}`} size="text-sm"/>
-                <ButtonCard text="Editar" link="/library/update" size="text-sm"/>
+                <ButtonCard text="Editar" link={`/library/update/${id}`} size="text-sm"/>
             </div>       
         </div>
     )

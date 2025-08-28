@@ -29,7 +29,7 @@ export function RouterLibrary () {
             <Route path="/finished" element={<FinishedBooks/>}  />
             <Route path="/unfinished" element={<UnfinishedBook/>}  />
             <Route path="/profile" element={<LibraryProfile/>}  />
-            <Route path="/update" element={<UpdateBook/>}  />
+            <Route path="/update/:id" element={<UpdateBook/>}  />
             </Route>
 
             <Route path="/book" element={<Layout/>} >
