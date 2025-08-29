@@ -24,7 +24,7 @@ export interface getBooksTypeResponse{
 
 export async function getBook({bookId, token} : getBooksTypeRequest): Promise<getBooksTypeResponse> {
 
-    const { data } = await api.get<getBooksTypeResponse>(`/book/${bookId}`, {headers: {Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data",}})
+    const { data } = await api.get<getBooksTypeResponse>(`/book/${bookId}`, {headers: {Authorization: `Bearer ${token}`}})
 
     return data
 } 

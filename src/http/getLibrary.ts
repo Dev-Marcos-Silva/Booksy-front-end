@@ -19,7 +19,7 @@ export interface getLibraryTypeResponse{
 
 export async function getLibrary({libraryId, token} : getLibraryTypeRequest): Promise<getLibraryTypeResponse> {
 
-    const { data } = await api.get<getLibraryTypeResponse>(`/library/profile/${libraryId}`, {headers: {Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data",}})
+    const { data } = await api.get<getLibraryTypeResponse>(`/library/profile/${libraryId}`, {headers: {Authorization: `Bearer ${token}`}})
 
     return data
 } 

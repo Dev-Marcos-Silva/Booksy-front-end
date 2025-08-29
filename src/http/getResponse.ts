@@ -15,7 +15,7 @@ export interface getResponseTypeResponse{
 
 export async function getResponse({commentId, token} : getResponseTypeRequest): Promise<getResponseTypeResponse | null> {
 
-    const { data } = await api.get<getResponseTypeResponse | null>(`/library/response/${commentId}`, {headers: {Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data",}})
+    const { data } = await api.get<getResponseTypeResponse | null>(`/library/response/${commentId}`, {headers: {Authorization: `Bearer ${token}`}})
 
     return data
 } 

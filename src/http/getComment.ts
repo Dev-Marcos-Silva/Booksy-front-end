@@ -15,7 +15,7 @@ export interface getCommentTypeResponse{
 
 export async function getComment({bookId, token} : getCommentTypeRequest): Promise<getCommentTypeResponse[] | null > {
 
-    const { data } = await api.get<{comments: getCommentTypeResponse[] | null }>(`/comment/get/${bookId}`, {headers: {Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data",}})
+    const { data } = await api.get<{comments: getCommentTypeResponse[] | null }>(`/comment/get/${bookId}`, {headers: {Authorization: `Bearer ${token}`}})
 
     return data.comments
 } 

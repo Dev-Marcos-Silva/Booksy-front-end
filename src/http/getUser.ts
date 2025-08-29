@@ -19,7 +19,7 @@ export interface getUserTypeResponse{
 
 export async function getUser({userId, token} : getUserTypeRequest): Promise<getUserTypeResponse> {
 
-    const { data } = await api.get<getUserTypeResponse>(`/user/profile/${userId}`, {headers: {Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data",}})
+    const { data } = await api.get<getUserTypeResponse>(`/user/profile/${userId}`, {headers: {Authorization: `Bearer ${token}`}})
 
     return data
 } 
