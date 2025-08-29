@@ -2,6 +2,7 @@ import { api } from "../service/api";
 
 export interface putBookTypeRequest{
     bookId: string
+    libraryId: string
     author: string
     title: string
     description: string

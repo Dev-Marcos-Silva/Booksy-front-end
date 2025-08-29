@@ -12,7 +12,7 @@ interface BookType{
 export function CardBookLibrary({id, title, author, image}: BookType){
 
     return (
-        <div className="max-w-56 max-h-72 border-1 border-but-200 rounded-sm shadow-lg">
+        <div className="w-56 h-74 border-1 border-but-200 rounded-sm shadow-lg">
             
             <section  className="relative w-full h-4/5">
                 <img className="w-full h-full object-cover rounded-t-sm " src={image && `${api.defaults.baseURL}/upload/book/${image}`} alt={`capa do livro ${title}`}/>
@@ -20,11 +20,11 @@ export function CardBookLibrary({id, title, author, image}: BookType){
                 <div className="absolute h-full w-full top-0 flex flex-col justify-end opacity-0 hover:opacity-100 duration-500 rounded-sm" >
                     <section className="bg-font-500 h-26 flex flex-col justify-center px-2 gap-2">
                     <div className="flex flex-col gap-1">
-                        <abbr className="no-underline" title="Mockup Your Design Mockup Your Design Mockup Your Design">
+                        <abbr className="no-underline" title={capitalizeFirstLetter(title)}>
                             <h2 className="font-medium whitespace-nowrap overflow-hidden truncate">{capitalizeFirstLetter(title)}</h2>
                         </abbr>
         
-                        <p className="text-sm">Autor(a): {capitalizeFirstLetter(author)}</p>
+                        <p className="text-sm">Autor(a): {author.toUpperCase()}</p>
                     </div>
 
                     </section>

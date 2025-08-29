@@ -7,12 +7,14 @@ interface InputType extends React.TextareaHTMLAttributes<HTMLTextAreaElement>{
 
 export function TextArea({label, placeholder, ...props}: InputType){
     return (
-        <div className="flex flex-col gap-2 h-24 " >
-            <label className="text-font-100 text-xl" htmlFor={label}>{label}</label>
+        <details>
+            <summary className="text-font-100 text-lg cursor-pointer">{label}</summary>
 
-            <textarea {...props} className="bg-amber-50 w-full h-20 py-2 px-4 focus:outline-2 focus:outline-font-200 rounded-md text-sm" placeholder={placeholder} id={label}>
+            <div className="pt-4">
+                <textarea {...props} className="bg-amber-50 w-full h-32 py-2 px-4 focus:outline-2 focus:outline-font-200 rounded-md text-sm" placeholder={placeholder} id={label}>
 
-            </textarea>   
-        </div>
+                </textarea>   
+            </div>
+        </details>
     )
 }

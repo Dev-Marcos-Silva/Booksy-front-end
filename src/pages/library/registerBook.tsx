@@ -10,8 +10,9 @@ import { SmallButton } from "../../components/buttons/smallButton"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { authContex } from "../../hook/authContext"
-import z from "zod"
+import { useNavigate } from "react-router-dom"
 import image from "../../assets/img/book.webp"
+import z from "zod"
 
 const schemaForm = z.object({
     author: z.string().min(3),
@@ -37,6 +38,8 @@ export function RegisterBook(){
 
     const { account } = authContex()
 
+    const navigate = useNavigate()
+
     const [ valueCheckBox, setValueCheckBox ] = useState(false)
 
     const [ imageState, setImageState ] = useState<string | null >(null)
@@ -45,6 +48,7 @@ export function RegisterBook(){
         mutationFn: postBook,
         onSuccess: () => {
             alert("Livro registado com sucesso")
+            navigate("/library")
         },
         onError: () => {
             alert("Algo deu errado ao registar o livro! verifique o ISBN e tente novamente") 
@@ -65,12 +69,23 @@ export function RegisterBook(){
 
     async function formBookPost(data: SchemaForm){
 
+        const {category, edition, finishing, year_publi} = data
+
         if(imageState === null){
             return alert("Adicionar uma imagem da biblioteca")
         }
 
         if(!account?.id){
             return alert("Usuário não encontrado")
+        }
+
+        if(
+            category === "default" || 
+            edition === "default" || 
+            finishing === "default" || 
+            year_publi === "default")
+        {
+            return alert("Preencha corretamente para registrar o livro")
         }
 
         const availability = valueCheckBox? "available": "unavailable"
@@ -94,30 +109,30 @@ export function RegisterBook(){
                     <h1>Cadastrar livros</h1>
                 </div>
             </header>
-            <main className="flex items-center justify-center h-full w-full">
+            <main className="overflow-y-scroll flex items-center justify-center h-full w-full">
                 <section className="rounded-md w-full my-2 mx-18" >
                    <form onSubmit={handleSubmit(formBookPost)} className="flex gap-6">
                          <div className="flex-1/5 flex flex-col gap-2" > 
 
-                            <div className="relative h-60" >
+                            <div className="relative h-62" >
 
                                 <img className="border-1 h-full w-full border-font-200 rounded-lg object-cover" src={imageState? imageState: image} alt="" />
 
-                                <button className="absolute flex justify-center items-center bg-bg-primary w-10 h-10 top-50 right-0 rounded-lg border-1 border-but-200 " >
+                                <button className="absolute flex justify-center items-center bg-bg-primary w-10 h-10 top-52 right-0 rounded-lg border-1 border-but-200 " >
                                     <Camera color="#FA7248" size={32}/>
                                 </button>
                                 <input 
-                                    className="absolute w-10 h-10 pt-11 top-49 right-0 rounded-xl cursor-pointer" 
+                                    className="absolute w-10 h-10 pt-11 top-51 right-0 rounded-xl cursor-pointer" 
                                     type="file"
                                     onChange={e => handleImage(e.target.files) }
                                 />
                             </div>
                         
                             <div className="bg-font-500 p-6 py-6 border-1 border-font-200 rounded-lg flex flex-col gap-2" >
-                                <InputSelect {...register("category")} label="Categoria/Genero" options={categories} />
-                                <InputSelect {...register("edition")} label="Edição" options={edition} />
-                                <InputSelect {...register("year_publi")} label="Ano de publicação" options={yearOfPublication} />
-                                <InputSelect {...register("finishing")} label="Acabamento" options={finish} />
+                                <InputSelect valueDefault={null} {...register("category")} label="Categoria/Genero" options={categories} />
+                                <InputSelect valueDefault={null} {...register("edition")} label="Edição" options={edition} />
+                                <InputSelect valueDefault={null} {...register("year_publi")} label="Ano de publicação" options={yearOfPublication} />
+                                <InputSelect valueDefault={null} {...register("finishing")} label="Acabamento" options={finish} />
                             </div>
 
                         </div>

@@ -65,7 +65,7 @@ export function Details(){
                bookId: param.id!,
                token: account.token
         }),
-        enabled: !!dataBook?.library_id
+        enabled: !!dataBook?.library_id,
     })
 
     const star = dataAssessment?.map(assessment => {
@@ -90,7 +90,7 @@ export function Details(){
                 <main className="overflow-y-scroll h-full" >
                     <section className="flex mt-4 mx-10 gap-6">
                         <div className="relative">
-                            <img className="w-88 h-full object-cover rounded-md" src={dataBook.image? `${api.defaults.baseURL}/upload/book/${dataBook.image}`: imageBook} alt={`Imagem do livro ${dataBook.title}`}/>
+                            <img className="w-88 h-74 object-cover rounded-md" src={dataBook.image? `${api.defaults.baseURL}/upload/book/${dataBook.image}`: imageBook} alt={`Imagem do livro ${dataBook.title}`}/>
                             {
                                 account?.type === "USER" &&
                                 <div className="absolute flex justify-end items-start p-4 w-full h-full top-0 opacity-0 hover:opacity-100 duration-500">
@@ -131,12 +131,12 @@ export function Details(){
                             </div>
                             <aside className="bg-bg-300 py-2 px-6 flex w-full h-full justify-between rounded-md">
                                 <div className="flex flex-col justify-between gap-6 pb-4">
-                                    <h2 className="text-xl max-w-2xs">
+                                    <h2 className="text-xl max-w-full">
                                         {capitalizeFirstLetter(dataBook.title)}
                                     </h2>
                                     <span>
                                         <p className="text-lg">Autor(a)</p>
-                                        <p className="text-font-300">{capitalizeFirstLetter(dataBook.author)}</p>
+                                        <p className="text-font-300">{dataBook.author.toUpperCase()}</p>
                                     </span>
                                 </div>
                                 <div className="flex flex-col justify-between gap-6 pb-4">
