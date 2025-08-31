@@ -59,7 +59,7 @@ export function UpdateBook(){
     }
     
     const { data: dataBook, isLoading, error} = useQuery<getBooksTypeResponse>({
-        queryKey: ["keyGetBook", param.id],
+        queryKey: ["keyGetBookUpdate", param.id],
         queryFn: async () => 
             await getBook({
                bookId: param.id!,

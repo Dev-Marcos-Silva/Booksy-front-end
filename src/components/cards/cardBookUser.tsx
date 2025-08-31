@@ -9,9 +9,10 @@ interface BookType{
     title: string
     author: string
     image: string
+    star: number
 }
 
-export function CardBookUser({id, title, author, image}: BookType){
+export function CardBookUser({id, title, author, image, star}: BookType){
     return (
         <div className="relative w-52 h-66 border-1 border-font-200 rounded-sm shadow-lg">
 
@@ -30,7 +31,7 @@ export function CardBookUser({id, title, author, image}: BookType){
                         <p className="text-sm">Autor(a): {author.toUpperCase()}</p>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="flex gap-1 items-center font-medium"><Star color="#FCCA23" fill="#FCCA23" strokeWidth={0}/>4.7</span>
+                        <span className="flex gap-1 items-center font-medium"><Star color="#FCCA23" fill="#FCCA23" strokeWidth={0}/>{star.toFixed(1)}</span>
                         <ButtonCard text="Ver mais" link={`/user/book/${id}`} size="text-sm" />
                     </div>
                 </section>

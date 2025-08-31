@@ -32,7 +32,7 @@ export function Comments(){
     const userQueries = useQueries({
         queries: ((dataComments ?? []).map(comment =>
             ({
-                queryKey: ["keyGetUser", comment.user_id],
+                queryKey: ["keyGetUserComment", comment.user_id],
                 queryFn: async () => 
                     await getUser({
                         userId: comment.user_id,
@@ -50,7 +50,7 @@ export function Comments(){
     return(
         <section className="overflow-auto no-scrollbar max-h-100">
             <div>
-                {account?.type === "USER" && <ButtonComment/>}
+                {account?.type === "USER" && <ButtonComment bookId={param.id} />}
             </div>
 
             {

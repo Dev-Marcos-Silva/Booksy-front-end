@@ -3,5 +3,5 @@ export function numberOfStars(star: number[] | null | undefined ){
         return 0
     }
     
-    return star.reduce((total: number, value:number) =>  total + value ) / star.length
+    return star.reduce((total: number, value:number) => total + value ) / star.length
 }

@@ -3,8 +3,10 @@ import { SearchBook } from "../../components/ui/search"
 import { CardBookUser } from "../../components/cards/cardBookUser"
 import { authContex } from "../../hook/authContext"
 import { getCategoryBook, type getCategoryBooksTypeRequest, type getCategoryBooksTypeResponse } from "../../http/getCategoryBook"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueries } from "@tanstack/react-query"
 import { useState } from "react"
+import { getAssessment } from "../../http/getAssessment"
+import { numberOfStars } from "../../utils/numberOfStars"
 
 export function Home(){
 
@@ -60,6 +62,28 @@ export function Home(){
         })
     }
 
+    const getAllAssessments = useQueries({
+        queries: ((books ?? []).map(book => ({
+             queryKey: ["keyGetStarAllBook", book.id],
+                queryFn: async () => 
+                    await getAssessment({
+                        bookId: book.id!,
+                        token: account.token
+                })
+            })
+        ))
+    })
+
+    const averages = getAllAssessments.map(assessments => {
+        const { data: assessment } = assessments
+
+        const star = (assessment ?? []).map(star => {
+            return star.star
+        })
+
+        return numberOfStars(star)
+    })
+
     return (
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden'>
 
@@ -77,20 +101,25 @@ export function Home(){
                 <main className="overflow-y-scroll h-full " >
                     <section className="flex flex-wrap gap-x-5 gap-y-4 mx-1 my-4 pr-3 pl-6"> 
                         {
-                            books.map(book => {
+                            books.map((book, index) => {
                                 return(
                                     <CardBookUser 
                                         key={book.id}
                                         id={book.id}
                                         title={book.title}
                                         author={book.author}
-                                        image={book.image} 
+                                        image={book.image}
+                                        star={averages[index]} 
                                     />
                                 )
                             })
                         }           
                     </section>
                 </main>
+            }
+            {
+                !books && 
+                <p>Carregando...</p>
             }
 
         </section>

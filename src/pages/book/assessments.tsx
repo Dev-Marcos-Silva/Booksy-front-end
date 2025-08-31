@@ -21,7 +21,7 @@ export function Assessments(){
     }
 
     const { data: dataAssessment, isLoading, error} = useQuery<getAssessmentTypeResponse[] | null>({
-        queryKey: ["keyGetStar", param.id],
+        queryKey: ["keyGetStarAssessment", param.id],
         queryFn: async () => 
             await getAssessment({
                bookId: param.id!,
@@ -30,9 +30,8 @@ export function Assessments(){
     })
 
     const userQueries = useQueries({
-        queries: ((dataAssessment ?? []).map(assessment =>
-            ({
-                queryKey: ["keyGetUser", assessment.user_id],
+        queries: ((dataAssessment ?? []).map(assessment =>({
+                queryKey: ["keyGetUserAssessment", assessment.user_id],
                 queryFn: async () => 
                     await getUser({
                         userId: assessment.user_id,
@@ -40,8 +39,8 @@ export function Assessments(){
                 }),
                 enabled: !!assessment.user_id
             })
-        )
-    )})
+        ))
+    })
 
     if(error){
         alert("Error ao buscar avaliações...")
@@ -50,7 +49,7 @@ export function Assessments(){
     return(
         <section className="overflow-auto no-scrollbar max-h-100">
             <div> 
-               { account?.type === "USER" && <ButtonRating/>}
+               { account?.type === "USER" && <ButtonRating bookId={param.id} />}
             </div>
 
             {

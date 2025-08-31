@@ -14,14 +14,7 @@ export function Favorites(){
             <main className="overflow-y-scroll h-full" >
                 <section className="flex flex-wrap gap-x-6 gap-y-5 mx-2 my-4 px-6" >
 
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
-                    <CardBookUser />
+                  
                    
                 </section>
             </main>

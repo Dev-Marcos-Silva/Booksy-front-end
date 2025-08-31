@@ -1,15 +1,53 @@
+import { postAssessment, type postAssessmentTypeRequest } from "../../http/postAssessment"
 import { ChevronRight, Star } from "lucide-react"
 import { useState } from "react"
+import { useMutation } from "@tanstack/react-query"
+import { authContex } from "../../hook/authContext"
+
+interface ButtonType extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    bookId: string | undefined | null
+}
 
 const ratingStar = [1,2,3,4,5]
 
-export function ButtonRating(){
+export function ButtonRating({bookId}: ButtonType){  
+
     const [ index, setIndex ] = useState(0)
     const [ text, setText ] = useState(0)
+
+    const { account } = authContex()
+
+    const assessment = useMutation<void, Error, postAssessmentTypeRequest>({
+        mutationFn: postAssessment,
+        onSuccess: () => {
+            alert("Avaliação registrada com sucesso")
+        },
+        onError: () => {
+            alert("Error ao registrar avaliação")
+        }
+    })
 
     function handleStar(star: number){
         setIndex(star)
         setText(star)
+    }
+
+    async function assessmentPost( star : number ){
+
+        if(!account){
+            return 
+        }
+
+        if(!bookId){
+            return
+        }
+
+        assessment.mutate({
+            bookId,
+            userId: account.id,
+            star,
+            token: account.token
+        })
     }
 
     return(
@@ -29,7 +67,11 @@ export function ButtonRating(){
                     )
                 })}
 
-                <button type="button" className="bg-font-400 rounded-xl p-0.5 font-medium cursor-pointer hover:text-font-300 ml-4" >
+                <button 
+                    className="bg-font-400 rounded-xl p-0.5 font-medium cursor-pointer hover:text-font-300 ml-4"
+                    type="button"
+                    onClick={() => assessmentPost(index)} 
+                >
                     <ChevronRight/>
                 </button> 
             </div>
