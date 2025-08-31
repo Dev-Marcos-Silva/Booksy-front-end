@@ -10,4 +10,5 @@ export interface postCommentTypeRequest{
 export async function postComment({userId, bookId, text, token}: postCommentTypeRequest) {
 
    await api.post('/comment/register', {userId, bookId, text}, {headers: {Authorization: `Bearer ${token}`}})
+   
 } 

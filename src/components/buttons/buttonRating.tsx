@@ -17,13 +17,18 @@ export function ButtonRating({bookId}: ButtonType){
 
     const { account } = authContex()
 
-    const assessment = useMutation<void, Error, postAssessmentTypeRequest>({
+    const assessment = useMutation<number, Error, postAssessmentTypeRequest>({
         mutationFn: postAssessment,
-        onSuccess: () => {
+        onSuccess: (data) => {
+            
+            if(data === 208){
+                return alert("Avaliação já foi registrada")
+            }
+
             alert("Avaliação registrada com sucesso")
         },
-        onError: () => {
-            alert("Error ao registrar avaliação")
+        onError: (data) => {
+            alert(`Error ao registrar avaliação: ${data}`)
         }
     })
 

@@ -9,5 +9,7 @@ export interface postAssessmentTypeRequest{
 
 export async function postAssessment({userId, bookId, star, token}: postAssessmentTypeRequest) {
 
-   await api.post('/assessment/register', {userId, bookId, star}, {headers: {Authorization: `Bearer ${token}`}})
+   const {status} = await api.post('/assessment/register', {userId, bookId, star}, {headers: {Authorization: `Bearer ${token}`}})
+
+   return status
 } 

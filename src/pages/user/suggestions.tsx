@@ -1,7 +1,34 @@
+import { getRatedsBook, type getRatedsBookTypeResponse } from "../../http/getRatedsBook"
+import { getRecentsBook, type getRecentsBookTypeResponse } from "../../http/getRecentsBook"
 import { Lightbulb, ArrowUpNarrowWide, SquarePlus } from "lucide-react"
 import { Suggestion } from "../../components/lists/suggestion"
+import { useQuery } from "@tanstack/react-query"
+import { authContex } from "../../hook/authContext"
 
 export function Suggestions(){
+
+    const { account } = authContex()
+
+    if(!account){
+        return
+    }
+
+    const { data: recentsBooks } = useQuery<getRecentsBookTypeResponse[]>({
+        queryKey: ["keyGetRecentsBook", account.id],
+        queryFn: async () => 
+            await getRecentsBook({
+                token: account.token
+        }),
+    })
+
+    const { data: ratedsBooks } = useQuery<getRatedsBookTypeResponse[]>({
+        queryKey: ["keyGetRatedsBook", account.id],
+        queryFn: async () => 
+            await getRatedsBook({
+                token: account.token
+        }),
+    })
+
 
     return(
         <section className='bg-bg-primary h-full flex flex-col overflow-hidden' >
@@ -19,17 +46,25 @@ export function Suggestions(){
                             <h1 className="text-xl py-2">Mais bem avaliado</h1>
                             <ArrowUpNarrowWide size={20} />
                         </span>
-                        <Suggestion/>
-
+                        {
+                            ratedsBooks && 
+                                <Suggestion
+                                    suggetionBook={ratedsBooks}
+                                />
+                        }
                     </div>
                     <div>
 
                         <span className="flex gap-2 items-center">
                             <h1 className="text-xl py-2">Recém adicionado</h1>
                             <SquarePlus size={20} />
-                        </span>      
-                       <Suggestion/>
-
+                        </span> 
+                        {
+                            recentsBooks && 
+                                <Suggestion
+                                    suggetionBook={recentsBooks}
+                                />
+                        }     
                     </div>
                 </section>
             </main>

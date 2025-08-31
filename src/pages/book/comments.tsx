@@ -32,7 +32,7 @@ export function Comments(){
     const userQueries = useQueries({
         queries: ((dataComments ?? []).map(comment =>
             ({
-                queryKey: ["keyGetUserComment", comment.user_id],
+                queryKey: ["keyGetUserComment", comment.created_at],
                 queryFn: async () => 
                     await getUser({
                         userId: comment.user_id,

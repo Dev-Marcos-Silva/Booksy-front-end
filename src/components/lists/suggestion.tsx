@@ -3,10 +3,27 @@ import { useKeenSlider } from 'keen-slider/react'
 import { ChevronLeft } from 'lucide-react'
 import { ChevronRight } from 'lucide-react'
 import { CardBookUser } from '../cards/cardBookUser'
+import { numberOfStars } from '../../utils/numberOfStars'
 
-const arrow = [1,2,3,4,5,6,7,8,9,10]
+type bookWithStar = {
+    id: string
+    title: string
+    author: string
+    image: string | null
+    stars: {
+        id: number
+        created_at: string
+        star: number
+        book_id: string
+        user_id: string
+    }[]
+}
 
-export function Suggestion(){
+interface SuggestionType{
+    suggetionBook: bookWithStar[]
+}
+
+export function Suggestion({ suggetionBook }: SuggestionType){
 
     const [ sliderRef, slider ] = useKeenSlider<HTMLDivElement>({
         loop: true,
@@ -19,7 +36,15 @@ export function Suggestion(){
     const handlePrev = () => slider.current?.prev()
     const handleNext = () => slider.current?.next()
 
+    const averages = suggetionBook.map(book => {
+        const { stars } = book
 
+        const star = stars.map(star => {
+            return star.star
+        })
+        return numberOfStars(star)
+    })
+    
     return(
         <div className='max-w-full flex justify-center relative' >
 
@@ -33,10 +58,17 @@ export function Suggestion(){
             <div ref={sliderRef} className="keen-slider" >
 
                 {
-                    arrow.map((item) =>{
+                    suggetionBook.map((book, index) =>{
                         return(
-                            <div className="keen-slider__slide" >
-                                <CardBookUser  key={item} />
+                            <div key={book.id} className="keen-slider__slide" >
+                                <CardBookUser  
+                                    key={book.id}
+                                    id={book.id}
+                                    title={book.title}
+                                    author={book.author}
+                                    image={book.image!}
+                                    star={averages[index]}
+                                />
                             </div>
                         )
                     })
