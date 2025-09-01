@@ -6,7 +6,7 @@ export function CardHistory(){
     return (
         <div className="flex w-76 h-44 border-1 m-1 border-font-200 rounded-sm">
 
-            <img className="max-w-30 h-full object-cover rounded-sm " src={image} alt=""/>
+            <img className="max-w-30 h-full object-cover" src={image} alt=""/>
 
             <div className="relative pt-8 px-2 w-46 h-full bg-font-500 flex flex-col gap-2">
                 <button className="absolute cursor-pointer right-2 top-2 " >

@@ -49,9 +49,9 @@ export function Comment({commentId, image, name, comment, date, isLibrary}: Comm
     })
 
     return (
-        <section className="mt-6 flex gap-2" >
+        <section className="w-full mt-6 flex gap-2" >
             <img className="max-w-12 max-h-12 rounded-full object-cover" src={image? `${api.defaults.baseURL}/upload/profile/${image}`: imageUser} alt={`Imagem do usuário ${name}`} />
-            <div>
+            <div className="w-full" > 
                 <div>
                     <span className="font-medium text-black">{name} </span>
                         <p className="text-sm text-justify text-font-300" >
@@ -62,7 +62,7 @@ export function Comment({commentId, image, name, comment, date, isLibrary}: Comm
                 <details className="mt-2" >
                      <summary className="text-sm text-font-300 cursor-pointer">Ver resposta</summary>
 
-                     <div className="mt-2 flex gap-2 flex-col ">
+                     <div className="w-full mt-2 flex gap-2 flex-col ">
                         {
                             isLibrary && dataResponse?.response === undefined ?
                                 <div className="flex pr-2 items-center mb-4 gap-2" >              

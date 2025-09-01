@@ -40,7 +40,7 @@ export function Suggestions(){
                 
             </header>
             <main className="h-full" >
-                <section className="h-full flex flex-col justify-center mx-2 px-6 pb-4" >
+                <section className="h-full flex flex-col justify-evenly mx-2 px-6 pb-4" >
                     <div>
                         <span className="flex gap-2 items-center">
                             <h1 className="text-xl py-2">Mais bem avaliado</h1>

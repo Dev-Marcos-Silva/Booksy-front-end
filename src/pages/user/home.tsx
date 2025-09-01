@@ -1,11 +1,11 @@
+import { getCategoryBook, type getCategoryBooksTypeRequest, type getCategoryBooksTypeResponse } from "../../http/getCategoryBook"
+import { getSearchBook, type getSearchBooksTypeRequest, type getSearchBooksTypeResponse } from "../../http/getSearchBook"
 import { Carousel } from "../../components/lists/carousel"
 import { SearchBook } from "../../components/ui/search"
 import { CardBookUser } from "../../components/cards/cardBookUser"
 import { authContex } from "../../hook/authContext"
-import { getCategoryBook, type getCategoryBooksTypeRequest, type getCategoryBooksTypeResponse } from "../../http/getCategoryBook"
-import { useMutation, useQueries } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
-import { getAssessment } from "../../http/getAssessment"
 import { numberOfStars } from "../../utils/numberOfStars"
 
 export function Home(){
@@ -16,71 +16,62 @@ export function Home(){
         return
     }
 
-    const [ books, setBooks ] = useState<getCategoryBooksTypeResponse[] | null >(null)
+    const [books, setBooks] = useState<getCategoryBooksTypeResponse[] | []>([])
 
     const category = useMutation<getCategoryBooksTypeResponse[], Error, getCategoryBooksTypeRequest>({
-        mutationFn: getCategoryBook,
-        onSuccess: (data) => { 
-            setBooks(data) 
+        mutationFn: ({category, token}) => {
+            return getCategoryBook({
+                category,
+                token
+            })
+        },
+        onSuccess: (data) => {
+            setBooks(data)
         },
         onError: () => {
-            alert("Algo deu errado ao buscar livros! tente novamente")  
+            alert("Error ao buscar os livros")
         }
     })
 
-    const search = useMutation<getCategoryBooksTypeResponse[], Error, getCategoryBooksTypeRequest>({
-        mutationFn: getCategoryBook,
-        onSuccess: (data) => { 
-            console.log(data)   
+    const search = useMutation<getSearchBooksTypeResponse[], Error, getSearchBooksTypeRequest>({
+        mutationFn: ({query, token}) => {
+            return getSearchBook({
+                query,
+                token
+            })
+        },
+        onSuccess: (data) => {
+            console.log(data)
+            setBooks(data)
         },
         onError: () => {
-            alert("Algo deu errado ao buscar livros! tente novamente")  
+            alert("Error ao buscar os livros")
         }
     })
 
     function handleValueCarousel(value: string){
 
-        if(!account){
-            return
-        }
-
         category.mutate({
             category: value,
-            token: account.token
+            token: account?.token!
         })
     }
 
     function handleValueSearchBook(value: string){
 
-        if(!account){
-            return
-        }
-        
         search.mutate({
-            category: value,
-            token: account.token
+            query: value,
+            token: account?.token!
         })
+         
     }
 
-    const getAllAssessments = useQueries({
-        queries: ((books ?? []).map(book => ({
-             queryKey: ["keyGetStarAllBook", book.id],
-                queryFn: async () => 
-                    await getAssessment({
-                        bookId: book.id!,
-                        token: account.token
-                })
-            })
-        ))
-    })
+    const averages = (books?? []).map(book => {
+        const { stars } = book
 
-    const averages = getAllAssessments.map(assessments => {
-        const { data: assessment } = assessments
-
-        const star = (assessment ?? []).map(star => {
+        const star = stars.map(star => {
             return star.star
         })
-
         return numberOfStars(star)
     })
 
@@ -97,7 +88,7 @@ export function Home(){
             </search>
 
             {
-              books && 
+               books && books.length > 0 && 
                 <main className="overflow-y-scroll h-full " >
                     <section className="flex flex-wrap gap-x-5 gap-y-4 mx-1 my-4 pr-3 pl-6"> 
                         {
@@ -108,18 +99,21 @@ export function Home(){
                                         id={book.id}
                                         title={book.title}
                                         author={book.author}
-                                        image={book.image}
+                                        image={book.image!}
                                         star={averages[index]} 
                                     />
                                 )
                             })
                         }           
                     </section>
+                    
                 </main>
             }
             {
-                !books && 
-                <p>Carregando...</p>
+                books?.length < 1 &&
+                    <div className="w-full h-full flex justify-center items-center">
+                        <p className="text-3xl text-font-400 font-secund italic">Pesquisa...</p>
+                    </div>
             }
 
         </section>
