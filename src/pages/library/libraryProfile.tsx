@@ -1,3 +1,6 @@
+import { putLibraryImage, type putLibraryImageTypeRequest } from "../../http/putLibraryImage"
+import { getLibrary, type getLibraryTypeResponse } from "../../http/getLibrary"
+import { putLibrary, type putLibraryTypeRequest } from "../../http/putLibrary"
 import { Camera, PencilLine } from "lucide-react"
 import { InputText } from "../../components/inputs/inputText"
 import { InputPassword } from "../../components/inputs/inputPassword"
@@ -9,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { api } from "../../service/api"
 import z from "zod"
 import image from "../../assets/img/house.webp"
+import { useMutation, useQuery } from "@tanstack/react-query"
 
 const schemaForm = z.object({
     name: z.string(),
@@ -34,7 +38,24 @@ export function LibraryProfile(){
 
     const { account } = authContex()
 
-    const avatar = account?.image? `${api.defaults.baseURL}/upload/library/${account.image}` : image
+    if(!account){
+        return
+    }
+
+    const { data: library, error } = useQuery<getLibraryTypeResponse>({
+        queryKey: [ "keyGetLibrary", account.id ],
+        queryFn: async () => 
+            await getLibrary({
+                libraryId: account.id,
+                token: account.token
+        })
+    })
+
+    if(error){
+        return
+    }
+
+    const avatar = account.image? `${api.defaults.baseURL}/upload/library/${account.image}` : image
 
     const [ imageState, setImageState ] = useState<string>(avatar)
 
@@ -46,8 +67,45 @@ export function LibraryProfile(){
         }
     }
 
+    const libraryUpdate = useMutation<void, Error, putLibraryTypeRequest>({
+        mutationFn: putLibrary,
+        onSuccess: () => {
+            alert("Informações atualizada com sucesso")
+        },
+        onError: () => {
+            alert("Algo deu errado ao atualizar as informações!") 
+        },
+    })
+
+    const libraryImage = useMutation<void, Error, putLibraryImageTypeRequest>({
+        mutationFn: putLibraryImage,
+        onSuccess: () => {
+            alert("Imagem atualizada com sucessso")
+        },
+        onError: () => {
+            alert("Algo deu errado ao atualizar a imagem!") 
+        }
+    })
+
     async function formLibraryPut(data: SchemaForm){
-        console.log(data, imageState)  
+
+        if(!account){
+            return
+        }
+        
+        libraryUpdate.mutate({
+            libraryId: account.id,
+            token: account.token,
+            ...data
+        })
+
+        if(imageState.includes("blob")){
+            libraryImage.mutate({
+                libraryId: account.id,
+                token: account.token,
+                image: imageState
+            })
+        }
     }
 
     return(
@@ -75,8 +133,8 @@ export function LibraryProfile(){
                                 />
                             </div>
 
-                            <InputText {...register('name')} isBook={false} widthDiv="w-full" type="text" placeholder="Digite o nome da biblioteca" label="Nome da biblioteca"/>
-                            <InputText {...register('email')} isBook={false} widthDiv="w-full" type="email" placeholder="Digite o email da biblioteca" label="Novo email"/>
+                            <InputText defaultValue={library?.name} {...register('name')} isBook={false} widthDiv="w-full" type="text" placeholder="Digite o nome da biblioteca" label="Nome da biblioteca"/>
+                            <InputText defaultValue={library?.email} {...register('email')} isBook={false} widthDiv="w-full" type="email" placeholder="Digite o email da biblioteca" label="Novo email"/>
                             <InputPassword {...register('newPassword')} widthDiv="w-full" isTrue placeholder="Digite a nova senha" label="Nova senha"/>
                             <InputPassword {...register('oldPassword')} widthDiv="w-full" isTrue={false} placeholder="Digite a antiga senha" label="Antiga senha"/>
 
@@ -84,20 +142,20 @@ export function LibraryProfile(){
 
                         <div className="flex-1/2 px-8 py-6 w-full flex flex-col gap-3" >
                              <div className="flex gap-4 justify-center">
-                                <InputText {...register('ddd')} isBook={false} widthDiv="max-w-26" type="number"  placeholder="00" label="DDD"/>
-                                <InputText {...register('phone')} isBook={false} widthDiv="w-full" type="number"  placeholder="000000000" label="Telefone de contato"/>
+                                <InputText defaultValue={library?.ddd} {...register('ddd')} isBook={false} widthDiv="max-w-26" type="number"  placeholder="00" label="DDD"/>
+                                <InputText defaultValue={library?.phone} {...register('phone')} isBook={false} widthDiv="w-full" type="number"  placeholder="000000000" label="Telefone de contato"/>
                             </div>
 
-                            <InputText {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000-000" label="CEP"/>
+                            <InputText defaultValue={library?.cep} {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000-000" label="CEP"/>
 
                             <div className="flex gap-4 justify-center" >
-                                <InputText {...register('street')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome da rua" label="Nome da rua"/>
-                                <InputText {...register('number')} isBook={false} widthDiv="" type="text"  placeholder="000" label="Número"/>  
+                                <InputText defaultValue={library?.street} {...register('street')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome da rua" label="Nome da rua"/>
+                                <InputText defaultValue={library?.number} {...register('number')} isBook={false} widthDiv="" type="text"  placeholder="000" label="Número"/>  
                             </div>
 
                              <div className="flex gap-4 justify-center" >
-                                <InputText {...register('neighborhood')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome do Bairro" label="Bairro"/>
-                                <InputText {...register('city')} isBook={false} widthDiv="w-full" type="text"  placeholder="Cidade" label="Cidade"/>  
+                                <InputText defaultValue={library?.neighborhood} {...register('neighborhood')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome do Bairro" label="Bairro"/>
+                                <InputText defaultValue={library?.city} {...register('city')} isBook={false} widthDiv="w-full" type="text"  placeholder="Cidade" label="Cidade"/>  
                             </div>
 
                             <BigButton 

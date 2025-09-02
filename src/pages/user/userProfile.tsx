@@ -1,3 +1,6 @@
+import { putUserImage, type putUserImageTypeRequest } from "../../http/putUserImage"
+import { getUser, type getUserTypeResponse } from "../../http/getUser"
+import { putUser, type putUserTypeRequest } from "../../http/putUser"
 import { PencilLine, Camera } from "lucide-react"
 import { InputText } from "../../components/inputs/inputText"
 import { InputPassword } from "../../components/inputs/inputPassword"
@@ -9,6 +12,7 @@ import { useState } from "react"
 import { api } from "../../service/api"
 import z from "zod"
 import image from '../../assets/img/profile.webp'
+import { useMutation, useQuery } from "@tanstack/react-query"
 
 const schemaForm = z.object({
     name: z.string(),
@@ -34,7 +38,24 @@ export function UserProfile(){
 
     const { account } = authContex()
 
-    const avatar = account?.image? `${api.defaults.baseURL}/upload/profile/${account.image}` : image
+    if(!account){
+        return
+    }
+
+    const { data: user, error } = useQuery<getUserTypeResponse>({
+        queryKey: [ "keyGetUser", account.id ],
+        queryFn: async () => 
+            await getUser({
+                userId: account.id,
+                token: account.token
+        })
+    })
+
+    if(error){
+        return
+    }
+
+    const avatar = account.image? `${api.defaults.baseURL}/upload/profile/${account.image}` : image
 
     const [ imageState, setImageState ] = useState<string>(avatar)
  
@@ -45,9 +66,48 @@ export function UserProfile(){
             setImageState(URL.createObjectURL(fileImage))
         }
     }
+
+    const userUpdate = useMutation<void, Error, putUserTypeRequest>({
+        mutationFn: putUser,
+        onSuccess: () => {
+            alert("Informações atualizada com sucesso")
+        },
+        onError: () => {
+            alert("Algo deu errado ao atualizar as informações!") 
+        },
+    })
+
+    const userImage = useMutation<void, Error, putUserImageTypeRequest>({
+        mutationFn: putUserImage,
+        onSuccess: () => {
+            alert("Imagem atualizada com sucessso")
+        },
+        onError: () => {
+            alert("Algo deu errado ao atualizar a imagem!") 
+        }
+    })
  
     async function formUserPut(data: SchemaForm){
-        console.log(data, imageState)  
+
+        if(!account){
+            return
+        }
+ 
+        console.log(data) 
+        
+        userUpdate.mutate({
+            userId: account.id,
+            token: account.token,
+            ...data
+        })
+
+        if(imageState.includes("blob")){
+            userImage.mutate({
+                image: imageState,
+                userId: account.id,
+                token: account.token
+            })
+        }
     }
     
     return(
@@ -76,8 +136,8 @@ export function UserProfile(){
                                 />
                             </div>
                            
-                            <InputText {...register('name')} isBook={false} widthDiv="w-full" className="inline" type="text" placeholder="Digite seu nome" label="Nome de usuário"/>
-                            <InputText {...register('email')} isBook={false} widthDiv="w-full" className="inline" type="email" placeholder="Digite seu email" label="Novo email"/>
+                            <InputText defaultValue={user?.name} {...register('name')} isBook={false} widthDiv="w-full" className="inline" type="text" placeholder="Digite seu nome" label="Nome de usuário"/>
+                            <InputText defaultValue={user?.email} {...register('email')} isBook={false} widthDiv="w-full" className="inline" type="email" placeholder="Digite seu email" label="Novo email"/>
                             <InputPassword {...register('newPassword')} widthDiv="w-full" className="inline" isTrue placeholder="Digite a nova senha" label="Nova senha"/>
                             <InputPassword {...register('oldPassword')} widthDiv="w-full" className="inline" isTrue={false} placeholder="Digite a antiga senha" label="Antiga senha"/>
 
@@ -85,20 +145,20 @@ export function UserProfile(){
 
                         <div className="flex-1/2 px-8 py-6 gap-3 flex flex-col" >
                             <div className="flex gap-4 justify-center">
-                                <InputText {...register('ddd')} isBook={false} widthDiv="max-w-26" type="number" className="" placeholder="00" label="DDD"/>
-                                <InputText {...register('phone')} isBook={false} widthDiv="w-full" type="number"  placeholder="000000000" label="Telefone de contato"/>
+                                <InputText defaultValue={user?.ddd} {...register('ddd')} isBook={false} widthDiv="max-w-26" type="number" className="" placeholder="00" label="DDD"/>
+                                <InputText defaultValue={user?.phone} {...register('phone')} isBook={false} widthDiv="w-full" type="number"  placeholder="000000000" label="Telefone de contato"/>
                             </div>
 
-                            <InputText {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000-000" label="CEP"/>
+                            <InputText defaultValue={user?.cep} {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000-000" label="CEP"/>
 
                             <div className="flex gap-4 justify-center" >
-                                <InputText {...register('street')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome da rua" label="Nome da rua"/>
-                                <InputText {...register('number')} isBook={false} widthDiv="" type="text"  placeholder="000" label="Número"/>
+                                <InputText defaultValue={user?.street} {...register('street')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome da rua" label="Nome da rua"/>
+                                <InputText defaultValue={user?.number} {...register('number')} isBook={false} widthDiv="" type="text"  placeholder="000" label="Número"/>
                             </div>
 
                             <div className="flex gap-4 justify-center" >
-                                <InputText {...register('neighborhood')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome do Bairro" label="Bairro"/>
-                                <InputText {...register('city')} isBook={false} widthDiv="w-full" type="text"  placeholder="Cidade" label="Cidade"/>  
+                                <InputText defaultValue={user?.neighborhood} {...register('neighborhood')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome do Bairro" label="Bairro"/>
+                                <InputText defaultValue={user?.city} {...register('city')} isBook={false} widthDiv="w-full" type="text"  placeholder="Cidade" label="Cidade"/>  
                             </div>
 
                             <BigButton  

@@ -1,78 +1,117 @@
+import { postRentedBook, type PostRentedBookTypeRequest } from "../../http/postRentedBook"
+import { getLibrary, type getLibraryTypeResponse } from "../../http/getLibrary"
+import { getBook, type getBooksTypeResponse } from "../../http/getbook"
 import { ArrowDownFromLine, Star, ArrowBigDownDash } from "lucide-react"
-import { Link, Navigate, Outlet, useParams } from "react-router-dom"
-import imageBook from "../../assets/img/book.webp"
-import imageLibrary from "../../assets/img/logo.webp"
+import { Link, Navigate, Outlet, useNavigate, useParams } from "react-router-dom"
 import { ButtonMark } from "../../components/buttons/buttonMark"
 import { ItemBook } from "../../components/lists/itemBook"
 import { ButtonCard } from "../../components/buttons/buttonCard"
 import { authContex } from "../../hook/authContext"
-import { useQuery } from "@tanstack/react-query"
-import { getBook, type getBooksTypeResponse } from "../../http/getbook"
-import { getLibrary, type getLibraryTypeResponse } from "../../http/getLibrary"
-import { getAssessment, type getAssessmentTypeResponse } from "../../http/getAssessment"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { api } from "../../service/api"
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter"
 import { numberOfStars } from "../../utils/numberOfStars"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import z from "zod"
+import imageBook from "../../assets/img/book.webp"
+import imageLibrary from "../../assets/img/logo.webp"
 
 type ParamBook = {
     id: string
 }
 
 let path: string = ''
+let average: number = 0
+
+const schemaRegister = z.object({
+    days: z.string(),
+})
+
+type SchemaRegister = z.infer<typeof schemaRegister>
 
 export function Details(){
 
     const { account } = authContex()
 
+    const navigate = useNavigate()
+
+    const { register, handleSubmit } = useForm<SchemaRegister>({
+        resolver: zodResolver(schemaRegister)
+    })
+
     const param = useParams<ParamBook>()
 
-    if(account){
-       const { type } = account
-
-       path = type.toLocaleLowerCase()
-    }
-    else if(!account ){
+    if(!account){
         return <Navigate to={'/'} />
     }
-
-    const { data: dataBook, isLoading, error } = useQuery<getBooksTypeResponse>({
+    
+    const { type } = account
+    path = type.toLocaleLowerCase()
+    
+    const { data: dataBook, isLoading, error} = useQuery<getBooksTypeResponse>({
         queryKey: ["keyGetBook", param.id],
         queryFn: async () => 
             await getBook({
-               bookId: param.id!,
-               token: account.token
+                bookId: param.id!,
+                token: account.token
         }),
+    })
+
+    const { data: dataLibrary } = useQuery<getLibraryTypeResponse>({
+        queryKey: ["keyGetLibrary", param.id],
+        queryFn: async () => 
+            await getLibrary({
+                libraryId: dataBook?.library_id!,
+                token: account.token
+        }),
+        enabled: !!dataBook?.library_id
     })
 
     if(error){
         alert("Error ao buscar livro...")
     }
 
-    const { data: dataLibrary} = useQuery<getLibraryTypeResponse>({
-        queryKey: ["keyGetLibrary", param.id],
-        queryFn: async () => 
-            await getLibrary({
-               libraryId: dataBook?.library_id!,
-               token: account.token
-        }),
-        enabled: !!dataBook?.library_id
+    if(dataBook){
+        const { stars } = dataBook!
+
+        const star = stars.map(star => {
+            return star.star
+        })
+    
+        average = numberOfStars(star)
+    }
+
+    const rentedBook = useMutation<void, Error, PostRentedBookTypeRequest>({
+        mutationFn: postRentedBook,
+        onSuccess: () => {
+            alert("Seu pedido foi realizado com sucesso")
+        },
+        onError: (data) => {
+            if(data.message.includes("code 401")){
+                alert("Para realizar o pedido, primeiro finalize o cadastro!")
+                navigate("/user/profile")
+                return
+            }
+
+            alert("Algo deu errado!")
+        }
     })
 
-    const { data: dataAssessment} = useQuery<getAssessmentTypeResponse[] | null>({
-        queryKey: ["keyGetStar", param.id],
-        queryFn: async () => 
-            await getAssessment({
-               bookId: param.id!,
-               token: account.token
-        }),
-        enabled: !!dataBook?.library_id,
-    })
+    async function registerPost({days}: SchemaRegister){
 
-    const star = dataAssessment?.map(assessment => {
-        return assessment.star
-    })
+        if(!account || !param.id || !dataLibrary?.id){
+            return
+        }
 
-    const average = numberOfStars(star)
+        rentedBook.mutate({
+            days: Number(days),
+            userId: account.id,
+            bookId: param.id,
+            libraryId: dataLibrary.id,
+            token: account.token
+        })
+    }
 
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
@@ -145,11 +184,11 @@ export function Details(){
                                     </h2>
                                     {
                                         account?.type === "USER"?
-                                        <form className="flex justify-between gap-6 relative" >
-                                            <button className="bg-bg-primary px-5 py-1 rounded-2xl border-1 cursor-pointer duration-500 border-but-100 text-but-100 hover:bg-but-100 hover:text-amber-50 ">
+                                        <form onSubmit={handleSubmit(registerPost)} className="flex justify-between gap-6 relative" >
+                                            <button type="submit" className="bg-bg-primary px-5 py-1 rounded-2xl border-1 cursor-pointer duration-500 border-but-100 text-but-100 hover:bg-but-100 hover:text-amber-50 ">
                                                 Fazer pedido
                                             </button>
-                                            <select id="days" className="bg-bg-primary appearance-none py-1 pl-6 pr-8 rounded-2xl border-1 border-but-100 text-but-100 cursor-pointer outline-0">
+                                            <select {...register("days")} id="days" className="bg-bg-primary appearance-none py-1 pl-6 pr-8 rounded-2xl border-1 border-but-100 text-but-100 cursor-pointer outline-0">
                                                 <option value={30} >Dias 30</option>
                                                 <option value={60} >Dias 60</option>
                                             </select>

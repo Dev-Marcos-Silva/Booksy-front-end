@@ -6,9 +6,11 @@ export interface getLibraryTypeRequest{
 }
 
 export interface getLibraryTypeResponse{
+    id: string
 	name: string
     image: string
     email: string
+    cep: string
 	city: string
 	neighborhood: string
 	street: string

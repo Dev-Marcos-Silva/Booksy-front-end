@@ -9,6 +9,7 @@ export interface getUserTypeResponse{
     name: string
     image: string
     email: string
+    cep: string
 	city: string
 	neighborhood: string
 	street: string

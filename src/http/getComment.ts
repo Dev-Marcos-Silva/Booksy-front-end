@@ -10,12 +10,15 @@ export interface getCommentTypeResponse{
     created_at: string
     comment: string
     book_id: string
-    user_id: string
+    user: {
+        name: string
+        avatar: string | null
+    }
 }
 
 export async function getComment({bookId, token} : getCommentTypeRequest): Promise<getCommentTypeResponse[] | null > {
 
-    const { data } = await api.get<{comments: getCommentTypeResponse[] | null }>(`/comment/get/${bookId}`, {headers: {Authorization: `Bearer ${token}`}})
+    const { data } = await api.get<{commentWithUser: getCommentTypeResponse[] | null }>(`/comment/get/${bookId}`, {headers: {Authorization: `Bearer ${token}`}})
 
-    return data.comments
+    return data.commentWithUser
 } 

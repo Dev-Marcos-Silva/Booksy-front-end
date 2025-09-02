@@ -5,13 +5,12 @@ import { formatDate } from "../../utils/formatDate"
 
 interface RatingType{
     name: string | undefined
-    image: string | undefined
+    image: string | null
     date: string
     index: number
 }
 
 const ratingStar = [1,2,3,4,5]
-
 
 export function Rating({image, name, date, index }: RatingType){
     return (

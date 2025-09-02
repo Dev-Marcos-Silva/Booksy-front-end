@@ -11,7 +11,7 @@ import { getLibrary, type getLibraryTypeResponse } from "../../http/getLibrary"
 interface CommentType{
     commentId: number
     name: string | undefined
-    image: string | undefined
+    image: string | null
     comment: string
     date: string
     isLibrary: boolean

@@ -2,9 +2,8 @@ import { Comment } from "../../components/ui/comment"
 import { ButtonComment } from "../../components/buttons/buttonComment"
 import { authContex } from "../../hook/authContext"
 import { useParams } from "react-router-dom"
-import { useQueries, useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { getComment, type getCommentTypeResponse } from "../../http/getComment"
-import { getUser } from "../../http/getUser"
 
 type paramBook = {
     id: string
@@ -29,20 +28,6 @@ export function Comments(){
         })   
     })
 
-    const userQueries = useQueries({
-        queries: ((dataComments ?? []).map(comment =>
-            ({
-                queryKey: ["keyGetUserComment", comment.created_at],
-                queryFn: async () => 
-                    await getUser({
-                        userId: comment.user_id,
-                        token: account.token
-                }),
-                enabled: !!comment.user_id
-            })
-        )
-    )})
-
     if(error){
         alert("Error ao buscar comentários")
     }
@@ -58,16 +43,16 @@ export function Comments(){
             }
             {
                 dataComments && 
-                    dataComments.map((comment, index )=> {
+                    dataComments.map((comment)=> {
 
-                        const dataUser = userQueries[index]?.data
+                        const { user } = comment
 
                         return(
                             <Comment
                                 key={comment.id} 
                                 commentId={comment.id}
-                                name={dataUser?.name}
-                                image={dataUser?.image}
+                                name={user.name}
+                                image={user?.avatar}
                                 comment={comment.comment}
                                 date={comment.created_at}
                                 isLibrary={account?.type === "LIBRARY"} 

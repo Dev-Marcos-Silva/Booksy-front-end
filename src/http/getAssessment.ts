@@ -10,12 +10,15 @@ export interface getAssessmentTypeResponse{
     created_at: string
     star: number
     book_id: string
-    user_id: string
+    user: {
+        name: string
+        avatar: string | null
+    }
 }
 
 export async function getAssessment({bookId, token} : getAssessmentTypeRequest): Promise<getAssessmentTypeResponse[] | null > {
 
-    const { data } = await api.get<{assessments: getAssessmentTypeResponse[] | null }>(`/assessment/get/${bookId}`, {headers: {Authorization: `Bearer ${token}`}})
+    const { data } = await api.get<{assessmentWithUser: getAssessmentTypeResponse[] | null }>(`/assessment/get/${bookId}`, {headers: {Authorization: `Bearer ${token}`}})
 
-    return data.assessments
+    return data.assessmentWithUser
 } 

@@ -2,9 +2,8 @@ import { Rating } from "../../components/ui/rating";
 import { ButtonRating } from "../../components/buttons/buttonRating";
 import { authContex } from "../../hook/authContext";
 import { useParams } from "react-router-dom";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getAssessment, type getAssessmentTypeResponse } from "../../http/getAssessment";
-import { getUser } from "../../http/getUser";
 
 type ParamBook = {
     id: string
@@ -29,19 +28,6 @@ export function Assessments(){
         })
     })
 
-    const userQueries = useQueries({
-        queries: ((dataAssessment ?? []).map(assessment =>({
-                queryKey: ["keyGetUserAssessment", assessment.user_id],
-                queryFn: async () => 
-                    await getUser({
-                        userId: assessment.user_id,
-                        token: account.token
-                }),
-                enabled: !!assessment.user_id
-            })
-        ))
-    })
-
     if(error){
         alert("Error ao buscar avaliações...")
     }
@@ -57,15 +43,15 @@ export function Assessments(){
             }
             {
                 dataAssessment && 
-                    dataAssessment.map((assessment, index )=> {
+                    dataAssessment.map((assessment,  )=> {
 
-                        const dataUser = userQueries[index]?.data
+                        const { user } = assessment
 
                         return(
                             <Rating 
                                 key={assessment.id}
-                                name={dataUser?.name}
-                                image={dataUser?.image}
+                                name={user.name}
+                                image={user?.avatar}
                                 index={assessment.star} 
                                 date={assessment.created_at} 
                             />

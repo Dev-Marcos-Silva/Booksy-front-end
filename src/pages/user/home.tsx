@@ -41,7 +41,6 @@ export function Home(){
             })
         },
         onSuccess: (data) => {
-            console.log(data)
             setBooks(data)
         },
         onError: () => {
@@ -62,8 +61,7 @@ export function Home(){
         search.mutate({
             query: value,
             token: account?.token!
-        })
-         
+        })  
     }
 
     const averages = (books?? []).map(book => {
