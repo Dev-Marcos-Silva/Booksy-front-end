@@ -21,7 +21,7 @@ export function UserSideBar(){
            <section className='flex flex-col items-center my-6 '>
 
                 <Link className='w-2/6' to={'/user/profile'}>
-                    <img className='rounded-full border-1 border-but-100 object-cover' src={account?.image? `${api.defaults.baseURL}/upload/profile/${account.image}`: image}  />
+                    <img className='rounded-full border-1 border-but-100 object-cover' src={account?.image? `${api.defaults.baseURL}/upload/profile/${account.image}`: image} alt={`imagem do usuário/a ${account?.name}`} />
                 </Link>
                 <p className='py-2 text-2xl'>{account?.name}</p>
 

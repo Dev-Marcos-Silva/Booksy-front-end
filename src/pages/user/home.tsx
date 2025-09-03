@@ -84,7 +84,6 @@ export function Home(){
                     onClick={e => handleValueCarousel(e.currentTarget.value)}
                 />
             </search>
-
             {
                books && books.length > 0 && 
                 <main className="overflow-y-scroll h-full " >

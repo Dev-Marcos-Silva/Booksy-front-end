@@ -46,7 +46,7 @@ export function AllBooks(){
                 <main className="overflow-y-scroll h-full" >
                     <section className="flex flex-wrap gap-x-5 gap-y-4 mx-1 my-4 pr-3 pl-6"  >
                         {
-                            data?.map(book => {
+                            data.map(book => {
                                 return(
                                     <CardBookLibrary 
                                         key={book.id}

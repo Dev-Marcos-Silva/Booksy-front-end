@@ -19,5 +19,5 @@ export async function putLibrary(data : putLibraryTypeRequest) {
 
     const { libraryId, token, ...baseData} = data
 
-    await api.patch(`/user/update/${libraryId}`, baseData, {headers: {Authorization: `Bearer ${token}`}})
+    await api.patch(`/library/update/${libraryId}`, baseData, {headers: {Authorization: `Bearer ${token}`}})
 } 
