@@ -1,3 +1,5 @@
+import { putAccept, type putAcceptTypeRequest } from "../../http/putAccept"
+import { useMutation } from "@tanstack/react-query"
 import imageBook from "../../assets/img/book.webp"
 import imageUser from "../../assets/img/profile.webp"
 import { api } from "../../service/api"
@@ -5,6 +7,8 @@ import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter"
 import { formatDate } from "../../utils/formatDate"
 import { SmallButton } from "../buttons/smallButton"
 import { StopWatch } from "../ui/stopWatch"
+import { authContex } from "../../hook/authContext"
+import { putDeliver, type putDeliverTypeRequest } from "../../http/putDeliver"
 
 interface BookType{
     id: number
@@ -27,6 +31,57 @@ interface BookType{
 }
 
 export function CardCustomerRequest({ isDelivered, ...data}: BookType){
+
+    const { account } = authContex()
+
+    const rendBookAccept = useMutation<void, Error, putAcceptTypeRequest>({
+        mutationFn: putAccept,
+        onSuccess: () => {
+            alert("Pedido aceito com sucesso")
+        },
+        onError: () => {
+            alert("Algo deu errado ao aceitar o pedido!") 
+        },
+    })
+
+    async function handleRendBookAccept(bookId: number){
+
+        if(!account){
+            return 
+        }
+
+        rendBookAccept.mutate({
+            rendBookId: bookId,
+            isAccepted: "true",
+            token: account.token
+        })
+    }
+
+    async function handleRendBookDeny(bookId: number){
+        console.log(bookId)
+    }
+
+    const rendBookDeliver = useMutation<void, Error, putDeliverTypeRequest>({
+        mutationFn: putDeliver,
+        onSuccess: () => {
+            alert("Livro entregue com sucesso")
+        },
+        onError: () => {
+            alert("Algo deu errado ao entregar o livro!") 
+        },
+    })
+
+    async function handleRendBookDelivered(bookId: number){
+
+        if(!account){
+            return 
+        }
+
+        rendBookDeliver.mutate({
+            rendBookId: bookId,
+            token: account.token
+        })
+    }
 
     return (
         <div className="border-font-200 border-1 w-full rounded-xl flex justify-between bg-font-500 py-3 shadow-lg">
@@ -52,7 +107,7 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
                 <img className="max-w-30 max-h-30 object-cover border-font-200 border-1 rounded-full mx-3" src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt="" />
                 
                 <div className="flex flex-col gap-2" >
-                    <h2 className="text-base" >{data.name?.toUpperCase()}</h2>
+                    <h2 className="text-base" >{capitalizeFirstLetter(data.name)}</h2>
                     <p className="text-font-300 text-sm ">{data.email}</p>
                     <p className="text-font-300 text-sm ">({data.ddd}) {data.phone}</p>
                     <p className="text-font-300 text-sm ">{capitalizeFirstLetter(data.city)}</p>
@@ -64,13 +119,25 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
                 {
                     isDelivered?
                     <div className="flex flex-col justify-center gap-6 px-5" >
-                        <SmallButton text="Aceite" isSave={true}/>
-                        <SmallButton text="Negar" isSave={false}/>
+                        <SmallButton 
+                            text="Aceite" 
+                            isSave={true}
+                            onClick={() => handleRendBookAccept(data.id)}
+                        />
+                        <SmallButton 
+                            text="Negar" 
+                            isSave={false}
+                            onClick={() => handleRendBookDeny(data.id)}
+                        />
                     </div>
                     :
                      <div className="flex flex-col justify-center gap-6 px-3" >
-                        <StopWatch days={24}/>
-                        <SmallButton text="Entregar" isSave={true}/>
+                        <StopWatch id={data.id} />
+                        <SmallButton 
+                            text="Entregar" 
+                            isSave={true}
+                            onClick={() => handleRendBookDelivered(data.id)}
+                        />
                     </div>
                 }
                

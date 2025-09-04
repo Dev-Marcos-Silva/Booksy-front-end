@@ -21,6 +21,8 @@ export interface getRendBookLibraryTypeResponse{
     author: string | undefined
     edition: string | undefined
     category: string | undefined
+    deliveryDate: string | null
+    isAccept: string | undefined
     date: string | undefined
 }
 

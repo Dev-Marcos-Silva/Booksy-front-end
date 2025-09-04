@@ -1,8 +1,8 @@
 import { getRendBookLibrary, type getRendBookLibraryTypeResponse } from "../../http/getRendBookLibrary"
 import { ArrowBigDownDash } from "lucide-react"
 import { CardCustomerRequest } from "../../components/cards/cardCustomerRequest"
-import { useQuery } from "@tanstack/react-query"
 import { authContex } from "../../hook/authContext"
+import { useQuery } from "@tanstack/react-query"
 
 export function OrdersReceived(){
 
@@ -43,11 +43,12 @@ export function OrdersReceived(){
                         {
                             data.map(ordersReceived => {
                                 return(
-                                    <CardCustomerRequest 
-                                        key={ordersReceived.id}
-                                        isDelivered={true}
-                                        {...ordersReceived}
-                                    />    
+                                    ordersReceived.isAccept === "undefine" &&
+                                        <CardCustomerRequest 
+                                            key={ordersReceived.id}
+                                            isDelivered={true}
+                                            {...ordersReceived}
+                                        />    
                                 )
                             })
                         }
