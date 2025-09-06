@@ -13,7 +13,7 @@ export function BorrowedBooks(){
     }
         
     const { data, error, isLoading } = useQuery<getRendBookLibraryTypeResponse[]>({
-        queryKey: [ "keyGetRendBookAccept", account.id ],
+        queryKey: [ "keyGetRendBook", account.id ],
         queryFn: async () => 
             await getRendBookLibrary({
                 libraryId: account.id,
@@ -25,7 +25,7 @@ export function BorrowedBooks(){
         alert("Error ao buscar pedidos...")
     }
 
-    const newData = data?.filter(book => book.deliveryDate !== null)
+    const newData = data?.filter(book => book.isComplete === "undefine" && book.deliveryDate !== null )
 
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
@@ -36,24 +36,23 @@ export function BorrowedBooks(){
                 </div>
                 <div className="px-17 flex items-center gap-2" >
                     <span className="border-1 border-but-200 rounded-full w-10 h-10 flex items-center justify-center text-but-200 text-xl">{newData?.length}</span>
-                    <p className="text-font-300 text-lg" >total de livros</p>
+                    <p className="text-font-300 text-lg" >Alugados</p>
                 </div>
             </header>
             {
                 isLoading && <p>Carregando...</p>
             }
             {
-                data &&
-                    <main className="overflow-y-scroll h-full" >
-                        <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4" >
+                newData &&
+                    <main className="overflow-y-scroll h-full">
+                        <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4">
                             {
-                                data.map(ordersReceived => {
+                                newData.map(ordersReceived => {
                                     return(
-                                        ordersReceived.deliveryDate !== null &&
-                                            <CardBookWithClient
-                                                key={ordersReceived.id}
-                                                {...ordersReceived}
-                                            />  
+                                        <CardBookWithClient
+                                            key={ordersReceived.id}
+                                            {...ordersReceived}
+                                        />  
                                     )
                                 })
                             }

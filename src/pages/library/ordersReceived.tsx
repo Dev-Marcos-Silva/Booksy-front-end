@@ -25,6 +25,8 @@ export function OrdersReceived(){
         alert("Error ao buscar pedidos...")
     }
 
+    const newData = data?.filter(book => book.isAccept === "undefine")
+
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >
@@ -37,23 +39,22 @@ export function OrdersReceived(){
                 isLoading && <p>Carregando...</p>
             }
             { 
-                data &&
-                <main className="overflow-y-scroll h-full" >
-                    <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4" >
-                        {
-                            data.map(ordersReceived => {
-                                return(
-                                    ordersReceived.isAccept === "undefine" &&
+                newData &&
+                    <main className="overflow-y-scroll h-full" >
+                        <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4" >
+                            {
+                                newData.map(ordersReceived => {
+                                    return(
                                         <CardCustomerRequest 
                                             key={ordersReceived.id}
                                             isDelivered={true}
                                             {...ordersReceived}
                                         />    
-                                )
-                            })
-                        }
-                    </section>
-                </main>
+                                    )
+                                })
+                            }
+                        </section>
+                    </main>
             }
         </section>
     )

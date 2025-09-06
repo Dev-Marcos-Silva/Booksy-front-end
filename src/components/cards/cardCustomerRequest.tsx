@@ -1,4 +1,5 @@
 import { putAccept, type putAcceptTypeRequest } from "../../http/putAccept"
+import { putDeliver, type putDeliverTypeRequest } from "../../http/putDeliver"
 import { useMutation } from "@tanstack/react-query"
 import imageBook from "../../assets/img/book.webp"
 import imageUser from "../../assets/img/profile.webp"
@@ -8,7 +9,6 @@ import { formatDate } from "../../utils/formatDate"
 import { SmallButton } from "../buttons/smallButton"
 import { StopWatch } from "../ui/stopWatch"
 import { authContex } from "../../hook/authContext"
-import { putDeliver, type putDeliverTypeRequest } from "../../http/putDeliver"
 
 interface BookType{
     id: number
@@ -85,7 +85,7 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
 
     return (
         <div className="border-font-200 border-1 w-full rounded-xl flex justify-between bg-font-500 py-3 shadow-lg">
-            <div className="flex items-center  gap-4 px-3" >
+            <div className="flex items-center w-md gap-4 px-3" >
 
                 <img className="max-w-42 h-50 object-cover border-font-200 border-1 rounded-xl" src={data.image? `${api.defaults.baseURL}/upload/book/${data.image}`: imageBook} alt={`capa do livro ${data.title}`} />
 
@@ -104,7 +104,7 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
             </div>
             <div className="flex items-center  gap-4 px-4">
 
-                <img className="max-w-30 max-h-30 object-cover border-font-200 border-1 rounded-full mx-3" src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt="" />
+                <img className="max-w-30 max-h-30 object-cover border-font-200 border-1 rounded-full mx-3" src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt={`imagem do usuário ${data.name}`} />
                 
                 <div className="flex flex-col gap-2" >
                     <h2 className="text-base" >{capitalizeFirstLetter(data.name)}</h2>

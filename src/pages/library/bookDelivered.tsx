@@ -13,7 +13,7 @@ export function BookDelivered(){
     }
     
     const { data, error, isLoading } = useQuery<getRendBookLibraryTypeResponse[]>({
-        queryKey: [ "keyGetRendBookAccept", account.id ],
+        queryKey: [ "keyGetRendBook", account.id ],
         queryFn: async () => 
             await getRendBookLibrary({
                 libraryId: account.id,
@@ -24,6 +24,8 @@ export function BookDelivered(){
     if(error){
         alert("Error ao buscar pedidos...")
     }
+
+    const newDate = data?.filter(book => book.isAccept === "true" && book.deliveryDate === null)
 
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
@@ -37,24 +39,22 @@ export function BookDelivered(){
                 isLoading && <p>Carregando...</p>
             }
             { 
-                data &&
-                <main className="overflow-y-scroll h-full" >
-                    <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4" >
-                        {
-                            data.map(ordersReceived => {
-                                return(
-                                    ordersReceived.isAccept === "true" &&
-                                    ordersReceived.deliveryDate === null &&
+                newDate &&
+                    <main className="overflow-y-scroll h-full">
+                        <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4">
+                            {
+                                newDate.map(ordersReceived => {
+                                    return(
                                         <CardCustomerRequest 
                                             key={ordersReceived.id}
                                             isDelivered={false}
                                             {...ordersReceived}
                                         />  
-                                )
-                            })
-                        }
-                    </section>
-                </main>
+                                    )
+                                })
+                            }
+                        </section>
+                    </main>
             }
         </section>
     )

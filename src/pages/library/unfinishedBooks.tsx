@@ -1,7 +1,32 @@
 import { CircleX } from "lucide-react"
 import { CardFinishedBook } from "../../components/cards/cardFinishedBook"
+import { useQuery } from "@tanstack/react-query"
+import { getRendBookLibrary, type getRendBookLibraryTypeResponse } from "../../http/getRendBookLibrary"
+import { authContex } from "../../hook/authContext"
 
 export function UnfinishedBook(){
+
+    const { account } = authContex()
+        
+    if(!account){
+        return
+    }
+        
+    const { data, error, isLoading } = useQuery<getRendBookLibraryTypeResponse[]>({
+        queryKey: [ "keyGetRendBook", account.id ],
+        queryFn: async () => 
+            await getRendBookLibrary({
+                libraryId: account.id,
+                token: account.token
+            })
+    })
+        
+    if(error){
+        alert("Error ao buscar pedidos...")
+    }
+
+    const newData = data?.filter(book => book.isComplete === "true")
+
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >
@@ -10,17 +35,32 @@ export function UnfinishedBook(){
                     <h1>Livros não concluídos</h1>
                 </div>
                 <div className="px-17 flex items-center gap-2" >
-                    <span className="border-1 border-font-700 rounded-full w-10 h-10 flex items-center justify-center text-font-700 text-xl" >7</span>
-                    <p className="text-font-300 text-lg" >total de livros</p>
+                    <span className="border-1 border-font-700 rounded-full w-10 h-10 flex items-center justify-center text-font-700 text-xl">{newData?.length}</span>
+                    <p className="text-font-300 text-lg">total de livros</p>
                 </div>
             </header>
-            <main className="overflow-y-scroll h-full" >
-                <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4"  >
-                    <CardFinishedBook isComplete={false} />
-                    <CardFinishedBook isComplete={false} />
-                    <CardFinishedBook isComplete={false} />
-                </section>
-            </main>
+            {
+                isLoading && <p>Carregando...</p>
+            }
+            {
+                newData &&
+                    <main className="overflow-y-scroll h-full">
+                        <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4">
+                            {
+                                newData.map(ordersReceived => {
+                                    return(
+                                        <CardFinishedBook
+                                            key={ordersReceived.id} 
+                                            isFinished={false}
+                                            {...ordersReceived} 
+                                        />
+                                    )
+                                })
+                            }                  
+                        </section>
+                    </main>
+            }
+           
         </section>
     )
 }

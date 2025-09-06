@@ -1,10 +1,13 @@
-import { api } from "../../service/api"
+import { putComplete, type putCompleteTypeRequest } from "../../http/putComplete"
+import { useMutation } from "@tanstack/react-query"
 import imageBook from "../../assets/img/book.webp"
 import imageUser from "../../assets/img/profile.webp"
+import { api } from "../../service/api"
 import { ArrowRightLeft } from "lucide-react"
 import { SmallButton } from "../buttons/smallButton"
 import { formatDate } from "../../utils/formatDate"
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter"
+import { authContex } from "../../hook/authContext"
 
 interface BookType{
     id: number
@@ -23,12 +26,39 @@ interface BookType{
     edition: string | undefined
     category: string | undefined
     date: string | undefined
+    returnDate: string | null
 }
 
 export function CardBookWithClient({...data}: BookType){
+
+    const { account } = authContex()
+
+    const rendBookComplete = useMutation<void, Error, putCompleteTypeRequest>({
+        mutationFn: putComplete,
+        onSuccess: () => {
+            alert("Livro completo com sucesso")
+        },
+        onError: () => {
+            alert("Algo deu errado ao concluir o livro!") 
+        },
+    })
+
+    async function handleRendBookComplete(bookId: number){
+
+        if(!account){
+            return
+        }
+
+        rendBookComplete.mutate({
+            rendBookId: bookId,
+            isComplete: "true",
+            token: account.token
+        })
+    }
+
     return (
         <div className="border-but-200 border-1 w-full rounded-xl flex justify-between bg-bg-100 py-3 shadow-lg">
-            <div className="flex items-center  gap-4 px-3" >
+            <div className="flex items-center w-md gap-4 px-3" >
 
                <img className="max-w-42 h-50 object-cover border-but-100 border-1 rounded-xl" src={data.image? `${api.defaults.baseURL}/upload/book/${data.image}`: imageBook} alt={`capa do livro ${data.title}`} />
                
@@ -51,7 +81,7 @@ export function CardBookWithClient({...data}: BookType){
             
             <div className="flex items-center  gap-4 px-0" >
             
-                <img className="max-w-30 max-h-30 object-cover border-but-200 border-1 rounded-full mx-3" src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt="" />
+                <img className="max-w-30 max-h-30 object-cover border-but-200 border-1 rounded-full mx-3" src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt={`imagem do usuário ${data.name}`} />
                 
                 <div className="flex flex-col gap-2" >
                     <h2 className="text-font-100 text-base" >{capitalizeFirstLetter(data.name)}</h2>
@@ -63,8 +93,20 @@ export function CardBookWithClient({...data}: BookType){
                     </p>
                 </div>
 
-                <div className="flex flex-col justify-center gap-6 px-5" >
-                    <SmallButton text="Finalizar" isSave={true}/>
+                <div className="flex flex-col w-30 justify-center items-center gap-6 pr-4">
+                    <div className="flex flex-col items-center gap-3">
+                        <p className="text-base/5 text-center">
+                            Prazor de entrega
+                        </p>
+                        <p className="text-sm text-center">
+                            {formatDate(data.returnDate)}
+                        </p>
+                    </div>
+                    <SmallButton 
+                        text="Finalizar" 
+                        isSave={true}
+                        onClick={() => handleRendBookComplete(data.id)}
+                    />
                 </div>
                  
             </div>  
