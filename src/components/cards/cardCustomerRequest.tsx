@@ -34,7 +34,7 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
 
     const { account } = authContex()
 
-    const rendBookAccept = useMutation<void, Error, putAcceptTypeRequest>({
+    const rendBookAcceptOrDeny = useMutation<void, Error, putAcceptTypeRequest>({
         mutationFn: putAccept,
         onSuccess: () => {
             alert("Pedido aceito com sucesso")
@@ -50,7 +50,7 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
             return 
         }
 
-        rendBookAccept.mutate({
+        rendBookAcceptOrDeny.mutate({
             rendBookId: bookId,
             isAccepted: "true",
             token: account.token
@@ -58,7 +58,16 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
     }
 
     async function handleRendBookDeny(bookId: number){
-        console.log(bookId)
+
+        if(!account){
+            return 
+        }
+
+        rendBookAcceptOrDeny.mutate({
+            rendBookId: bookId,
+            isAccepted: "false",
+            token: account.token
+        })
     }
 
     const rendBookDeliver = useMutation<void, Error, putDeliverTypeRequest>({

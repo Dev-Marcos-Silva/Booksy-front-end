@@ -5,9 +5,7 @@ export interface deleteBookTypeRequest{
     token: string
 }
 
-export async function deleteBook(data : deleteBookTypeRequest) {
-
-    const { bookId, token} = data
+export async function deleteBook({bookId, token} : deleteBookTypeRequest) {
 
     await api.delete(`/delete/book/${bookId}`,{headers: {Authorization: `Bearer ${token}`}})
 } 

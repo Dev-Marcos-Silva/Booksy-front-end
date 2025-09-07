@@ -13,7 +13,7 @@ export function FinishedBooks(){
     }
         
     const { data, error, isLoading } = useQuery<getRendBookLibraryTypeResponse[]>({
-        queryKey: [ "keyGetRendBook", account.id ],
+        queryKey: [ "keyGetRendBookLibrary", account.id ],
         queryFn: async () => 
             await getRendBookLibrary({
                 libraryId: account.id,
@@ -47,12 +47,12 @@ export function FinishedBooks(){
                     <main className="overflow-y-scroll h-full">
                         <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4">
                             {
-                                newData.map(ordersReceived => {
+                                newData.map(rendBook => {
                                     return(
                                         <CardFinishedBook
-                                            key={ordersReceived.id} 
+                                            key={rendBook.id} 
                                             isFinished={true}
-                                            {...ordersReceived} 
+                                            {...rendBook} 
                                         />
                                     )
                                 })

@@ -1,9 +1,12 @@
+import { useMutation } from "@tanstack/react-query"
 import imageBook from "../../assets/img/book.webp"
 import imageUser from "../../assets/img/profile.webp"
+import { authContex } from "../../hook/authContext"
 import { api } from "../../service/api"
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter"
 import { formatDate } from "../../utils/formatDate"
 import { SmallButton } from "../buttons/smallButton"
+import { putComplete, type putCompleteTypeRequest } from "../../http/putComplete"
 
 
 interface BookType{
@@ -24,10 +27,37 @@ interface BookType{
     category: string | undefined
     date: string | undefined
     returnDate: string | null
+    endDate: string | null
     isFinished: boolean
 }
 
 export function CardFinishedBook({isFinished, ...data}: BookType){
+
+    const { account } = authContex()
+
+    const rendBookComplete = useMutation<void, Error, putCompleteTypeRequest>({
+        mutationFn: putComplete,
+        onSuccess: () => {
+            alert("Livro completo com sucesso")
+        },
+        onError: () => {
+            alert("Algo deu errado ao concluir o livro!") 
+        },
+    })
+
+    async function handleRendBookComplete(bookId: number){
+
+        if(!account){
+            return
+        }
+
+        rendBookComplete.mutate({
+            rendBookId: bookId,
+            isComplete: "true",
+            token: account.token
+        })
+    }
+
     return (
         <div className={`${isFinished? "border-font-600 bg-bg-400":"border-font-700 bg-bg-500"} py-3 shadow-lg border-1 w-full rounded-xl flex justify-between`}>
             <div className="flex items-center w-md gap-4 px-3" >
@@ -65,15 +95,19 @@ export function CardFinishedBook({isFinished, ...data}: BookType){
                     isFinished?
                     <div className="bg-bg-primary flex flex-col items-center justify-center border-font-600 border-1 rounded-xl h-full px-3" >
                         <h2 className="text-lg text-font-100 font-semibold">Encerrado em</h2>
-                        <p className=" text-font-100 font-medium">11/02/2024</p>
+                        <p className=" text-font-100 font-medium">{formatDate(data.endDate)}</p>
                     </div>
                     : 
                     <div className="bg-bg-primary flex flex-col items-center justify-evenly border-font-700 border-1 rounded-xl h-full px-3" >
                         <div className="flex flex-col items-center justify-center" >
                             <h2 className="text-lg text-font-100 font-semibold">Encerrado em</h2>
-                            <p className=" text-font-100 font-medium">11/02/2024</p>
+                            <p className=" text-font-100 font-medium">{formatDate(data.returnDate)}</p>
                         </div>
-                        <SmallButton text="Finalizar" isSave={true}/>
+                        <SmallButton 
+                            text="Finalizar" 
+                            isSave={true}
+                            onClick={() => handleRendBookComplete(data.id)}
+                        />
                     </div>
                 }
                     

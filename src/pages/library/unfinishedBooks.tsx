@@ -13,7 +13,7 @@ export function UnfinishedBook(){
     }
         
     const { data, error, isLoading } = useQuery<getRendBookLibraryTypeResponse[]>({
-        queryKey: [ "keyGetRendBook", account.id ],
+        queryKey: [ "keyGetRendBookLibrary", account.id ],
         queryFn: async () => 
             await getRendBookLibrary({
                 libraryId: account.id,
@@ -25,7 +25,10 @@ export function UnfinishedBook(){
         alert("Error ao buscar pedidos...")
     }
 
-    const newData = data?.filter(book => book.isComplete === "true")
+
+    const nowDate = new Date()
+
+    const newData = data?.filter(book => book.isComplete === "undefine" && new Date(book.returnDate!) < nowDate && book.returnDate !== null )
 
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
@@ -47,12 +50,12 @@ export function UnfinishedBook(){
                     <main className="overflow-y-scroll h-full">
                         <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4">
                             {
-                                newData.map(ordersReceived => {
+                                newData.map(rendBook => {
                                     return(
                                         <CardFinishedBook
-                                            key={ordersReceived.id} 
+                                            key={rendBook.id} 
                                             isFinished={false}
-                                            {...ordersReceived} 
+                                            {...rendBook} 
                                         />
                                     )
                                 })

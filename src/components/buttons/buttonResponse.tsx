@@ -1,4 +1,4 @@
-import { postComment, type postCommentTypeRequest } from "../../http/postComment";
+import { postResponse, type postResponseTypeRequest } from "../../http/postResponse";
 import { ChevronRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,7 +7,7 @@ import z from "zod";
 import { authContex } from "../../hook/authContext";
 
 interface ButtonType extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    bookId: string | undefined | null
+    commentId: number | undefined | null
 }
 
 const schemaComment = z.object({
@@ -16,7 +16,7 @@ const schemaComment = z.object({
 
 type SchemaComment = z.infer<typeof schemaComment>
 
-export function ButtonComment({bookId}: ButtonType){
+export function ButtonResponse({commentId}: ButtonType){
 
     const { account } = authContex()
 
@@ -24,41 +24,41 @@ export function ButtonComment({bookId}: ButtonType){
         resolver: zodResolver(schemaComment)
     })
 
-    const comment = useMutation<void, Error, postCommentTypeRequest>({
-        mutationFn: postComment,
+    const response = useMutation<void, Error, postResponseTypeRequest>({
+        mutationFn: postResponse,
         onSuccess: () => {
-            alert("Comentário registrado com sucesso")
+            alert("Resposta registrado com sucesso")
             reset()
         },
         onError: () => {
-            alert("Error ao registrar comentário")
+            alert("Error ao registrar resposta")
         }
     })
 
-    async function commentPost({ text }: SchemaComment ){
+    async function responsePost({ text }: SchemaComment ){
 
         if(!account){
             return 
         }
-        if(!bookId){
+        if(!commentId){
             return
         }
 
-        comment.mutate({
-            bookId,
-            userId: account.id,
+        response.mutate({
+            commentId,
+            libraryId: account.id,
             text,
             token: account.token
         })
     }
 
     return(
-         <form onSubmit={handleSubmit(commentPost)} className="flex pr-2 items-center m-b-4 gap-2" >              
-            <input {...register("text")} className="w-full outline-0 border-b-1 border-font-400 pb-2" type="text" placeholder="Adicione um comentário..." />
-             
+        <form onSubmit={handleSubmit(responsePost)} className="flex pr-2 items-center mb-4 gap-2" >              
+            <input {...register("text")} className="w-full text-sm outline-0 border-b-1 border-font-400 pb-2" type="text" placeholder="Responde o comentário..." />
+                                        
             <button type="submit" className="bg-font-400 rounded-xl p-0.5 font-medium cursor-pointer  hover:text-font-300" >
-                <ChevronRight/>
-            </button> 
+                <ChevronRight size={20}/>
+            </button>
         </form>
     )
 }

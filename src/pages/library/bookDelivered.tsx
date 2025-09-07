@@ -13,7 +13,7 @@ export function BookDelivered(){
     }
     
     const { data, error, isLoading } = useQuery<getRendBookLibraryTypeResponse[]>({
-        queryKey: [ "keyGetRendBook", account.id ],
+        queryKey: [ "keyGetRendBookLibrary", account.id ],
         queryFn: async () => 
             await getRendBookLibrary({
                 libraryId: account.id,
@@ -25,7 +25,7 @@ export function BookDelivered(){
         alert("Error ao buscar pedidos...")
     }
 
-    const newDate = data?.filter(book => book.isAccept === "true" && book.deliveryDate === null)
+    const newData = data?.filter(book => book.isAccept === "true" && book.deliveryDate === null)
 
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
@@ -39,16 +39,16 @@ export function BookDelivered(){
                 isLoading && <p>Carregando...</p>
             }
             { 
-                newDate &&
+                newData &&
                     <main className="overflow-y-scroll h-full">
                         <section className="flex flex-wrap gap-x-4 gap-y-4 mx-1 my-4 pr-3 pl-4">
                             {
-                                newDate.map(ordersReceived => {
+                                newData.map(rendBook => {
                                     return(
                                         <CardCustomerRequest 
-                                            key={ordersReceived.id}
+                                            key={rendBook.id}
                                             isDelivered={false}
-                                            {...ordersReceived}
+                                            {...rendBook}
                                         />  
                                     )
                                 })

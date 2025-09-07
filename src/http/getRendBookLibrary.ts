@@ -25,6 +25,7 @@ export interface getRendBookLibraryTypeResponse{
     isComplete: string | undefined
     deliveryDate: string | null
     returnDate: string | null
+    endDate: string | null
     date: string | undefined
 }
 

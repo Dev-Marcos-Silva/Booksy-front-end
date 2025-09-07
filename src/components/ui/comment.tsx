@@ -1,4 +1,3 @@
-import { ChevronRight } from "lucide-react"
 import imageUser from "../../assets/img/profile.webp"
 import imageLibrary from "../../assets/img/house.webp"
 import { api } from "../../service/api"
@@ -7,6 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getResponse, type getResponseTypeResponse } from "../../http/getResponse"
 import { authContex } from "../../hook/authContext"
 import { getLibrary, type getLibraryTypeResponse } from "../../http/getLibrary"
+import { ButtonResponse } from "../buttons/buttonResponse"
 
 interface CommentType{
     commentId: number
@@ -65,13 +65,9 @@ export function Comment({commentId, image, name, comment, date, isLibrary}: Comm
                      <div className="w-full mt-2 flex gap-2 flex-col ">
                         {
                             isLibrary && dataResponse?.response === undefined ?
-                                <div className="flex pr-2 items-center mb-4 gap-2" >              
-                                    <input className="w-full text-sm outline-0 border-b-1 border-font-400 pb-2" type="text" placeholder="Responde o comentário..." />
-                                        
-                                    <button type="button" className="bg-font-400 rounded-xl p-0.5 font-medium cursor-pointer  hover:text-font-300" >
-                                        <ChevronRight size={20}/>
-                                    </button> 
-                                </div>    
+                                <ButtonResponse
+                                    commentId={commentId}
+                                />    
                             :   
                                 <div></div>   
                         }
