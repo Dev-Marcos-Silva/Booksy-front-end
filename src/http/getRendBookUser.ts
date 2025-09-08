@@ -28,6 +28,7 @@ export interface getRendBookUserTypeResponse{
     }[]
     isAccept: string | undefined
     isComplete: string | undefined
+    userVisibility: string
     orderDate: string | null
     deliveryDate: string | null
     returnDate: string | null

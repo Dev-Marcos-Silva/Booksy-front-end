@@ -53,6 +53,7 @@ export function Details(){
         queryKey: ["keyGetBook", param.id],
         queryFn: async () => 
             await getBook({
+                accountId: account.id,
                 bookId: param.id!,
                 token: account.token
         }),
@@ -133,7 +134,10 @@ export function Details(){
                             {
                                 account?.type === "USER" &&
                                 <div className="absolute flex justify-end items-start p-4 w-full h-full top-0 opacity-0 hover:opacity-100 duration-500">
-                                    <ButtonMark/>
+                                    <ButtonMark
+                                        bookId={dataBook.id}
+                                        bookFavorite={dataBook.bookFavorite}
+                                    />
                                 </div>
                             }
                         </div>

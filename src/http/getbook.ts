@@ -1,11 +1,13 @@
 import { api } from "../service/api";
 
 export interface getBooksTypeRequest{
+    accountId: string
     bookId: string
     token: string
 }
 
 export interface getBooksTypeResponse{
+    id: string
     author: string
     title: string
     stars: {
@@ -27,11 +29,12 @@ export interface getBooksTypeResponse{
     page: number
     amount: number
     library_id: string
+    bookFavorite: boolean
 }
 
-export async function getBook({bookId, token} : getBooksTypeRequest): Promise<getBooksTypeResponse> {
+export async function getBook({accountId, bookId, token} : getBooksTypeRequest): Promise<getBooksTypeResponse> {
 
-    const { data } = await api.get<getBooksTypeResponse>(`/book/${bookId}`, {headers: {Authorization: `Bearer ${token}`}})
+    const { data } = await api.get<getBooksTypeResponse>(`/book/${bookId}?accountId=${accountId}`, {headers: {Authorization: `Bearer ${token}`}})
 
     return data
 } 

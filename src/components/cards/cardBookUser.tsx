@@ -10,9 +10,10 @@ interface BookType{
     author: string
     image: string
     star: number
+    bookFavorite: boolean
 }
 
-export function CardBookUser({id, title, author, image, star}: BookType){
+export function CardBookUser({id, title, author, image, star, bookFavorite}: BookType){
     return (
         <div className="relative w-52 h-66 border-1 border-font-200 rounded-sm shadow-lg">
 
@@ -20,7 +21,10 @@ export function CardBookUser({id, title, author, image, star}: BookType){
 
             <div className="absolute h-full w-full top-0 flex flex-col justify-end opacity-0 hover:opacity-100 duration-500 rounded-sm" >
                 <div className="flex justify-end items-start h-33 p-4">
-                    <ButtonMark/>
+                    <ButtonMark
+                        bookId={id}
+                        bookFavorite={bookFavorite}
+                    />
                 </div>
                 <section className="bg-font-500 h-33 flex flex-col justify-center px-2 gap-2">
                     <div className="flex flex-col gap-1">

@@ -19,8 +19,9 @@ export function Home(){
     const [books, setBooks] = useState<getCategoryBooksTypeResponse[] | []>([])
 
     const category = useMutation<getCategoryBooksTypeResponse[], Error, getCategoryBooksTypeRequest>({
-        mutationFn: ({category, token}) => {
+        mutationFn: ({userId, category, token}) => {
             return getCategoryBook({
+                userId,
                 category,
                 token
             })
@@ -34,8 +35,9 @@ export function Home(){
     })
 
     const search = useMutation<getSearchBooksTypeResponse[], Error, getSearchBooksTypeRequest>({
-        mutationFn: ({query, token}) => {
+        mutationFn: ({userId, query, token}) => {
             return getSearchBook({
+                userId,
                 query,
                 token
             })
@@ -50,15 +52,25 @@ export function Home(){
 
     function handleValueCarousel(value: string){
 
+        if(!account){
+            return
+        }
+
         category.mutate({
+            userId: account.id,
             category: value,
-            token: account?.token!
+            token: account.token
         })
     }
 
     function handleValueSearchBook(value: string){
 
+        if(!account){
+            return
+        }
+
         search.mutate({
+            userId: account.id,
             query: value,
             token: account?.token!
         })  
@@ -97,7 +109,8 @@ export function Home(){
                                         title={book.title}
                                         author={book.author}
                                         image={book.image!}
-                                        star={averages[index]} 
+                                        star={averages[index]}
+                                        bookFavorite={book.bookFavorite} 
                                     />
                                 )
                             })

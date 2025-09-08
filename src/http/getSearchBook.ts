@@ -1,6 +1,7 @@
 import { api } from "../service/api";
 
 export interface getSearchBooksTypeRequest{
+    userId: string
     query: string
     token: string
 }
@@ -17,11 +18,12 @@ export interface getSearchBooksTypeResponse{
         book_id: string
         user_id: string
     }[]
+    bookFavorite: boolean
 }
 
-export async function getSearchBook({query, token} : getSearchBooksTypeRequest): Promise<getSearchBooksTypeResponse[] > {
+export async function getSearchBook({userId, query, token} : getSearchBooksTypeRequest): Promise<getSearchBooksTypeResponse[] > {
 
-    const { data } = await api.get<{bookWithStar: getSearchBooksTypeResponse[]}>(`/search/book?query=${query}`, {headers: {Authorization: `Bearer ${token}`}})
+    const { data } = await api.get<{bookWithStar: getSearchBooksTypeResponse[]}>(`/search/book?query=${query}&userId=${userId}`, {headers: {Authorization: `Bearer ${token}`}})
 
     return data.bookWithStar
 }

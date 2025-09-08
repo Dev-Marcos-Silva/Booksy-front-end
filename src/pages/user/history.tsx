@@ -25,7 +25,7 @@ export function History(){
         alert("Error ao buscar pedidos...")
     }
 
-    const newData = data?.filter(book => book.isComplete === "true")
+    const newData = data?.filter(book => book.isComplete === "true" && book.userVisibility === "true")
 
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >

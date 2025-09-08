@@ -53,7 +53,9 @@ export function CardHistory({...data}: BookType){
         }
 
         bookDelete.mutate({
+            userId: account.id,
             historyBookId,
+            visibility: "false",
             token: account.token
         })
     }
@@ -78,7 +80,7 @@ export function CardHistory({...data}: BookType){
 
                 <p className="text-sm">Autor(a): {data.author?.toUpperCase()}</p>
 
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center pt-2">
                         <span className="flex gap-1 items-center font-medium text-sm"><Star color="#FC9B1C" fill="#FC9B1C" strokeWidth={0} size={20}/>{average.toFixed(1)}</span>
                         <ButtonCard text="Avaliar" link={`/user/book/${data.bookId}/assessments`} size="text-xs"/>
                 </div>

@@ -9,5 +9,5 @@ export interface deleteHistoryBookTypeRequest{
 
 export async function deleteHistoryBook({historyBookId, token, userId, visibility}: deleteHistoryBookTypeRequest) {
 
-    await api.delete(`/user/delete/${historyBookId}`, {headers: {Authorization: `Bearer ${token}`}})
+    await api.patch(`/user/delete/${historyBookId}`, {userId, visibility}, {headers: {Authorization: `Bearer ${token}`}})
 } 

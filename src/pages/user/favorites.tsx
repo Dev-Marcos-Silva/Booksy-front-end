@@ -1,7 +1,40 @@
+import { getFavoriteBook, type getFavoriteBookTypeResponse } from "../../http/getFavoriteBook"
 import { CircleCheck } from "lucide-react"
 import { CardBookUser  } from "../../components/cards/cardBookUser"
+import { authContex } from "../../hook/authContext"
+import { useQuery } from "@tanstack/react-query"
+import { numberOfStars } from "../../utils/numberOfStars"
 
 export function Favorites(){
+
+    const { account } = authContex()
+    
+    if(!account){
+         return
+    }
+    
+    const { data, error, isLoading } = useQuery<getFavoriteBookTypeResponse[]>({
+        queryKey: [ "keyGetRendBookUser", account.id ],
+        queryFn: async () => 
+            await getFavoriteBook({
+                userId: account.id,
+                token: account.token
+        })
+    })
+    
+    if(error){
+        alert("Error ao buscar pedidos...")
+    }
+
+    const averages = (data?? []).map(book => {
+        const { stars } = book
+    
+        const star = stars.map(star => {
+            return star.star
+        })
+        return numberOfStars(star)
+    })
+
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >
@@ -11,13 +44,31 @@ export function Favorites(){
                 </div>
 
             </header>
-            <main className="overflow-y-scroll h-full" >
-                <section className="flex flex-wrap gap-x-6 gap-y-5 mx-2 my-4 px-6" >
-
-                  
-                   
-                </section>
-            </main>
+            {
+                isLoading && <p>Carregando...</p>
+            }
+            {
+                data && 
+                    <main className="overflow-y-scroll h-full" >
+                        <section className="flex flex-wrap gap-x-6 gap-y-5 mx-2 my-4 px-6">
+                            {
+                                data.map((book, index) => {
+                                    return(
+                                        <CardBookUser 
+                                            key={book.id}
+                                            id={book.id}
+                                            title={book.title}
+                                            author={book.author}
+                                            image={book.image!}
+                                            star={averages[index]}
+                                            bookFavorite={book.bookFavorite} 
+                                        />
+                                    )
+                                })
+                            }
+                        </section>
+                    </main>
+            }
         </section>
     )
 }

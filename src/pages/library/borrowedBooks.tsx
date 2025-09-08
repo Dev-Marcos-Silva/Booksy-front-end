@@ -25,7 +25,9 @@ export function BorrowedBooks(){
         alert("Error ao buscar pedidos...")
     }
 
-    const newData = data?.filter(book => book.isComplete === "undefine" && book.deliveryDate !== null )
+    const nowDate = new Date()
+
+    const newData = data?.filter(book => book.isComplete === "undefine" && new Date(book.returnDate!) > nowDate && book.deliveryDate !== null )
 
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
