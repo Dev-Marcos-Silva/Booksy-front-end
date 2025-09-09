@@ -3,6 +3,7 @@ import { CardFinishedBook } from "../../components/cards/cardFinishedBook"
 import { authContex } from "../../hook/authContext"
 import { useQuery } from "@tanstack/react-query"
 import { getRendBookLibrary, type getRendBookLibraryTypeResponse } from "../../http/getRendBookLibrary"
+import { Loading } from "../../components/ui/loading"
 
 export function FinishedBooks(){
 
@@ -40,7 +41,7 @@ export function FinishedBooks(){
                 </div>
             </header>
             {
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading size={24}/>
             }
             {
                 newData &&

@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
 import imageBook from "../../assets/img/book.webp"
 import imageLibrary from "../../assets/img/logo.webp"
+import { Loading } from "../../components/ui/loading"
 
 type ParamBook = {
     id: string
@@ -123,7 +124,7 @@ export function Details(){
                 </div>
             </header>
             {
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading size={24}/>
             }
             {
                 dataBook && dataLibrary &&

@@ -62,8 +62,9 @@ export function UpdateBook(){
         queryKey: ["keyGetBookUpdate", param.id],
         queryFn: async () => 
             await getBook({
-               bookId: param.id!,
-               token: account.token
+                accountId: account.id, 
+                bookId: param.id!,
+                token: account.token
         }),
     })
 

@@ -4,6 +4,7 @@ import { authContex } from "../../hook/authContext";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getAssessment, type getAssessmentTypeResponse } from "../../http/getAssessment";
+import { Loading } from "../../components/ui/loading";
 
 type ParamBook = {
     id: string
@@ -39,7 +40,7 @@ export function Assessments(){
             </div>
 
             {
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading size={18} />
             }
             {
                 dataAssessment && 

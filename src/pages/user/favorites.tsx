@@ -4,6 +4,7 @@ import { CardBookUser  } from "../../components/cards/cardBookUser"
 import { authContex } from "../../hook/authContext"
 import { useQuery } from "@tanstack/react-query"
 import { numberOfStars } from "../../utils/numberOfStars"
+import { Loading } from "../../components/ui/loading"
 
 export function Favorites(){
 
@@ -45,7 +46,7 @@ export function Favorites(){
 
             </header>
             {
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading size={24}/>
             }
             {
                 data && 

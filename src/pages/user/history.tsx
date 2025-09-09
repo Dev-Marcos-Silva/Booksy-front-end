@@ -3,6 +3,7 @@ import { Clock } from "lucide-react"
 import { CardHistory } from "../../components/cards/cardHistory"
 import { authContex } from "../../hook/authContext"
 import { useQuery } from "@tanstack/react-query"
+import { Loading } from "../../components/ui/loading"
 
 export function History(){
 
@@ -41,7 +42,7 @@ export function History(){
 
             </header>
             {
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading size={24}/>
             }
             {
                 newData &&

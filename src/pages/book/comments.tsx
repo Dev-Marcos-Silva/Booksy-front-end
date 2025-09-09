@@ -4,6 +4,7 @@ import { authContex } from "../../hook/authContext"
 import { useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { getComment, type getCommentTypeResponse } from "../../http/getComment"
+import { Loading } from "../../components/ui/loading"
 
 type paramBook = {
     id: string
@@ -39,7 +40,7 @@ export function Comments(){
             </div>
 
             {
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading size={18}/>
             }
             {
                 dataComments && 

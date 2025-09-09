@@ -3,6 +3,7 @@ import { CardBookLibrary } from "../../components/cards/cardBookLibrary"
 import { useQuery } from "@tanstack/react-query"
 import { getAllBooks, type getAllBooksTypeResponse } from "../../http/getAllBooks"
 import { authContex } from "../../hook/authContext"
+import { Loading } from "../../components/ui/loading"
 
 export function AllBooks(){
 
@@ -39,7 +40,7 @@ export function AllBooks(){
 
             </header>
             {
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading size={24}/>
             }
             {
                 data && 

@@ -7,6 +7,7 @@ import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter"
 import { formatDate } from "../../utils/formatDate"
 import { SmallButton } from "../buttons/smallButton"
 import { putComplete, type putCompleteTypeRequest } from "../../http/putComplete"
+import { useNavigate } from "react-router-dom"
 
 
 interface BookType{
@@ -35,10 +36,13 @@ export function CardFinishedBook({isFinished, ...data}: BookType){
 
     const { account } = authContex()
 
+    const navigate = useNavigate()
+
     const rendBookComplete = useMutation<void, Error, putCompleteTypeRequest>({
         mutationFn: putComplete,
         onSuccess: () => {
             alert("Livro completo com sucesso")
+            navigate("/library/finished")
         },
         onError: () => {
             alert("Algo deu errado ao concluir o livro!") 

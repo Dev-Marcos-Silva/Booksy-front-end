@@ -15,13 +15,14 @@ type AccountContex = {
     logout: () => void
 }
 
+
 export const authContex = create<AccountContex>()(
     persist(
         (set) => (
             {
                 account: null,
                 login: (data) => set({account: data}),
-                logout: () => set({account: null})
+                logout: () => set({account: null}),
             }
         ),
         {

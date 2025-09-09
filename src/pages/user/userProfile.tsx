@@ -124,9 +124,9 @@ export function UserProfile(){
                 </div>
             </header>
             <main className="flex items-center justify-center h-full w-full">
-                    {   
-                        user &&
-                            user.cep?
+                {   
+                    user &&
+                        user.cep?
                             <section className="bg-bg-100 rounded-md w-full my-2 mx-10 pb-2" >
                                 <form onSubmit={handleSubmit(formUserPut)}  className="flex ">
                                     <div className="flex-1/2 px-8 py-6 flex flex-col items-center gap-3" > 
@@ -142,7 +142,7 @@ export function UserProfile(){
                                                 onChange={e => handleImage(e.target.files)} 
                                             />
                                         </div>
-                                    
+                                        
                                         <InputText defaultValue={user?.name} {...register('name')} isBook={false} widthDiv="w-full" className="inline" type="text" placeholder="Digite seu nome" label="Nome de usuário"/>
                                         <InputText defaultValue={user?.email} {...register('email')} isBook={false} widthDiv="w-full" className="inline" type="email" placeholder="Digite seu email" label="Novo email"/>
                                         <InputPassword {...register('newPassword')} widthDiv="w-full" className="inline" isTrue placeholder="Digite a nova senha" label="Nova senha"/>
@@ -175,10 +175,10 @@ export function UserProfile(){
                                         />
                                     </div>
                                 </form>
-                             </section> 
+                            </section> 
                             : 
                             <FormUserPut/>
-                    }
+                }
             </main>
         </section>
     )

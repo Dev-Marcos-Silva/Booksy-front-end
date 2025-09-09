@@ -3,6 +3,7 @@ import { ArrowBigDownDash } from "lucide-react"
 import { CardCustomerRequest } from "../../components/cards/cardCustomerRequest"
 import { authContex } from "../../hook/authContext"
 import { useQuery } from "@tanstack/react-query"
+import { Loading } from "../../components/ui/loading"
 
 export function OrdersReceived(){
 
@@ -36,7 +37,7 @@ export function OrdersReceived(){
                 </div>
             </header>
             {
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading size={24}/>
             }
             { 
                 newData &&

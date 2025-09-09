@@ -3,6 +3,7 @@ import { BookOpenCheck } from "lucide-react"
 import { CardOrder } from "../../components/cards/cardOrder"
 import { authContex } from "../../hook/authContext"
 import { useQuery } from "@tanstack/react-query"
+import { Loading } from "../../components/ui/loading"
 
 export function Books(){
 
@@ -40,10 +41,10 @@ export function Books(){
 
             </header>
             {
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading size={24} />
             }
             {
-                newData &&
+                newData && 
                     <main className="overflow-y-scroll h-full">
                         <section className="flex flex-col gap-x-6 gap-y-8 mx-2 my-4 px-6">
                             {
@@ -58,6 +59,7 @@ export function Books(){
                             }
                         </section>
                     </main>
+                   
             }
         </section>
     )

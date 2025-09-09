@@ -1,6 +1,7 @@
 import { api } from "../service/api";
 
 export interface getRatedsBookTypeRequest{
+    userId: string
     token: string
 }
 
@@ -16,11 +17,12 @@ export interface getRatedsBookTypeResponse{
         book_id: string
         user_id: string
     }[]
+    bookFavorite: boolean
 }
 
-export async function getRatedsBook({ token } : getRatedsBookTypeRequest): Promise<getRatedsBookTypeResponse[]> {
+export async function getRatedsBook({userId, token } : getRatedsBookTypeRequest): Promise<getRatedsBookTypeResponse[]> {
 
-    const { data } = await api.get<{bookWithStar: getRatedsBookTypeResponse[]}>('/rateds/book', {headers: {Authorization: `Bearer ${token}`}})
+    const { data } = await api.get<{bookWithStar: getRatedsBookTypeResponse[]}>(`/rateds/book/${userId}`, {headers: {Authorization: `Bearer ${token}`}})
 
     return data.bookWithStar
 } 

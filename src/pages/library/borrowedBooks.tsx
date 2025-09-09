@@ -3,6 +3,7 @@ import { BookUser } from "lucide-react"
 import { CardBookWithClient } from "../../components/cards/cardBookWithClient"
 import { authContex } from "../../hook/authContext"
 import { useQuery } from "@tanstack/react-query"
+import { Loading } from "../../components/ui/loading"
 
 export function BorrowedBooks(){
 
@@ -42,7 +43,7 @@ export function BorrowedBooks(){
                 </div>
             </header>
             {
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading size={24}/>
             }
             {
                 newData &&

@@ -17,6 +17,7 @@ type bookWithStar = {
         book_id: string
         user_id: string
     }[]
+    bookFavorite: boolean
 }
 
 interface SuggestionType{
@@ -68,6 +69,7 @@ export function Suggestion({ suggetionBook }: SuggestionType){
                                     author={book.author}
                                     image={book.image!}
                                     star={averages[index]}
+                                    bookFavorite={book.bookFavorite}
                                 />
                             </div>
                         )

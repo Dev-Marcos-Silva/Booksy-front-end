@@ -17,6 +17,7 @@ export function Suggestions(){
         queryKey: ["keyGetRecentsBook", account.id],
         queryFn: async () => 
             await getRecentsBook({
+                userId: account.id,
                 token: account.token
         }),
     })
@@ -25,6 +26,7 @@ export function Suggestions(){
         queryKey: ["keyGetRatedsBook", account.id],
         queryFn: async () => 
             await getRatedsBook({
+                userId: account.id,
                 token: account.token
         }),
     })

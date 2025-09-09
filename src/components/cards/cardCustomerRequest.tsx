@@ -9,6 +9,7 @@ import { formatDate } from "../../utils/formatDate"
 import { SmallButton } from "../buttons/smallButton"
 import { StopWatch } from "../ui/stopWatch"
 import { authContex } from "../../hook/authContext"
+import { useNavigate } from "react-router-dom"
 
 interface BookType{
     id: number
@@ -34,10 +35,13 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
 
     const { account } = authContex()
 
+    const navigate = useNavigate()
+
     const rendBookAcceptOrDeny = useMutation<void, Error, putAcceptTypeRequest>({
         mutationFn: putAccept,
         onSuccess: () => {
             alert("Pedido aceito com sucesso")
+            navigate("/library/delivered")
         },
         onError: () => {
             alert("Algo deu errado ao aceitar o pedido!") 
@@ -74,6 +78,7 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
         mutationFn: putDeliver,
         onSuccess: () => {
             alert("Livro entregue com sucesso")
+            navigate("/library/borrowed")
         },
         onError: () => {
             alert("Algo deu errado ao entregar o livro!") 

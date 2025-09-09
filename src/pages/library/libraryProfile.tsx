@@ -118,8 +118,8 @@ export function LibraryProfile(){
             </header>
             <main className="flex items-center justify-center h-full w-full">
                 <section className="bg-bg-100 rounded-md w-full my-2 mx-10 pb-2" >
-                   <form onSubmit={handleSubmit(formLibraryPut)}  className="flex">
-                         <div className="flex-1/2 px-8 py-6 flex flex-col items-center gap-3" > 
+                    <form onSubmit={handleSubmit(formLibraryPut)}  className="flex">
+                        <div className="flex-1/2 px-8 py-6 flex flex-col items-center gap-3" > 
                          
                             <div className="relative max-h-30 max-w-40" >
                                 <img className="h-30 w-40 border-1 border-but-200 rounded-lg object-cover" src={imageState} alt="" />
