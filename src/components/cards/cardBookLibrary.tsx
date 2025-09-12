@@ -7,15 +7,17 @@ interface BookType{
     title: string
     author: string
     image: string
+    updataAt: string
+
 }
 
-export function CardBookLibrary({id, title, author, image}: BookType){
+export function CardBookLibrary({id, title, author, image, updataAt}: BookType){
 
     return (
         <div className="w-56 h-74 border-1 border-but-200 rounded-sm shadow-lg">
             
             <section  className="relative w-full h-4/5">
-                <img className="w-full h-full object-cover rounded-t-sm " src={image && `${api.defaults.baseURL}/upload/book/${image}`} alt={`capa do livro ${title}`}/>
+                <img className="w-full h-full object-cover rounded-t-sm " src={image && `${api.defaults.baseURL}/upload/book/${image}?v=${updataAt}`} alt={`capa do livro ${title}`}/>
 
                 <div className="absolute h-full w-full top-0 flex flex-col justify-end opacity-0 hover:opacity-100 duration-500 rounded-sm" >
                     <section className="bg-font-500 h-26 flex flex-col justify-center px-2 gap-2">

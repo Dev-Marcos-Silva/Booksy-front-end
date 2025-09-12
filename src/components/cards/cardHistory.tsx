@@ -7,6 +7,7 @@ import { numberOfStars } from "../../utils/numberOfStars"
 import { ButtonCard } from "../buttons/buttonCard"
 import { Star, X } from "lucide-react"
 import { authContex } from "../../hook/authContext"
+import { queryClient } from "../../service/queryClient"
 
 interface BookType{
     id: number
@@ -30,6 +31,10 @@ export function CardHistory({...data}: BookType){
 
     const { account } = authContex()
 
+    if(!account){
+        return
+    }
+
     const stars = data.stars
     
     const star = stars.map(star => star.star)
@@ -40,6 +45,10 @@ export function CardHistory({...data}: BookType){
         mutationFn: deleteHistoryBook,
         onSuccess: () => {
             alert("Livro excluído com sucessso")
+            
+            queryClient.refetchQueries({
+                queryKey: [ "keyGetRendBookUser", account.id ]
+            })
         },
         onError: () => {
             alert("Algo deu errado ao excluir livro!") 

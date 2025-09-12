@@ -30,6 +30,7 @@ export interface getBooksTypeResponse{
     amount: number
     library_id: string
     bookFavorite: boolean
+    updateAt: string
 }
 
 export async function getBook({accountId, bookId, token} : getBooksTypeRequest): Promise<getBooksTypeResponse> {

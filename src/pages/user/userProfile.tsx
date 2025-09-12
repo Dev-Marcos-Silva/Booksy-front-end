@@ -14,6 +14,7 @@ import z from "zod"
 import image from '../../assets/img/profile.webp'
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { FormUserPut } from "../../components/form/formUserPut"
+import { queryClient } from "../../service/queryClient"
 
 const schemaForm = z.object({
     name: z.string(),
@@ -56,7 +57,7 @@ export function UserProfile(){
         return
     }
 
-    const avatar = account.image? `${api.defaults.baseURL}/upload/profile/${account.image}` : image
+    const avatar = user?.image? `${api.defaults.baseURL}/upload/profile/${user.image}?v=${user.updateAt}` : image
 
     const [ imageState, setImageState ] = useState<string>(avatar)
  
@@ -70,8 +71,12 @@ export function UserProfile(){
 
     const userUpdate = useMutation<void, Error, putUserTypeRequest>({
         mutationFn: putUser,
-        onSuccess: () => {
+        onSuccess:  () => {
             alert("Informações atualizada com sucesso")
+
+            queryClient.refetchQueries({
+                queryKey: [ "keyGetUserAccount", account.id ],
+            })
         },
         onError: () => {
             alert("Algo deu errado ao atualizar as informações!") 
@@ -108,7 +113,7 @@ export function UserProfile(){
             })
         }
     }
-    
+
     return(
         <section className='bg-bg-primary h-full flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >
@@ -132,7 +137,7 @@ export function UserProfile(){
                                     <div className="flex-1/2 px-8 py-6 flex flex-col items-center gap-3" > 
 
                                         <div className="relative max-h-30 max-w-30" >
-                                            <img className="h-30 w-30 border-1 border-but-200 rounded-full object-cover" src={imageState} alt={`Imagem do usuário ${account?.name}`} />
+                                            <img className="h-30 w-30 border-1 border-but-200 rounded-full object-cover" src={imageState} alt={`Imagem do usuário ${user.name}`} />
                                             <button className="absolute flex justify-center items-center bg-bg-primary w-10 h-10 top-20 right-0 rounded-xl border-1 border-but-200 " >
                                                 <Camera color="#FA7248" size={32}/>
                                             </button>

@@ -43,7 +43,7 @@ export function BorrowedBooks(){
                 </div>
             </header>
             {
-                isLoading && <Loading size={24}/>
+                isLoading && <Loading/>
             }
             {
                 newData &&

@@ -37,12 +37,12 @@ export function History(){
                 </div>
                 <div className="px-17 flex items-center gap-2" >
                     <span className="border-1 border-but-200 rounded-full w-10 h-10 flex items-center justify-center text-but-200 text-xl">{newData?.length}</span>
-                    <p className="text-font-300 text-lg" >total de livros</p>
+                    <p className="text-font-300 text-lg" >Total de Livros</p>
                 </div>
 
             </header>
             {
-                isLoading && <Loading size={24}/>
+                isLoading && <Loading/>
             }
             {
                 newData &&

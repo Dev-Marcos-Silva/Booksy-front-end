@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { House, Book, History, LibraryBig, Bookmark, CirclePlus, Power } from 'lucide-react'
 import { authContex } from '../../hook/authContext'
 import { api } from '../../service/api'
+import { useQuery } from '@tanstack/react-query'
+import { getUser, type getUserTypeResponse } from '../../http/getUser'
 
 export function UserSideBar(){
 
@@ -15,15 +17,32 @@ export function UserSideBar(){
         navigate('/login')
     }
 
+    if(!account){
+        return
+    }
+
+    const { data: user, error } = useQuery<getUserTypeResponse>({
+        queryKey: [ "keyGetUserAccount", account.id ],
+        queryFn: async () => 
+            await getUser({
+                userId: account.id,
+                token: account.token
+        })
+    })
+
+    if(error){
+        return
+    }
+
     return(
         <section className='bg-bg-primary h-screen flex flex-col items-center justify-evenly font-primary' >
 
            <section className='flex flex-col items-center my-6 '>
 
                 <Link className='w-2/6' to={'/user/profile'}>
-                    <img className='rounded-full border-1 border-but-100 object-cover' src={account?.image? `${api.defaults.baseURL}/upload/profile/${account.image}`: image} alt={`imagem do usuário/a ${account?.name}`} />
+                    <img className='rounded-full border-1 border-but-100 object-cover' src={user?.image? `${api.defaults.baseURL}/upload/profile/${user.image}?v=${user.updateAt}`: image} alt={`imagem do usuário/a ${user?.name}`} />
                 </Link>
-                <p className='py-2 text-2xl'>{account?.name}</p>
+                <p className='py-2 text-2xl'>{user?.name}</p>
 
            </section>
 

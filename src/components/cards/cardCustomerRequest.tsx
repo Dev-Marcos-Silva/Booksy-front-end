@@ -9,7 +9,7 @@ import { formatDate } from "../../utils/formatDate"
 import { SmallButton } from "../buttons/smallButton"
 import { StopWatch } from "../ui/stopWatch"
 import { authContex } from "../../hook/authContext"
-import { useNavigate } from "react-router-dom"
+import { queryClient } from "../../service/queryClient"
 
 interface BookType{
     id: number
@@ -35,13 +35,17 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
 
     const { account } = authContex()
 
-    const navigate = useNavigate()
+    if(!account){
+        return
+    }
 
     const rendBookAcceptOrDeny = useMutation<void, Error, putAcceptTypeRequest>({
         mutationFn: putAccept,
         onSuccess: () => {
             alert("Pedido aceito com sucesso")
-            navigate("/library/delivered")
+            queryClient.refetchQueries({
+                queryKey: ["keyGetRendBookLibrary", account.id]
+            })
         },
         onError: () => {
             alert("Algo deu errado ao aceitar o pedido!") 
@@ -78,7 +82,9 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
         mutationFn: putDeliver,
         onSuccess: () => {
             alert("Livro entregue com sucesso")
-            navigate("/library/borrowed")
+            queryClient.refetchQueries({
+                queryKey: ["keyGetRendBookLibrary", account.id]
+            })
         },
         onError: () => {
             alert("Algo deu errado ao entregar o livro!") 

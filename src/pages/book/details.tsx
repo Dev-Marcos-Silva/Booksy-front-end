@@ -17,6 +17,7 @@ import z from "zod"
 import imageBook from "../../assets/img/book.webp"
 import imageLibrary from "../../assets/img/logo.webp"
 import { Loading } from "../../components/ui/loading"
+import { queryClient } from "../../service/queryClient"
 
 type ParamBook = {
     id: string
@@ -115,6 +116,9 @@ export function Details(){
         })
     }
 
+    queryClient.invalidateQueries({queryKey: ["keyGetBook", param.id]})
+    queryClient.invalidateQueries({queryKey: ["keyGetLibrary", param.id]})
+
     return(
         <section className='bg-bg-primary h-screen flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >
@@ -124,14 +128,14 @@ export function Details(){
                 </div>
             </header>
             {
-                isLoading && <Loading size={24}/>
+                isLoading && <Loading/>
             }
             {
                 dataBook && dataLibrary &&
                 <main className="overflow-y-scroll h-full" >
                     <section className="flex mt-4 mx-10 gap-6">
                         <div className="relative">
-                            <img className="w-88 h-74 object-cover rounded-md" src={dataBook.image? `${api.defaults.baseURL}/upload/book/${dataBook.image}`: imageBook} alt={`Imagem do livro ${dataBook.title}`}/>
+                            <img className="w-88 h-74 object-cover rounded-md" src={dataBook.image? `${api.defaults.baseURL}/upload/book/${dataBook.image}?v=${dataBook.updateAt}`: imageBook} alt={`Imagem do livro ${dataBook.title}`}/>
                             {
                                 account?.type === "USER" &&
                                 <div className="absolute flex justify-end items-start p-4 w-full h-full top-0 opacity-0 hover:opacity-100 duration-500">
@@ -144,7 +148,7 @@ export function Details(){
                         </div>
                         <section className="flex flex-col gap-2 h-full w-full" >
                             <div className="bg-bg-300 pl-4 py-3 pr-3 flex gap-6 w-full h-full rounded-md">
-                                <img className="w-40 max-h-32 rounded-md border-1 border-but-100 object-cover" src={dataLibrary.image? `${api.defaults.baseURL}/upload/library/${dataLibrary.image}`: imageLibrary} alt={`Imagem da biblioteca ${dataLibrary.name}`}/>
+                                <img className="w-40 max-h-32 rounded-md border-1 border-but-100 object-cover" src={dataLibrary.image? `${api.defaults.baseURL}/upload/library/${dataLibrary.image}?v=${dataLibrary.updateAt}`: imageLibrary} alt={`Imagem da biblioteca ${dataLibrary.name}`}/>
 
                                 <div className="flex flex-col gap-4 ">
                                     <div>

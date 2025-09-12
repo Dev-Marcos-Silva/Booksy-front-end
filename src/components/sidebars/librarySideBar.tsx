@@ -2,8 +2,10 @@ import image from '../../assets/img/house.webp'
 import { Link, useNavigate } from 'react-router-dom'
 import { Book, Power, BookUp, BookCopy, BookCheck, BookX, BookDown, BookPlus } from 'lucide-react'
 import { authContex } from '../../hook/authContext'
-import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter'
- 
+import { api } from '../../service/api'
+import { useQuery } from '@tanstack/react-query'
+import { getLibrary, type getLibraryTypeResponse } from '../../http/getLibrary'
+
 export function LibrarySideBar(){
 
     const { account, logout } = authContex()
@@ -15,15 +17,32 @@ export function LibrarySideBar(){
         navigate('/login')
     }
 
+    if(!account){
+        return
+    }
+
+    const { data: library, error } = useQuery<getLibraryTypeResponse>({
+        queryKey: [ "keyGetLibraryAccount", account.id ],
+        queryFn: async () => 
+            await getLibrary({
+                libraryId: account.id,
+                token: account.token
+        })
+    })
+
+    if(error){
+        return
+    }
+
     return(
         <section className='bg-bg-primary h-screen flex flex-col items-center justify-evenly font-primary' >
 
            <section className='flex flex-col items-center my-6 '>
 
                 <Link to={'/library/profile'}>
-                    <img className='h-30 w-40 rounded-lg border-1 border-but-100 object-cover' src={account?.image? `http://localhost:3333/upload/library/${account.image}`: image} alt={`imagem da biblioteca ${account?.name}`} />
+                    <img className='h-30 w-40 rounded-lg border-1 border-but-100 object-cover' src={library?.image? `${api.defaults.baseURL}/upload/library/${library.image}?v=${library.updateAt}`: image} alt={`imagem da biblioteca ${library?.name}`} />
                 </Link>
-                <p className='py-2 text-2xl'>{capitalizeFirstLetter(account?.name)}</p>
+                <p className='py-2 text-2xl'>{library?.name}</p>
 
            </section>
 

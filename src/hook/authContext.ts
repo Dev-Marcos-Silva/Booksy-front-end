@@ -3,8 +3,6 @@ import { persist } from "zustand/middleware"
 
 type Account = {
     id: string
-    name: string
-    image: string | undefined | null
     type: string
     token: string
 }

@@ -41,7 +41,7 @@ export function Books(){
 
             </header>
             {
-                isLoading && <Loading size={24} />
+                isLoading && <Loading/>
             }
             {
                 newData && 

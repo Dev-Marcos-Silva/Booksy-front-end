@@ -17,6 +17,7 @@ export interface getLibraryTypeResponse{
 	number: string
     ddd: string
 	phone: string
+    updateAt: string
 }
 
 export async function getLibrary({libraryId, token} : getLibraryTypeRequest): Promise<getLibraryTypeResponse> {

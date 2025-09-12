@@ -4,6 +4,7 @@ import { authContex } from "../../hook/authContext"
 import { useMutation } from "@tanstack/react-query"
 import { postFavoriteBook, type postFavoriteBookTypeRequest } from "../../http/postFavoriteBook"
 import { deleteFavoriteBook, type deleteFavoriteBookTypeRequest } from "../../http/deleteFavoriteBook"
+import { queryClient } from "../../service/queryClient"
 
 interface ButtonType extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     bookId: string
@@ -13,6 +14,10 @@ interface ButtonType extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export function ButtonMark({bookId, bookFavorite}: ButtonType){
 
     const { account } = authContex()
+
+    if(!account){
+        return
+    }
 
     const [markButton, setMarkButton] = useState(bookFavorite)
     
@@ -26,6 +31,9 @@ export function ButtonMark({bookId, bookFavorite}: ButtonType){
     const postFavorite = useMutation<void, Error, postFavoriteBookTypeRequest>({
         mutationFn: postFavoriteBook,
         onSuccess: () => {
+            queryClient.refetchQueries({
+                queryKey: ["keyGetBook", bookId]
+            })
         },
         onError: () => {
             alert("Erro ao favoritar livro")
@@ -50,6 +58,12 @@ export function ButtonMark({bookId, bookFavorite}: ButtonType){
     const deleteFavorite = useMutation<void, Error, deleteFavoriteBookTypeRequest>({
         mutationFn: deleteFavoriteBook,
         onSuccess: () => {
+            queryClient.refetchQueries({
+                queryKey: ["keyGetBook", bookId]
+            })
+            queryClient.refetchQueries({
+                queryKey: [ "keyGetRendBookUser", account.id ]
+            })
         },
         onError: () => {
             alert("Erro ao favoritar livro")

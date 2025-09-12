@@ -15,8 +15,10 @@ import { api } from "../../service/api"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { queryClient } from "../../service/queryClient"
 import z from "zod"
+import { Loading } from "../../components/ui/loading"
+import { queryClient } from "../../service/queryClient"
+
 
 const schemaForm = z.object({
     author: z.string(),
@@ -44,9 +46,9 @@ export function UpdateBook(){
         resolver: zodResolver(schemaForm)
     })
 
-    const { account } = authContex()
-
     const navigate = useNavigate()
+
+    const { account } = authContex()
 
     const [ imageState, setImageState ] = useState<string>("")
 
@@ -70,14 +72,12 @@ export function UpdateBook(){
 
     const book = useMutation<void, Error, putBookTypeRequest>({
         mutationFn: putBook,
-        onSuccess: (_, variables) => {
+        onSuccess: () => {
             alert("Livro atualizado com sucesso")
-
             queryClient.invalidateQueries({
-                queryKey: ["keyGetAllBook", variables.libraryId]
-            }) 
-
-            navigate("/library")
+                queryKey: ["keyGetBookUpdate", param.id]
+            })
+            navigate('/library')
         },
         onError: () => {
             alert("Algo deu errado ao atualizar as informações do livro!") 
@@ -89,8 +89,9 @@ export function UpdateBook(){
         onSuccess: () => {
             alert("Imagem atualizada com sucessso")
             queryClient.invalidateQueries({
-                queryKey: ["keyGetAllBook", account.id]
-            }) 
+                queryKey: ["keyGetBookUpdate", param.id]
+            })
+            navigate('/library')
         },
         onError: () => {
             alert("Algo deu errado ao atualizar imagem do livro!") 
@@ -101,7 +102,6 @@ export function UpdateBook(){
         mutationFn: deleteBook,
         onSuccess: () => {
             alert("Livro excluído com sucessso")
-            navigate("/library")
         },
         onError: () => {
             alert("Algo deu errado ao excluir livro!") 
@@ -174,7 +174,7 @@ export function UpdateBook(){
                 </div>
             </header>
             { 
-                isLoading && <p>Carregando...</p>
+                isLoading && <Loading/>
             }
             {
                 dataBook && 
@@ -185,7 +185,7 @@ export function UpdateBook(){
 
                                     <div className="relative h-62" >
 
-                                        <img className="border-1 h-full w-full border-font-200 rounded-lg object-cover" src={imageState? imageState: `${api.defaults.baseURL}/upload/book/${dataBook.image}`} alt={`Imagem do livro ${dataBook.title}`}  />
+                                        <img className="border-1 h-full w-full border-font-200 rounded-lg object-cover" src={imageState? imageState: `${api.defaults.baseURL}/upload/book/${dataBook.image}?v=${dataBook.updateAt}`} alt={`Imagem do livro ${dataBook.title}`}  />
 
                                         <button className="absolute flex justify-center items-center bg-bg-primary w-10 h-10 top-52 right-0 rounded-lg border-1 border-but-200 " >
                                             <Camera color="#FA7248" size={32}/>

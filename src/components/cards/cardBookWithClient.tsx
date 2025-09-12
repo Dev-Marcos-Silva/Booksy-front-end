@@ -8,7 +8,7 @@ import { SmallButton } from "../buttons/smallButton"
 import { formatDate } from "../../utils/formatDate"
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter"
 import { authContex } from "../../hook/authContext"
-import { useNavigate } from "react-router-dom"
+import { queryClient } from "../../service/queryClient"
 
 interface BookType{
     id: number
@@ -34,13 +34,17 @@ export function CardBookWithClient({...data}: BookType){
 
     const { account } = authContex()
 
-    const navigate = useNavigate()
+    if(!account){
+        return
+    }
 
     const rendBookComplete = useMutation<void, Error, putCompleteTypeRequest>({
         mutationFn: putComplete,
         onSuccess: () => {
             alert("Livro completo com sucesso")
-            navigate("/library/finished")
+            queryClient.refetchQueries({
+                queryKey: [ "keyGetRendBookLibrary", account.id ]
+            })
         },
         onError: () => {
             alert("Algo deu errado ao concluir o livro!") 

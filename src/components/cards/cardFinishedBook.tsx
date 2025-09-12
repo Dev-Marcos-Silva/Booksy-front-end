@@ -7,8 +7,7 @@ import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter"
 import { formatDate } from "../../utils/formatDate"
 import { SmallButton } from "../buttons/smallButton"
 import { putComplete, type putCompleteTypeRequest } from "../../http/putComplete"
-import { useNavigate } from "react-router-dom"
-
+import { queryClient } from "../../service/queryClient"
 
 interface BookType{
     id: number
@@ -36,13 +35,17 @@ export function CardFinishedBook({isFinished, ...data}: BookType){
 
     const { account } = authContex()
 
-    const navigate = useNavigate()
+    if(!account){
+        return
+    }
 
     const rendBookComplete = useMutation<void, Error, putCompleteTypeRequest>({
         mutationFn: putComplete,
         onSuccess: () => {
             alert("Livro completo com sucesso")
-            navigate("/library/finished")
+            queryClient.refetchQueries({
+                queryKey: ["keyGetRendBookLibrary", account.id]
+            })
         },
         onError: () => {
             alert("Algo deu errado ao concluir o livro!") 
@@ -97,9 +100,11 @@ export function CardFinishedBook({isFinished, ...data}: BookType){
 
                 {
                     isFinished?
-                    <div className="bg-bg-primary flex flex-col items-center justify-center border-font-600 border-1 rounded-xl h-full px-3" >
-                        <h2 className="text-lg text-font-100 font-semibold">Encerrado em</h2>
-                        <p className=" text-font-100 font-medium">{formatDate(data.endDate)}</p>
+                    <div className="bg-bg-primary flex flex-col items-center justify-evenly border-font-600 border-1 rounded-xl h-full px-3" >
+                        <div className="flex flex-col items-center justify-center" >
+                            <h2 className="text-lg text-font-100 font-semibold">Encerrado em</h2>
+                            <p className=" text-font-100 font-medium">{formatDate(data.endDate)}</p>
+                        </div>
                     </div>
                     : 
                     <div className="bg-bg-primary flex flex-col items-center justify-evenly border-font-700 border-1 rounded-xl h-full px-3" >

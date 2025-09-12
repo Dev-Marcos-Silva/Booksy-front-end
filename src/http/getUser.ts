@@ -16,6 +16,7 @@ export interface getUserTypeResponse{
 	number: string
     ddd: string
 	phone: string
+    updateAt: string
 }
 
 export async function getUser({userId, token} : getUserTypeRequest): Promise<getUserTypeResponse> {

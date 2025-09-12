@@ -46,7 +46,7 @@ export function Favorites(){
 
             </header>
             {
-                isLoading && <Loading size={24}/>
+                isLoading && <Loading/>
             }
             {
                 data && 

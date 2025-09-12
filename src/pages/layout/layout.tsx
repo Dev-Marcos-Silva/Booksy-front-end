@@ -6,17 +6,17 @@ import { authContex } from "../../hook/authContext"
 export function Layout(){
 
     const { account } = authContex()
-
+    
     return(
         <section className="w-screen h-screen grid grid-cols-4 grid-rows-5">
 
             <aside className= "w-full row-span-5 border-r-1 border-but-100">
                 {
                     account?.type === "USER"?(
-                        <UserSideBar/>
+                        <UserSideBar />
                     ):
                     account?.type === "LIBRARY"?(
-                        <LibrarySideBar/>
+                        <LibrarySideBar />
                     ):
                     <div/>
                 }
