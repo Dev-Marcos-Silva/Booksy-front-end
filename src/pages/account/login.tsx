@@ -95,7 +95,7 @@ export function Login(){
 
                         <div className="flex justify-between w-full pt-2 gap-4" >
                             <Link className="text-font-100 text-lg border-b-1 border-bg-100 hover:border-b-font-100 duration-600" to={'/register'}>Crie uma conta aqui</Link>
-                            <a className="text-font-100 text-lg border-b-1 border-bg-100 hover:border-b-font-100 duration-600" href="">Esqueci senha</a>
+                            <p onClick={() => {alert("Essa função ainda não estar disponível")}} className="text-font-100 text-lg border-b-1 border-bg-100 hover:border-b-font-100 duration-600 cursor-pointer">Esqueci senha</p>
                         </div>
 
                         <div className="w-3 h-8 bg-bg-200 absolute left-6 -bottom-8"></div>
