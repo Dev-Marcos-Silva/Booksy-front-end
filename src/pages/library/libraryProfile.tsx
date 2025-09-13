@@ -6,7 +6,7 @@ import { InputText } from "../../components/inputs/inputText"
 import { InputPassword } from "../../components/inputs/inputPassword"
 import { BigButton } from "../../components/buttons/bigButton"
 import { authContex } from "../../hook/authContext"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { api } from "../../service/api"
@@ -55,10 +55,6 @@ export function LibraryProfile(){
     if(error){
         return
     }
-
-    const avatar = library?.image? `${api.defaults.baseURL}/upload/library/${library.image}?v=${library.updateAt}` : image
-
-    const [ imageState, setImageState ] = useState<string>(avatar)
 
     function handleImage(file: FileList | null){
 
@@ -113,6 +109,16 @@ export function LibraryProfile(){
         }
     }
 
+    const [ imageState, setImageState ] = useState<string>(image)
+
+    useEffect(() => {
+    
+        const avatar = library?.image? `${api.defaults.baseURL}/upload/library/${library.image}` : image
+    
+        setImageState(avatar)
+    
+    }, [library])
+
     return(
         <section className='bg-bg-primary h-full flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >
@@ -153,7 +159,7 @@ export function LibraryProfile(){
                                         <InputText defaultValue={library?.phone} {...register('phone')} isBook={false} widthDiv="w-full" type="number"  placeholder="000000000" label="Telefone de contato"/>
                                     </div>
 
-                                    <InputText defaultValue={library?.cep} {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000-000" label="CEP"/>
+                                    <InputText defaultValue={library?.cep} {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000000" label="CEP"/>
 
                                     <div className="flex gap-4 justify-center" >
                                         <InputText defaultValue={library?.street} {...register('street')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome da rua" label="Nome da rua"/>

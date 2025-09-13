@@ -31,7 +31,7 @@ export function ButtonResponse({commentId}: ButtonType){
             reset()
         },
         onError: () => {
-            alert("Error ao registrar resposta")
+            alert("Error ao registrar resposta!")
         }
     })
 

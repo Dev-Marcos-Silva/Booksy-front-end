@@ -24,7 +24,7 @@ export function InputSelect({label, options, valueDefault, ...props}: InputType)
                     </option>
                 }))}
             </select>
-            <ChevronDown className="absolute right-2 top-10 pointer-events-none" size={20} />  
+            <ChevronDown className="absolute right-1 top-10 pointer-events-none" size={20} />  
         </div> 
     )
 }

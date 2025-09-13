@@ -23,7 +23,7 @@ export function UnfinishedBook(){
     })
         
     if(error){
-        alert("Error ao buscar pedidos...")
+        alert("Error ao buscar pedidos!")
     }
 
 

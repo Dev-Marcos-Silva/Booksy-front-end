@@ -23,7 +23,7 @@ export function AllBooks(){
     })
 
     if(error){
-        alert("Error ao buscar livros...")
+        alert("Error ao buscar livros!")
     }
 
     return(

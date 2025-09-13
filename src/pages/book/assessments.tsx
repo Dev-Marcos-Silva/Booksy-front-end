@@ -29,7 +29,7 @@ export function Assessments(){
     })
 
     if(error){
-        alert("Error ao buscar avaliações...")
+        alert("Error ao buscar avaliações!")
     }
 
     return(

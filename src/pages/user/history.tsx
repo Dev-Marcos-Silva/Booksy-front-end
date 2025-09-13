@@ -23,7 +23,7 @@ export function History(){
     })
 
     if(error){
-        alert("Error ao buscar pedidos...")
+        alert("Error ao buscar histórico!")
     }
 
     const newData = data?.filter(book => book.isComplete === "true" && book.userVisibility === "true")

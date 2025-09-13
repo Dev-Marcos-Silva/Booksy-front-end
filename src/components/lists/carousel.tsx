@@ -28,6 +28,7 @@ export function Carousel({...props}: CarouselType){
 
             <button
                 onClick={handlePrev}
+                className="cursor-pointer"
             >
                 <ChevronLeft/>
             </button>
@@ -52,6 +53,7 @@ export function Carousel({...props}: CarouselType){
             
             <button
                 onClick={handleNext}
+                className="cursor-pointer"
             >
                 <ChevronRight/>
             </button>

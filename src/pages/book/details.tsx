@@ -72,7 +72,7 @@ export function Details(){
     })
 
     if(error){
-        alert("Error ao buscar livro...")
+        alert("Error ao buscar livro!")
     }
 
     if(dataBook){

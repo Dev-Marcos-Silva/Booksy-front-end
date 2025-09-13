@@ -162,7 +162,7 @@ export function UpdateBook(){
     }
 
     if(error){
-        alert("Error ao buscar livro...")
+        alert("Error ao buscar livro!")
     }
 
     return(

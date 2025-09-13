@@ -30,7 +30,7 @@ export function Home(){
             setBooks(data)
         },
         onError: () => {
-            alert("Error ao buscar os livros")
+            alert("Error ao buscar os livros!")
         }
     })
 
@@ -46,7 +46,7 @@ export function Home(){
             setBooks(data)
         },
         onError: () => {
-            alert("Error ao buscar os livros")
+            alert("Error ao buscar os livros!")
         }
     })
 
@@ -121,7 +121,7 @@ export function Home(){
             {
                 books?.length < 1 &&
                     <div className="w-full h-full flex justify-center items-center">
-                        <p className="text-3xl text-font-400 font-secund italic">Pesquisa...</p>
+                        <p className="text-3xl cursor-default text-font-400 font-secund italic">Pesquisa...</p>
                     </div>
             }
 

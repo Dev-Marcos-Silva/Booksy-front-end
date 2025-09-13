@@ -36,7 +36,7 @@ export function ButtonMark({bookId, bookFavorite}: ButtonType){
             })
         },
         onError: () => {
-            alert("Erro ao favoritar livro")
+            alert("Erro ao favoritar livro!")
         }
     })
 
@@ -66,7 +66,7 @@ export function ButtonMark({bookId, bookFavorite}: ButtonType){
             })
         },
         onError: () => {
-            alert("Erro ao favoritar livro")
+            alert("Erro ao desfavoritar livro!")
         }
     })
 

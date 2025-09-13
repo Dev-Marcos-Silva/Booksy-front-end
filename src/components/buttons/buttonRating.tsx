@@ -22,13 +22,13 @@ export function ButtonRating({bookId}: ButtonType){
         onSuccess: (data) => {
             
             if(data === 208){
-                return alert("Avaliação já foi registrada")
+                return alert("Avaliação já foi registrada!")
             }
 
             alert("Avaliação registrada com sucesso")
         },
-        onError: (data) => {
-            alert(`Error ao registrar avaliação: ${data}`)
+        onError: () => {
+            alert("Error ao registrar avaliação!")
         }
     })
 

@@ -29,7 +29,7 @@ export function Comments(){
     })
 
     if(error){
-        alert("Error ao buscar comentários")
+        alert("Error ao buscar comentários!")
     }
 
     return(

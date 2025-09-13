@@ -51,7 +51,7 @@ export function Suggestion({ suggetionBook }: SuggestionType){
 
             <button
                 onClick={handlePrev}
-                className='absolute left-0 top-28 z-2'
+                className='absolute left-0 top-28 z-2 cursor-pointer bg-font-400 rounded-full opacity-60'
             >
                 <ChevronLeft size={33}/>
             </button>
@@ -80,7 +80,7 @@ export function Suggestion({ suggetionBook }: SuggestionType){
             
             <button
                 onClick={handleNext}
-                className='absolute right-0 top-28'
+                className='absolute right-0 top-28 cursor-pointer bg-font-400 rounded-full opacity-60'
             >
                 <ChevronRight size={33}/>
             </button>

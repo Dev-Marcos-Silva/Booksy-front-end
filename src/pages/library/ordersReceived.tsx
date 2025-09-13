@@ -23,7 +23,7 @@ export function OrdersReceived(){
     })
 
     if(error){
-        alert("Error ao buscar pedidos...")
+        alert("Error ao buscar pedidos!")
     }
 
     const newData = data?.filter(book => book.isAccept === "undefine")

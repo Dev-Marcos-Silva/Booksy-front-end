@@ -31,7 +31,7 @@ export function ButtonComment({bookId}: ButtonType){
             reset()
         },
         onError: () => {
-            alert("Error ao registrar comentário")
+            alert("Error ao registrar comentário!")
         }
     })
 

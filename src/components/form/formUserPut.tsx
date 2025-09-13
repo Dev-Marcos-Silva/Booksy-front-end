@@ -37,7 +37,7 @@ export function FormUserPut(){
             alert("Cadastro completo com sucesso")
         },
         onError: () => {
-            alert("Algo deu errado ao finalizar cadastro") 
+            alert("Algo deu errado ao finalizar cadastro!") 
         },
     })
 

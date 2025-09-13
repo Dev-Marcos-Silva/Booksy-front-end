@@ -8,13 +8,13 @@ import { BigButton } from "../../components/buttons/bigButton"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { authContex } from "../../hook/authContext"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { api } from "../../service/api"
-import z from "zod"
-import image from '../../assets/img/profile.webp'
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { FormUserPut } from "../../components/form/formUserPut"
 import { queryClient } from "../../service/queryClient"
+import image from '../../assets/img/profile.webp'
+import z from "zod"
 
 const schemaForm = z.object({
     name: z.string(),
@@ -56,10 +56,6 @@ export function UserProfile(){
     if(error){
         return
     }
-
-    const avatar = user?.image? `${api.defaults.baseURL}/upload/profile/${user.image}?v=${user.updateAt}` : image
-
-    const [ imageState, setImageState ] = useState<string>(avatar)
  
     function handleImage(file: FileList | null){
 
@@ -114,13 +110,23 @@ export function UserProfile(){
         }
     }
 
+    const [ imageState, setImageState ] = useState<string>(image)
+
+    useEffect(() => {
+
+        const avatar = user?.image? `${api.defaults.baseURL}/upload/profile/${user.image}` : image
+
+        setImageState(avatar)
+
+    }, [user])
+
     return(
         <section className='bg-bg-primary h-full flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >
                 <div className="flex py-3 px-4 gap-4 text-2xl font-medium items-center" >
                     <PencilLine size={38} />
                     {
-                         user &&
+                        user &&
                             user.cep?
                             <h1>Atualização de informações</h1>
                             :
@@ -161,7 +167,7 @@ export function UserProfile(){
                                             <InputText defaultValue={user?.phone} {...register('phone')} isBook={false} widthDiv="w-full" type="number"  placeholder="000000000" label="Telefone de contato"/>
                                         </div>
 
-                                        <InputText defaultValue={user?.cep} {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000-000" label="CEP"/>
+                                        <InputText defaultValue={user?.cep} {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000000" label="CEP"/>
 
                                         <div className="flex gap-4 justify-center" >
                                             <InputText defaultValue={user?.street} {...register('street')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome da rua" label="Nome da rua"/>

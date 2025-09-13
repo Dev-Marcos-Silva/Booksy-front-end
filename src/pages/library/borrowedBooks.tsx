@@ -23,7 +23,7 @@ export function BorrowedBooks(){
     })
         
     if(error){
-        alert("Error ao buscar pedidos...")
+        alert("Error ao buscar pedidos!")
     }
 
     const nowDate = new Date()

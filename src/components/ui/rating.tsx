@@ -13,6 +13,7 @@ interface RatingType{
 const ratingStar = [1,2,3,4,5]
 
 export function Rating({image, name, date, index }: RatingType){
+    
     return (
         <section className="mt-6 flex gap-2" >
             <img className="max-w-12 max-h-12 rounded-full" src={image? `${api.defaults.baseURL}/upload/profile/${image}`: imageUser} alt={`Imagem do usuário ${name}`} />

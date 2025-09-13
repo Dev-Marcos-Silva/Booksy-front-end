@@ -24,7 +24,7 @@ export function Favorites(){
     })
     
     if(error){
-        alert("Error ao buscar pedidos...")
+        alert("Error ao buscar favoritos!")
     }
 
     const averages = (data?? []).map(book => {

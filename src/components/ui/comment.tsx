@@ -35,7 +35,7 @@ export function Comment({commentId, image, name, comment, date, isLibrary}: Comm
     })
 
     if(error){
-        alert("Error ao buscar respotas")
+        alert("Error ao buscar respostas!")
     }
 
     const { data: dataLibrary} = useQuery<getLibraryTypeResponse>({

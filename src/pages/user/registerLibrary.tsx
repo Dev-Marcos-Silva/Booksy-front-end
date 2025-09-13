@@ -50,7 +50,7 @@ export function RegisterLibrary(){
             navigate("/login")
         },
         onError: () => {
-            alert("Algo deu errado ao criar a contar! tente novamente") 
+            alert("Algo deu errado ao criar a contar!") 
         }
     })
 
@@ -67,15 +67,15 @@ export function RegisterLibrary(){
         const { password, confirmPassword } = data
 
         if(!account?.id){
-            return alert("Usuário não encontrado")
+            return alert("Usuário não encontrado!")
         }
 
         if( password !== confirmPassword ){
-            return alert("Senha invalidas")
+            return alert("Senha invalidas!")
         }
 
         if(imageState === null){
-            return alert("Adicionar uma imagem da biblioteca")
+            return alert("Adicionar uma imagem da biblioteca!")
         }
 
         const dataLibrary = {
@@ -129,8 +129,8 @@ export function RegisterLibrary(){
                                 <InputText {...register('phone')} isBook={false} widthDiv="w-full" type="number"  placeholder="000000000" label="Telefone de contato"/>
                             </div>
 
-                            <InputText {...register('cnpj')} isBook={false} widthDiv="w-full" type="number"  placeholder="00.000.000/0000-00" label="CNPJ"/>
-                            <InputText {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000-000" label="CEP"/>
+                            <InputText {...register('cnpj')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000000000000" label="CNPJ"/>
+                            <InputText {...register('cep')} isBook={false} widthDiv="w-full" type="number"  placeholder="00000000" label="CEP"/>
 
                             <div className="flex gap-4 justify-center" >
                                 <InputText {...register('street')} isBook={false} widthDiv="w-full" type="text"  placeholder="Digite o nome da rua" label="Nome da rua"/>

@@ -23,7 +23,7 @@ export function FinishedBooks(){
     })
         
     if(error){
-        alert("Error ao buscar pedidos...")
+        alert("Error ao buscar pedidos!")
     }
 
     const newData = data?.filter(book => book.isComplete === "true")

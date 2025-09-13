@@ -51,7 +51,7 @@ export function RegisterBook(){
             navigate("/library")
         },
         onError: () => {
-            alert("Algo deu errado ao registar o livro! verifique o ISBN e tente novamente") 
+            alert("Algo deu errado ao registar o livro!") 
         }
     })
 
@@ -72,11 +72,11 @@ export function RegisterBook(){
         const {category, edition, finishing, year_publi} = data
 
         if(imageState === null){
-            return alert("Adicionar uma imagem da biblioteca")
+            return alert("Adicionar uma imagem da biblioteca!")
         }
 
         if(!account?.id){
-            return alert("Usuário não encontrado")
+            return alert("Usuário não encontrado!")
         }
 
         if(
@@ -85,7 +85,7 @@ export function RegisterBook(){
             finishing === "default" || 
             year_publi === "default")
         {
-            return alert("Preencha corretamente para registrar o livro")
+            return alert("Preencha corretamente para registrar o livro!")
         }
 
         const availability = valueCheckBox? "available": "unavailable"
