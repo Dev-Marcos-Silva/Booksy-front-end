@@ -3,6 +3,7 @@ import { ChevronRight, Star } from "lucide-react"
 import { useState } from "react"
 import { useMutation } from "@tanstack/react-query"
 import { authContex } from "../../hook/authContext"
+import { queryClient } from "../../service/queryClient"
 
 interface ButtonType extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     bookId: string | undefined | null
@@ -24,8 +25,15 @@ export function ButtonRating({bookId}: ButtonType){
             if(data === 208){
                 return alert("Avaliação já foi registrada!")
             }
-
             alert("Avaliação registrada com sucesso")
+
+            queryClient.refetchQueries({
+                queryKey: ["keyGetStarAssessment", bookId]
+            })
+             
+            queryClient.refetchQueries({
+                queryKey: ["keyGetBook", bookId]
+            })
         },
         onError: () => {
             alert("Error ao registrar avaliação!")

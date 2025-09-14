@@ -26,7 +26,6 @@ export function UnfinishedBook(){
         alert("Error ao buscar pedidos!")
     }
 
-
     const nowDate = new Date()
 
     const newData = data?.filter(book => book.isComplete === "undefine" && new Date(book.returnDate!) < nowDate && book.returnDate !== null )

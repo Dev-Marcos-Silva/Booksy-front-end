@@ -10,6 +10,7 @@ import { SmallButton } from "../buttons/smallButton"
 import { StopWatch } from "../ui/stopWatch"
 import { authContex } from "../../hook/authContext"
 import { queryClient } from "../../service/queryClient"
+import { startStopwatch } from "../../utils/startStopWatch"
 
 interface BookType{
     id: number
@@ -61,8 +62,10 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
         rendBookAcceptOrDeny.mutate({
             rendBookId: bookId,
             isAccepted: "true",
-            token: account.token
+            token: account.token,
+            accountId: null
         })
+        startStopwatch(bookId)
     }
 
     async function handleRendBookDeny(bookId: number){
@@ -74,17 +77,19 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
         rendBookAcceptOrDeny.mutate({
             rendBookId: bookId,
             isAccepted: "false",
-            token: account.token
+            token: account.token,
+            accountId: null
         })
     }
 
     const rendBookDeliver = useMutation<void, Error, putDeliverTypeRequest>({
         mutationFn: putDeliver,
-        onSuccess: () => {
+        onSuccess: (_, variable) => {
             alert("Livro entregue com sucesso")
             queryClient.refetchQueries({
                 queryKey: ["keyGetRendBookLibrary", account.id]
             })
+            localStorage.removeItem(`stopwatch-${variable.rendBookId}`);
         },
         onError: () => {
             alert("Algo deu errado ao entregar o livro!") 
@@ -124,7 +129,7 @@ export function CardCustomerRequest({ isDelivered, ...data}: BookType){
             </div>
             <div className="flex items-center  gap-4 px-4">
 
-                <img className="max-w-30 max-h-30 object-cover border-font-200 border-1 rounded-full mx-3" src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt={`imagem do usuário ${data.name}`} />
+                <img className="w-30 h-30 object-cover border-font-200 border-1 rounded-full mx-3" src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt={`imagem do usuário ${data.name}`} />
                 
                 <div className="flex flex-col gap-2" >
                     <h2 className="text-base" >{capitalizeFirstLetter(data.name)}</h2>

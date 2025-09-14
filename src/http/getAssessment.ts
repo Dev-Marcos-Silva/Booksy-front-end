@@ -11,6 +11,7 @@ export interface getAssessmentTypeResponse{
     star: number
     book_id: string
     user: {
+        id: string
         name: string
         avatar: string | null
     }

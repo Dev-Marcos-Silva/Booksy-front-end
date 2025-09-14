@@ -86,7 +86,7 @@ export function CardFinishedBook({isFinished, ...data}: BookType){
 
             <div className="flex items-center  gap-4 px-3" >
             
-                <img className={`${isFinished? "border-font-600 bg-bg-400":"border-font-700 bg-bg-500"}border-but-200 border-1 rounded-full mx-3 max-w-30 max-h-30 object-cover`} src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt={`imagem do usuário ${data.name}`} />
+                <img className={`${isFinished? "border-font-600 bg-bg-400":"border-font-700 bg-bg-500"}border-but-200 border-1 rounded-full mx-3 w-30 h-30 object-cover`} src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt={`imagem do usuário ${data.name}`} />
                 
                 <div className="flex flex-col gap-2" >
                     <h2 className="text-font-100 text-base" >{capitalizeFirstLetter(data.name)}</h2>

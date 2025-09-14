@@ -89,7 +89,7 @@ export function CardBookWithClient({...data}: BookType){
             
             <div className="flex items-center  gap-4 px-0" >
             
-                <img className="max-w-30 max-h-30 object-cover border-but-200 border-1 rounded-full mx-3" src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt={`imagem do usuário ${data.name}`} />
+                <img className="w-30 h-30 object-cover border-but-200 border-1 rounded-full mx-3" src={data.avatar? `${api.defaults.baseURL}/upload/profile/${data.avatar}` : imageUser} alt={`imagem do usuário ${data.name}`} />
                 
                 <div className="flex flex-col gap-2" >
                     <h2 className="text-font-100 text-base" >{capitalizeFirstLetter(data.name)}</h2>

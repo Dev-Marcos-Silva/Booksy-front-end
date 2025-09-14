@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { authContex } from "../../hook/authContext";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { queryClient } from "../../service/queryClient";
 
 const schemaForm = z.object({
     ddd: z.string().min(2),
@@ -35,6 +36,9 @@ export function FormUserPut(){
         mutationFn: postAddressPhone,
         onSuccess: () => {
             alert("Cadastro completo com sucesso")
+            queryClient.refetchQueries({
+                queryKey: [ "keyGetUser", account.id ]
+            })
         },
         onError: () => {
             alert("Algo deu errado ao finalizar cadastro!") 

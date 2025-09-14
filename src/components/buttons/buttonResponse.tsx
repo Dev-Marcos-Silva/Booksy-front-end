@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import z from "zod";
 import { authContex } from "../../hook/authContext";
+import { queryClient } from "../../service/queryClient";
 
 interface ButtonType extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     commentId: number | undefined | null
@@ -28,6 +29,9 @@ export function ButtonResponse({commentId}: ButtonType){
         mutationFn: postResponse,
         onSuccess: () => {
             alert("Resposta registrado com sucesso")
+            queryClient.refetchQueries({
+                queryKey: ["keyGetResponse", commentId]
+            })
             reset()
         },
         onError: () => {

@@ -1,53 +1,70 @@
 import { useEffect, useState } from "react";
+import { deleteOrders } from "../../utils/deleteOrders";
+import { authContex } from "../../hook/authContext";
 
 type StopWatchProps = {
-  id: number; // identificador único do timer
+    id: number;
 };
 
 export function StopWatch({ id }: StopWatchProps) {
-  const [timeLeft, setTimeLeft] = useState<number>(0);
 
-  useEffect(() => {
-    const storageKey = `stopwatch-${id}`;
-    let expiration = localStorage.getItem(storageKey);
+    const [timeLeft, setTimeLeft] = useState(0);
+    const { account } = authContex()
+    const deleteOrder = deleteOrders()
 
-    if (!expiration) {
-      // cria nova data de expiração (48h = 172800000 ms)
-      const newExpiration = Date.now() + 48 * 60 * 60 * 1000;
-      localStorage.setItem(storageKey, newExpiration.toString());
-      expiration = newExpiration.toString();
+    if(!account){
+        return
     }
 
-    const expirationTime = Number(expiration);
+    useEffect(() => {
+        const storageKey = `stopwatch-${id}`;
+        const expiration = localStorage.getItem(storageKey);
 
-    const update = () => {
-      const diff = expirationTime - Date.now();
-      setTimeLeft(diff > 0 ? diff : 0);
+        if (!expiration) return; // se não tiver cronômetro, não mostra nada
+
+        const expirationTime = Number(expiration);
+
+        const update = () => {
+            const diff = expirationTime - Date.now();
+
+                if (diff > 0) {
+                    setTimeLeft(diff);
+                } else {
+                    setTimeLeft(0);
+
+                    deleteOrder.mutate({
+                        isAccepted: "false",
+                        rendBookId: id,
+                        accountId: account.id,
+                        token: account.token
+                    })
+                    
+                    localStorage.removeItem(storageKey);
+                    clearInterval(interval);
+                }
+        };
+
+        update();
+
+        const interval = setInterval(update, 1000);
+
+        return () => clearInterval(interval);
+        
+    }, [id]);
+
+    const formatTime = (ms: number) => {
+        const total = Math.floor(ms / 1000);
+        const h = Math.floor(total / 3600);
+        const m = Math.floor((total % 3600) / 60);
+        const s = total % 60;
+        return `${h.toString().padStart(2, "0")}:${m
+            .toString()
+            .padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
     };
 
-    update();
-    const interval = setInterval(update, 1000);
-
-    return () => clearInterval(interval);
-  }, [id]);
-
-  // Converte milissegundos para h:m:s
-  const formatTime = (ms: number) => {
-    const totalSeconds = Math.floor(ms / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    return `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-  };
-
-  return (
-    <section className="flex justify-center">
-      <div className="text-xl font-mono">
-        {timeLeft > 0 ? formatTime(timeLeft) : "Expirado"}
-      </div>
-    </section>
-  );
+    return (
+        <div className="text-xl font-mono">
+            {timeLeft > 0 ? formatTime(timeLeft) : "Expirado"}
+        </div>
+    );
 }

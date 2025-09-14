@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import z from "zod";
 import { authContex } from "../../hook/authContext";
+import { queryClient } from "../../service/queryClient";
 
 interface ButtonType extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     bookId: string | undefined | null
@@ -29,6 +30,10 @@ export function ButtonComment({bookId}: ButtonType){
         onSuccess: () => {
             alert("Comentário registrado com sucesso")
             reset()
+            
+            queryClient.refetchQueries({
+                queryKey: ["keyGetComment", bookId]
+            })
         },
         onError: () => {
             alert("Error ao registrar comentário!")

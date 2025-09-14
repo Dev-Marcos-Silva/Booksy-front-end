@@ -34,6 +34,12 @@ export function ButtonMark({bookId, bookFavorite}: ButtonType){
             queryClient.refetchQueries({
                 queryKey: ["keyGetBook", bookId]
             })
+            queryClient.refetchQueries({
+                queryKey: ["keyGetRecentsBook", account.id]
+            })
+            queryClient.refetchQueries({
+                queryKey: ["keyGetRatedsBook", account.id]
+            }) 
         },
         onError: () => {
             alert("Erro ao favoritar livro!")
@@ -63,6 +69,12 @@ export function ButtonMark({bookId, bookFavorite}: ButtonType){
             })
             queryClient.refetchQueries({
                 queryKey: [ "keyGetRendBookUser", account.id ]
+            })
+            queryClient.refetchQueries({
+                queryKey: ["keyGetRecentsBook", account.id]
+            })
+            queryClient.refetchQueries({
+                queryKey: ["keyGetRatedsBook", account.id]
             })
         },
         onError: () => {

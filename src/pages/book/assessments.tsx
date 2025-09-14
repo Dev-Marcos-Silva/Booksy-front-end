@@ -32,10 +32,12 @@ export function Assessments(){
         alert("Error ao buscar avaliações!")
     }
 
+    const userAssessment = dataAssessment?.find(assessment => assessment.user.id === account.id)
+
     return(
         <section className="overflow-auto no-scrollbar max-h-100">
             <div> 
-               { account?.type === "USER" && <ButtonRating bookId={param.id} />}
+               { account?.type === "USER" && userAssessment === undefined && <ButtonRating bookId={param.id} />}
             </div>
 
             {

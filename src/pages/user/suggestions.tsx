@@ -31,7 +31,6 @@ export function Suggestions(){
         }),
     })
 
-
     return(
         <section className='bg-bg-primary h-full flex flex-col overflow-hidden' >
             <header className='border-b border-but-100 flex justify-between items-center' >

@@ -1,69 +1,64 @@
-# React + TypeScript + Vite
+# 📘 Booksy - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend do sistema **Booksy**, responsável por **interface de usuário**, pesquisa de livros, favoritar, pedidos, avaliações e painel da biblioteca.  
+Desenvolvido em **React + TypeScript + TailwindCSS**, consumindo a API do backend via Axios e React Query.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+- **React** → biblioteca principal para UI  
+- **TypeScript** → tipagem estática  
+- **Vite** → bundler e dev server  
+- **TailwindCSS** → estilização utilitária  
+- **@tanstack/react-query** → gerenciamento de dados assíncronos  
+- **Axios** → chamadas HTTP para o backend  
+- **react-router-dom** → roteamento  
+- **react-hook-form** + **@hookform/resolvers** → formulários com validação  
+- **Zod** → validação de dados e formulários  
+- **dayjs** → manipulação de datas  
+- **zustand** → gerenciamento de estado global leve  
+- **keen-slider** → sliders/carrosséis  
+- **lucide-react** → ícones  
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## ▶️ Como Executar o Projeto
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 1️⃣ Pré-requisitos
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Antes de iniciar, certifique-se de ter instalado em sua máquina:
+
+- Node.js
+ (>= 20.x)
+
+- npm
+ ou yarn
+
+### 2️⃣ Clonar o repositório
+
+```bash
+# Clonar o repositório.
+git clone https://github.com/Dev-Marcos-Silva/Booksy-front-end.git
+
+# Entrar no projeto.
+cd frontend
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 3️⃣ Instalar dependências
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Instalar dependências.
+npm install
 ```
+
+
+### 4️⃣ Rodar o projeto em desenvolvimento
+
+```bash
+# Isso vai iniciar o projeto.
+npm run dev
+```
+
+## 🖥️ O frontend ficará disponível em:
+### 👉 http://localhost:5173

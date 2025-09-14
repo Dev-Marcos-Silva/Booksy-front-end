@@ -1,6 +1,7 @@
 import { api } from "../service/api";
 
 export interface putAcceptTypeRequest{
+    accountId: string | null
     rendBookId: number
     isAccepted: string
     token: string
