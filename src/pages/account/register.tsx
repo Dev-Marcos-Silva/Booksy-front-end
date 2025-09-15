@@ -66,7 +66,7 @@ export function Register(){
                     <div className="bg-bg-100 w-8 h-full absolute -left-5 top-0 shadow-md"></div>
 
                         <div className="flex flex-col items-center w-full">
-                            <h2 className="text-font-100 font-primary text-3xl">Criar</h2>
+                            <h2 className="text-font-100 font-primary text-3xl">Contar</h2>
                         </div>
                     
                         <form onSubmit={handleSubmit(registerPost)} className="flex flex-col gap-5 w-full" action="">
