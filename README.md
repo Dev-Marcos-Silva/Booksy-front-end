@@ -51,9 +51,14 @@ cd frontend
 # Instalar dependências.
 npm install
 ```
+### 4️⃣ Configurar variáveis de ambiente
 
+Crie um arquivo .env na raiz do frontend com a seguinte variável (exemplo):
 
-### 4️⃣ Rodar o projeto em desenvolvimento
+```env
+VITE_API_URL="http://localhost:3333"
+```
+### 5️⃣ Rodar o projeto em desenvolvimento
 
 ```bash
 # Isso vai iniciar o projeto.
