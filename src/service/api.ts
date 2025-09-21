@@ -25,8 +25,6 @@ api.interceptors.response.use(
                 // chama o refresh → backend lê refreshToken do cookie
                 const { data } = await api.post<postRefreshTokenTypeResponse>("/refresh/token");
 
-                console.log(data)
-
                 // atualiza o accessToken no Zustand
             if (account) {
                 login({ ...account, token: data.token});
