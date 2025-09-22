@@ -14,7 +14,7 @@ import { FinishedBooks } from "../pages/library/finishedBooks"
 import { UnfinishedBook } from "../pages/library/unfinishedBooks"
 import { LibraryProfile } from "../pages/library/libraryProfile"
 
-import {Routes, Route} from "react-router"
+import {Routes, Route} from "react-router-dom"
 import { NotFound } from "../pages/layout/notFound"
 
 export function RouterLibrary () {

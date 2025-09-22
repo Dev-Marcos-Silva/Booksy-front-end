@@ -12,7 +12,7 @@ import { Details } from "../pages/book/details"
 import { Comments } from "../pages/book/comments"
 import { Assessments } from "../pages/book/assessments"
 
-import { Routes, Route} from "react-router"
+import { Routes, Route} from "react-router-dom"
 import { NotFound } from "../pages/layout/notFound"
 
 export function RouterUser() {
