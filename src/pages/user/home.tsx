@@ -99,7 +99,7 @@ export function Home(){
             {
                books && books.length > 0 && 
                 <main className="overflow-y-scroll h-full " >
-                    <section className="flex flex-wrap gap-x-5 gap-y-4 mx-1 my-4 pr-3 pl-6"> 
+                    <section className="flex flex-wrap gap-x-6 gap-y-4 mx-12 my-4"> 
                         {
                             books.map((book, index) => {
                                 return(

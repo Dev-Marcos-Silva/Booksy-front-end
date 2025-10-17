@@ -42,7 +42,7 @@ export function Login(){
             reset()  
         },
         onError: () => {
-            alert("Email ou senha incorreto!!")
+            alert("Email ou senha incorreto!")
             reset()  
         }
     })
@@ -67,7 +67,7 @@ export function Login(){
 
                         <div className="flex flex-col items-center w-full gap-2">
                             <h2 className="text-font-100 font-primary text-3xl">Login</h2>
-                            <p className="text-font-100 font-primary text-lg">Digite os dados corretament</p>
+                            <p className="text-font-100 font-primary text-lg">Digite os dados corretamente</p>
                         </div>
                     
                         <form onSubmit={handleSubmit(loginPost)}  className="flex flex-col gap-8 w-full">

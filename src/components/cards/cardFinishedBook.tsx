@@ -102,14 +102,14 @@ export function CardFinishedBook({isFinished, ...data}: BookType){
                     isFinished?
                     <div className="bg-bg-primary flex flex-col items-center justify-evenly border-font-600 border-1 rounded-xl h-full px-3" >
                         <div className="flex flex-col items-center justify-center" >
-                            <h2 className="text-lg text-font-100 font-semibold">Encerrado em</h2>
+                            <h2 className="text-lg text-font-100 font-semibold text-center">Encerrado em</h2>
                             <p className=" text-font-100 font-medium">{formatDate(data.endDate)}</p>
                         </div>
                     </div>
                     : 
                     <div className="bg-bg-primary flex flex-col items-center justify-evenly border-font-700 border-1 rounded-xl h-full px-3" >
                         <div className="flex flex-col items-center justify-center" >
-                            <h2 className="text-lg text-font-100 font-semibold">Encerrado em</h2>
+                            <h2 className="text-lg text-font-100 font-semibold text-center">Encerrado em</h2>
                             <p className=" text-font-100 font-medium">{formatDate(data.returnDate)}</p>
                         </div>
                         <SmallButton 

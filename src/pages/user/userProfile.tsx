@@ -34,7 +34,7 @@ type SchemaForm = z.infer<typeof schemaForm>
 
 export function UserProfile(){
 
-    const { register, handleSubmit } = useForm<SchemaForm>({
+    const { register, handleSubmit, reset } = useForm<SchemaForm>({
         resolver: zodResolver(schemaForm)
     })
 
@@ -73,6 +73,8 @@ export function UserProfile(){
             queryClient.refetchQueries({
                 queryKey: [ "keyGetUserAccount", account.id ],
             })
+
+            reset()
         },
         onError: () => {
             alert("Algo deu errado ao atualizar as informações!") 
@@ -83,6 +85,8 @@ export function UserProfile(){
         mutationFn: putUserImage,
         onSuccess: () => {
             alert("Imagem atualizada com sucessso")
+
+            reset()
         },
         onError: () => {
             alert("Algo deu errado ao atualizar a imagem!") 
